@@ -15,7 +15,7 @@ class ProxyTest extends TestCase
      */
     public function it_converts_to_string(): void
     {
-        $proxy = new Proxy(new Ipv4(99999999), new Port(1234));
-        $this->assertSame('5.245.224.255:1234', (string)$proxy);
+        $proxy = new Proxy(new Ipv4('192.168.0.1'), new Port(1234));
+        $this->assertSame('192.168.0.1:1234', (string)$proxy);
     }
 }

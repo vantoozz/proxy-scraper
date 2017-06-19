@@ -11,18 +11,20 @@ use Vantoozz\ProxyScrapper\Exceptions\InvalidArgumentException;
 class Ipv4
 {
     /**
-     * @var int
+     * @var string
      */
     private $ipv4;
 
     /**
      * Ipv4 constructor.
-     * @param int $ipv4
+     * @param string $ipv4
      * @throws InvalidArgumentException
      */
-    public function __construct(int $ipv4)
+    public function __construct(string $ipv4)
     {
-        //TODO: check if ip address is valid
+        if (!filter_var($ipv4, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
+            throw new InvalidArgumentException('Invalid ipv4 string: ' . $ipv4);
+        }
         $this->ipv4 = $ipv4;
     }
 
@@ -31,6 +33,6 @@ class Ipv4
      */
     public function __toString()
     {
-        return long2ip($this->ipv4);
+        return $this->ipv4;
     }
 }
