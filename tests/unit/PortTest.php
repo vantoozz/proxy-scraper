@@ -39,4 +39,12 @@ class PortTest extends TestCase
     {
         new Port(999999);
     }
+
+    /**
+     * @test
+     */
+    public function it_converts_to_string(): void
+    {
+        $this->assertSame('1234', (string)new Port(1234));
+    }
 }
