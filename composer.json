@@ -20,7 +20,9 @@
     "block8/php-docblock-checker": "~1",
     "jakub-onderka/php-parallel-lint": "~0",
     "phpstan/phpstan": "~0",
-    "phpunit/phpunit": "~6"
+    "phpunit/phpunit": "~6",
+    "codacy/coverage": "~1",
+    "satooshi/php-coveralls": "~1"
   },
   "autoload": {
     "psr-4": {

@@ -1,0 +1,23 @@
+language: php
+
+php:
+  - 7.1
+
+before_script:
+  - curl -s http://getcomposer.org/installer | php
+  - php composer.phar install --no-interaction
+
+script:
+  - mkdir -p build/logs
+  - phpunit --coverage-text  --coverage-clover build/logs/clover.xml
+  - vendor/bin/phpstan analyze src
+  - vendor/bin/parallel-lint --no-colors --exclude vendor --exclude .idea .
+  - vendor/bin/phpdoccheck -d src
+  - vendor/bin/phpcpd --ansi src
+  - vendor/bin/phpcs --standard=psr2 --colors src
+  - vendor/bin/phpmd src text phpmd.xml
+  - vendor/bin/phploc --ansi src
+
+after_script:
+  - vendor/bin/coveralls -v
+  - vendor/bin/codacycoverage clover build/logs/clover.xml
