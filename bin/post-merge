@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+. ".git/hooks/change-detector"
+
+
+# Detect composer binary
+if which composer >/dev/null; then
+    composer='composer'
+elif which composer.phar >/dev/null; then
+    composer='composer.phar'
+else
+    # Install composer
+    curl -s http://getcomposer.org/installer | php >/dev/null
+    composer='php composer.phar'
+fi
+
+# Run composer if composer.json is updated
+if has_changed post-merge composer.lock; then
+
+    # Install or update depending on lock file
+    echo "Updating Composer packages"
+    $composer install
+
+else
+
+    # Regenerating autoload files
+    echo "Composer packages up to date"
+    $composer dump-autoload
+
+fi

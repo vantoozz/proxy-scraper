@@ -1,13 +1,45 @@
 {
-    "name": "vantoozz/proxy-scrapper",
-    "license": "MIT",
-    "type": "library",
-    "description": "Free proxy scrapper",
-    "authors": [
-        {
-            "name": "Ivan Nikitin",
-            "email": "vantoozz@gmail.com"
-        }
+  "name": "vantoozz/proxy-scrapper",
+  "license": "MIT",
+  "type": "library",
+  "description": "Free proxy scrapper",
+  "authors": [
+    {
+      "name": "Ivan Nikitin",
+      "email": "vantoozz@gmail.com"
+    }
+  ],
+  "require": {
+    "php": "^7.1"
+  },
+  "require-dev": {
+    "squizlabs/php_codesniffer": "~3",
+    "phploc/phploc": "~3",
+    "sebastian/phpcpd": "~3",
+    "phpmd/phpmd": "~2",
+    "block8/php-docblock-checker": "~1",
+    "jakub-onderka/php-parallel-lint": "~0",
+    "phpstan/phpstan": "~0",
+    "phpunit/phpunit": "~6"
+  },
+  "autoload": {
+    "psr-4": {
+      "Vantoozz\\ProxyScrapper\\": [
+        "src/",
+        "tests/unit",
+        "tests/integration"
+      ]
+    }
+  },
+  "config": {
+    "preferred-install": "dist"
+  },
+  "scripts": {
+    "post-install-cmd": [
+      "bash bin/setup.sh"
     ],
-    "require": {}
+    "post-update-cmd": [
+      "bash bin/setup.sh"
+    ]
+  }
 }
