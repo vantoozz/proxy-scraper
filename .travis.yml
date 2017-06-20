@@ -8,7 +8,7 @@ before_script:
 
 script:
   - mkdir -p build/logs
-  - phpunit --coverage-text  --coverage-clover build/logs/clover.xml
+  - phpunit --testsuite=unit --coverage-text  --coverage-clover build/logs/clover.xml
   - vendor/bin/phpstan analyze src
   - vendor/bin/parallel-lint --no-colors --exclude vendor --exclude .idea .
   - vendor/bin/phpdoccheck -d src
