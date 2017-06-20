@@ -14,6 +14,13 @@
 		exit 1
 	fi
 
+./vendor/bin/phpmnd src
+	if [ $? != 0 ]
+	then
+		echo "Fix errors before commit."
+		exit 1
+	fi
+
 ./vendor/bin/phpcs --standard=psr2 src
 	if [ $? != 0 ]
 	then

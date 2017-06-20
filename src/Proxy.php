@@ -6,7 +6,7 @@ namespace Vantoozz\ProxyScrapper;
  * Class Proxy
  * @package Vantoozz\ProxyScrapper
  */
-class Proxy
+final class Proxy
 {
     /**
      * @var Ipv4

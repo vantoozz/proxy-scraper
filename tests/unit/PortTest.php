@@ -1,14 +1,15 @@
 <?php declare(strict_types = 1);
 
-namespace Vantoozz\ProxyScrapper;
+namespace Vantoozz\ProxyScrapper\UnitTests;
 
 use PHPUnit\Framework\TestCase;
+use Vantoozz\ProxyScrapper\Port;
 
 /**
  * Class PortTest
  * @package Vantoozz\ProxyScrapper
  */
-class PortTest extends TestCase
+final class PortTest extends TestCase
 {
     /**
      * @test

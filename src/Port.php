@@ -8,7 +8,7 @@ use Vantoozz\ProxyScrapper\Exceptions\InvalidArgumentException;
  * Class Port
  * @package Vantoozz\ProxyScrapper
  */
-class Port
+final class Port
 {
     const MIN_PORT_NUMBER = 1;
     const MAX_PORT_NUMBER = 65535;

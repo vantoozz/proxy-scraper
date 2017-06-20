@@ -8,7 +8,7 @@ use Vantoozz\ProxyScrapper\Exceptions\InvalidArgumentException;
  * Class Ipv4
  * @package Vantoozz\ProxyScrapper
  */
-class Ipv4
+final class Ipv4
 {
     /**
      * @var string
