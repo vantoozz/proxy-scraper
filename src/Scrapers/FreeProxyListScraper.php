@@ -36,7 +36,7 @@ final class FreeProxyListScraper implements ScraperInterface
     }
 
     /**
-     * @return \Generator|Proxy[]
+     * @return Proxy[]|\Generator
      * @throws \RuntimeException
      * @throws \Vantoozz\ProxyScrapper\Exceptions\ScraperException
      */
