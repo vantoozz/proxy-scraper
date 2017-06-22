@@ -9,10 +9,11 @@ before_script:
 script:
   - mkdir -p build/logs
   - phpunit --testsuite=unit --coverage-text  --coverage-clover build/logs/clover.xml
-  - vendor/bin/phpstan analyze src
+  - vendor/bin/phpstan analyze src --level=1
   - vendor/bin/parallel-lint --no-colors --exclude vendor --exclude .idea .
   - vendor/bin/phpdoccheck -d src
   - vendor/bin/phpcpd --ansi src
+  ./vendor/bin/phpmnd src --non-zero-exit-on-violation
   - vendor/bin/phpcs --standard=psr2 --colors src
   - vendor/bin/phpmd src text phpmd.xml
   - vendor/bin/phploc --ansi src
