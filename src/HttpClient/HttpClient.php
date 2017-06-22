@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace Vantoozz\ProxyScrapper;
+namespace Vantoozz\ProxyScrapper\HttpClient;
 
 use Http\Client\Exception as ClientException;
 use Http\Client\HttpClient as Client;
@@ -12,7 +12,7 @@ use Vantoozz\ProxyScrapper\Exceptions\HttpClientException;
  * Class HttpClient
  * @package Vantoozz\ProxyScrapper
  */
-class HttpClient
+final class HttpClient implements HttpClientInterface
 {
     /**
      * @var Client

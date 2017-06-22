@@ -5,7 +5,7 @@ namespace Vantoozz\ProxyScrapper\Scrapers;
 use Symfony\Component\DomCrawler\Crawler as Dom;
 use Vantoozz\ProxyScrapper\Exceptions\HttpClientException;
 use Vantoozz\ProxyScrapper\Exceptions\ScraperException;
-use Vantoozz\ProxyScrapper\HttpClient;
+use Vantoozz\ProxyScrapper\HttpClient\HttpClientInterface;
 use Vantoozz\ProxyScrapper\Ipv4;
 use Vantoozz\ProxyScrapper\Port;
 use Vantoozz\ProxyScrapper\Proxy;
@@ -17,7 +17,7 @@ use Vantoozz\ProxyScrapper\Proxy;
 final class FreeProxyListScraper implements ScraperInterface
 {
     /**
-     * @var HttpClient
+     * @var HttpClientInterface
      */
     private $httpClient;
 
@@ -28,9 +28,9 @@ final class FreeProxyListScraper implements ScraperInterface
 
     /**
      * FreeProxyListScraper constructor.
-     * @param HttpClient $httpClient
+     * @param HttpClientInterface $httpClient
      */
-    public function __construct(HttpClient $httpClient)
+    public function __construct(HttpClientInterface $httpClient)
     {
         $this->httpClient = $httpClient;
     }

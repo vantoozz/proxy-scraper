@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
-use Vantoozz\ProxyScrapper\HttpClient;
+use Vantoozz\ProxyScrapper\HttpClient\HttpClient;
 
 final class HttpClientTest extends TestCase
 {

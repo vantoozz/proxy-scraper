@@ -4,7 +4,7 @@ namespace Vantoozz\ProxyScrapper\UnitTests\Scrapers;
 
 use PHPUnit\Framework\TestCase;
 use Vantoozz\ProxyScrapper\Exceptions\HttpClientException;
-use Vantoozz\ProxyScrapper\HttpClient;
+use Vantoozz\ProxyScrapper\HttpClient\HttpClientInterface;
 use Vantoozz\ProxyScrapper\Proxy;
 use Vantoozz\ProxyScrapper\Scrapers\MultiproxyScraper;
 
@@ -21,8 +21,8 @@ final class MultiproxyScraperTest extends TestCase
      */
     public function it_throws_an_exception_on_http_client_error(): void
     {
-        /** @var HttpClient|\PHPUnit_Framework_MockObject_MockObject $httpClient */
-        $httpClient = $this->createMock(HttpClient::class);
+        /** @var HttpClientInterface|\PHPUnit_Framework_MockObject_MockObject $httpClient */
+        $httpClient = $this->createMock(HttpClientInterface::class);
         $httpClient
             ->expects(static::once())
             ->method('get')
@@ -37,8 +37,8 @@ final class MultiproxyScraperTest extends TestCase
      */
     public function it_returns_a_proxy(): void
     {
-        /** @var HttpClient|\PHPUnit_Framework_MockObject_MockObject $httpClient */
-        $httpClient = $this->createMock(HttpClient::class);
+        /** @var HttpClientInterface|\PHPUnit_Framework_MockObject_MockObject $httpClient */
+        $httpClient = $this->createMock(HttpClientInterface::class);
         $httpClient
             ->expects(static::once())
             ->method('get')
@@ -56,8 +56,8 @@ final class MultiproxyScraperTest extends TestCase
      */
     public function it_skips_bad_rows(): void
     {
-        /** @var HttpClient|\PHPUnit_Framework_MockObject_MockObject $httpClient */
-        $httpClient = $this->createMock(HttpClient::class);
+        /** @var HttpClientInterface|\PHPUnit_Framework_MockObject_MockObject $httpClient */
+        $httpClient = $this->createMock(HttpClientInterface::class);
         $httpClient
             ->expects(static::once())
             ->method('get')

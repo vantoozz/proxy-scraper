@@ -6,7 +6,7 @@ use Vantoozz\ProxyScrapper\Exceptions\HttpClientException;
 use Vantoozz\ProxyScrapper\Exceptions\ProxyScrapperException;
 use Vantoozz\ProxyScrapper\Exceptions\RuntimeException;
 use Vantoozz\ProxyScrapper\Exceptions\ScraperException;
-use Vantoozz\ProxyScrapper\HttpClient;
+use Vantoozz\ProxyScrapper\HttpClient\HttpClientInterface;
 use Vantoozz\ProxyScrapper\Ipv4;
 use Vantoozz\ProxyScrapper\Port;
 use Vantoozz\ProxyScrapper\Proxy;
@@ -18,7 +18,7 @@ use Vantoozz\ProxyScrapper\Proxy;
 final class MultiproxyScraper implements ScraperInterface
 {
     /**
-     * @var HttpClient
+     * @var HttpClientInterface
      */
     private $httpClient;
 
@@ -29,9 +29,9 @@ final class MultiproxyScraper implements ScraperInterface
 
     /**
      * FreeProxyListScraper constructor.
-     * @param HttpClient $httpClient
+     * @param HttpClientInterface $httpClient
      */
-    public function __construct(HttpClient $httpClient)
+    public function __construct(HttpClientInterface $httpClient)
     {
         $this->httpClient = $httpClient;
     }
