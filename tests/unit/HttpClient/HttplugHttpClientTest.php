@@ -1,16 +1,16 @@
 <?php declare(strict_types = 1);
 
-namespace Vantoozz\ProxyScrapper\UnitTests;
+namespace Vantoozz\ProxyScrapper\HttpClient;
 
 use Http\Client\Exception as ClientException;
+use Http\Client\HttpClient;
 use Http\Message\MessageFactory;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
-use Vantoozz\ProxyScrapper\HttpClient\HttpClient;
 
-final class HttpClientTest extends TestCase
+final class HttplugHttpClientTest extends TestCase
 {
     /**
      * @test
@@ -29,14 +29,14 @@ final class HttpClientTest extends TestCase
             ->method('createRequest')
             ->willReturn($request);
 
-        /** @var \Http\Client\HttpClient|\PHPUnit_Framework_MockObject_MockObject $client */
-        $client = $this->createMock(\Http\Client\HttpClient::class);
+        /** @var HttpClient|\PHPUnit_Framework_MockObject_MockObject $client */
+        $client = $this->createMock(HttpClient::class);
         $client
             ->expects(static::once())
             ->method('sendRequest')
             ->willThrowException(new \Exception('error message'));
 
-        $httpClient = new HttpClient($client, $messageFactory);
+        $httpClient = new HttplugHttpClient($client, $messageFactory);
         $httpClient->get('some url');
     }
 
@@ -57,14 +57,16 @@ final class HttpClientTest extends TestCase
             ->method('createRequest')
             ->willReturn($request);
 
-        /** @var \Http\Client\HttpClient|\PHPUnit_Framework_MockObject_MockObject $client */
-        $client = $this->createMock(\Http\Client\HttpClient::class);
+        /** @var HttpClient|\PHPUnit_Framework_MockObject_MockObject $client */
+        $client = $this->createMock(HttpClient::class);
         $client
             ->expects(static::once())
             ->method('sendRequest')
-            ->willThrowException(new class ('error message') extends \Exception implements ClientException {});
+            ->willThrowException(new class ('error message') extends \Exception implements ClientException
+            {
+            });
 
-        $httpClient = new HttpClient($client, $messageFactory);
+        $httpClient = new HttplugHttpClient($client, $messageFactory);
         $httpClient->get('some url');
     }
 
@@ -89,8 +91,8 @@ final class HttpClientTest extends TestCase
             ->method('createRequest')
             ->willReturn($request);
 
-        /** @var \Http\Client\HttpClient|\PHPUnit_Framework_MockObject_MockObject $client */
-        $client = $this->createMock(\Http\Client\HttpClient::class);
+        /** @var HttpClient|\PHPUnit_Framework_MockObject_MockObject $client */
+        $client = $this->createMock(HttpClient::class);
         $client
             ->expects(static::once())
             ->method('sendRequest')
@@ -106,7 +108,7 @@ final class HttpClientTest extends TestCase
             ->method('getContents')
             ->willReturn('some string');
 
-        $httpClient = new HttpClient($client, $messageFactory);
+        $httpClient = new HttplugHttpClient($client, $messageFactory);
 
         $this->assertEquals('some string', $httpClient->get('some url'));
     }

@@ -50,7 +50,7 @@
 		exit 1
 	fi
 
-./vendor/bin/phpunit
+./vendor/bin/phpunit --testsuite=unit
 	if [ $? != 0 ]
 	then
 		echo "Fix tests before commit."

@@ -4,7 +4,7 @@ namespace Vantoozz\ProxyScrapper\HttpClient;
 
 /**
  * Interface HttpClientInterface
- * @package Vantoozz\ProxyScrapper\HttpClient
+ * @package Vantoozz\ProxyScrapper\HttplugHttpClient
  */
 interface HttpClientInterface
 {

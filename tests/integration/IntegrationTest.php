@@ -50,7 +50,7 @@ abstract class IntegrationTest extends TestCase
         });
         $container->add(MessageFactory::class, GuzzleMessageFactory::class, true);
 
-        $httpClient = $container->get(\Vantoozz\ProxyScrapper\HttpClient\HttpClient::class);
+        $httpClient = $container->get(\Vantoozz\ProxyScrapper\HttpClient\HttplugHttpClient::class);
         $container->add(HttpClientInterface::class, $httpClient, true);
 
         return $container;

@@ -9,10 +9,10 @@ use Vantoozz\ProxyScrapper\Enums\Http;
 use Vantoozz\ProxyScrapper\Exceptions\HttpClientException;
 
 /**
- * Class HttpClient
+ * Class HttplugHttpClient
  * @package Vantoozz\ProxyScrapper
  */
-final class HttpClient implements HttpClientInterface
+final class HttplugHttpClient implements HttpClientInterface
 {
     /**
      * @var Client
@@ -25,7 +25,7 @@ final class HttpClient implements HttpClientInterface
     private $messageFactory;
 
     /**
-     * HttpClient constructor.
+     * HttplugHttpClient constructor.
      * @param Client $httpClient
      * @param MessageFactory $messageFactory
      */
