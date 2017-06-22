@@ -65,8 +65,9 @@ final class MultiproxyScraper implements ScraperInterface
      */
     private function makeProxy(string $proxy): Proxy
     {
+        $expectedPartsCount = 2;
         $parts = explode(':', $proxy);
-        if (2 !== count($parts)) {
+        if ($expectedPartsCount !== count($parts)) {
             throw new RuntimeException('Bad formatted proxy');
         }
 

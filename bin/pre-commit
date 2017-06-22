@@ -14,10 +14,10 @@
 		exit 1
 	fi
 
-./vendor/bin/phpmnd src
+./vendor/bin/phpmnd src --non-zero-exit-on-violation
 	if [ $? != 0 ]
 	then
-		echo "Fix errors before commit."
+		echo "Avoid magic numbers usage."
 		exit 1
 	fi
 
