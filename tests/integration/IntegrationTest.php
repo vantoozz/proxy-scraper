@@ -12,6 +12,7 @@ use League\Container\Container;
 use League\Container\ReflectionContainer;
 use PHPUnit\Framework\TestCase;
 use Vantoozz\ProxyScrapper\HttpClient\HttpClientInterface;
+use Vantoozz\ProxyScrapper\HttpClient\HttplugHttpClient;
 
 /**
  * Class IntegrationTest
@@ -50,7 +51,7 @@ abstract class IntegrationTest extends TestCase
         });
         $container->add(MessageFactory::class, GuzzleMessageFactory::class, true);
 
-        $httpClient = $container->get(\Vantoozz\ProxyScrapper\HttpClient\HttplugHttpClient::class);
+        $httpClient = $container->get(HttplugHttpClient::class);
         $container->add(HttpClientInterface::class, $httpClient, true);
 
         return $container;

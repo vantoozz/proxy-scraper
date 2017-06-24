@@ -3,16 +3,16 @@
 namespace Vantoozz\ProxyScrapper\Scrapers;
 
 /**
- * Class MultiproxyScraper
+ * Class SpysMeScraper
  * @package Vantoozz\ProxyScrapper\Scrapers
  */
-final class MultiproxyScraper extends RemoteTextScraper
+final class SpysMeScraper extends RemoteTextScraper
 {
     /**
      * @return string
      */
     protected function remoteTextUrl(): string
     {
-        return 'http://multiproxy.org/txt_all/proxy.txt';
+        return 'http://spys.me/proxy.txt';
     }
 }
