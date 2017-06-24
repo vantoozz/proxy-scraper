@@ -37,7 +37,11 @@
     "psr-4": {
       "Vantoozz\\ProxyScrapper\\": [
         "src/"
-      ],
+      ]
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
       "Vantoozz\\ProxyScrapper\\UnitTests\\": [
         "tests/unit"
       ],
