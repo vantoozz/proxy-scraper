@@ -37,7 +37,7 @@ final class HttplugHttpClientTest extends TestCase
             ->willThrowException(new \Exception('error message'));
 
         $httpClient = new HttplugHttpClient($client, $messageFactory);
-        $httpClient->get('some url');
+        $httpClient->get('some url', []);
     }
 
     /**
@@ -67,7 +67,7 @@ final class HttplugHttpClientTest extends TestCase
             });
 
         $httpClient = new HttplugHttpClient($client, $messageFactory);
-        $httpClient->get('some url');
+        $httpClient->get('some url', []);
     }
 
     /**
@@ -110,6 +110,6 @@ final class HttplugHttpClientTest extends TestCase
 
         $httpClient = new HttplugHttpClient($client, $messageFactory);
 
-        $this->assertEquals('some string', $httpClient->get('some url'));
+        $this->assertEquals('some string', $httpClient->get('some url', []));
     }
 }

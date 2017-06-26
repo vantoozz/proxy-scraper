@@ -38,12 +38,13 @@ final class HttplugHttpClient implements HttpClientInterface
 
     /**
      * @param string $uri
+     * @param array $headers
      * @return string
-     * @throws \Vantoozz\ProxyScrapper\Exceptions\HttpClientException
+     * @throws HttpClientException
      */
-    public function get(string $uri): string
+    public function get(string $uri, array $headers): string
     {
-        $request = $this->messageFactory->createRequest(Http::GET, $uri);
+        $request = $this->messageFactory->createRequest(Http::GET, $uri, $headers);
         try {
             return $this->httpClient->sendRequest($request)->getBody()->getContents();
         } catch (ClientException  $e) {

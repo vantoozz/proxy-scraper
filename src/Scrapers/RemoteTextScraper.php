@@ -34,7 +34,7 @@ abstract class RemoteTextScraper
     public function get(): \Generator
     {
         try {
-            $text = $this->httpClient->get($this->remoteTextUrl());
+            $text = $this->httpClient->get($this->remoteTextUrl(), []);
         } catch (HttpClientException $e) {
             throw new ScraperException($e->getMessage(), $e->getCode(), $e);
         }

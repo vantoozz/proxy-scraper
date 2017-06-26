@@ -43,7 +43,7 @@ final class FreeProxyListScraper implements ScraperInterface
     public function get(): \Generator
     {
         try {
-            $html = $this->httpClient->get(static::BASE_URL);
+            $html = $this->httpClient->get(static::BASE_URL, []);
         } catch (HttpClientException $e) {
             throw new ScraperException($e->getMessage(), $e->getCode(), $e);
         }
