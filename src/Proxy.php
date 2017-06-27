@@ -2,8 +2,6 @@
 
 namespace Vantoozz\ProxyScrapper;
 
-use Vantoozz\ProxyScrapper\Exceptions\InvalidArgumentException;
-
 /**
  * Class Proxy
  * @package Vantoozz\ProxyScrapper
