@@ -42,7 +42,14 @@ final class HideMyIpScraper implements ScraperInterface
     public function get(): \Generator
     {
         try {
-            $html = $this->httpClient->get(static::URL, ['User-Agent' => 'Mozilla/5.0']);
+            $html = $this->httpClient->get(
+                static::URL,
+                [
+                    'User-Agent' =>
+                        'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) ' .
+                        'Chrome/41.0.2228.0 Safari/537.36',
+                ]
+            );
         } catch (HttpClientException $e) {
             throw new ScraperException($e->getMessage(), $e->getCode(), $e);
         }
