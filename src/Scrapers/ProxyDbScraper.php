@@ -6,25 +6,23 @@ use Symfony\Component\DomCrawler\Crawler as Dom;
 use Vantoozz\ProxyScrapper\Exceptions\HttpClientException;
 use Vantoozz\ProxyScrapper\Exceptions\ScraperException;
 use Vantoozz\ProxyScrapper\HttpClient\HttpClientInterface;
-use Vantoozz\ProxyScrapper\Ipv4;
-use Vantoozz\ProxyScrapper\Port;
 use Vantoozz\ProxyScrapper\Proxy;
+use Vantoozz\ProxyScrapper\ProxyString;
 
 /**
- * Class FreeProxyListScraper
+ * Class ProxyDbScraper
  * @package Vantoozz\ProxyScrapper\Scrapers
  */
-final class FreeProxyListScraper implements ScraperInterface
+final class ProxyDbScraper implements ScraperInterface
 {
+    private const PAGE_SIZE = 50;
+    private const MAX_OFFSET = 1000;
+    private const PAGE_URL = 'http://proxydb.net/?limit=%d&offset=%d';
+
     /**
      * @var HttpClientInterface
      */
     private $httpClient;
-
-    /**
-     *
-     */
-    private const BASE_URL = 'https://www.free-proxy-list.net/';
 
     /**
      * FreeProxyListScraper constructor.
@@ -37,18 +35,35 @@ final class FreeProxyListScraper implements ScraperInterface
 
     /**
      * @return \Generator|Proxy[]
-     * @throws \RuntimeException if the CssSelector Component is not available
+     * @throws \RuntimeException
      * @throws \Vantoozz\ProxyScrapper\Exceptions\ScraperException
      */
     public function get(): \Generator
     {
+        $offset = 0;
+        $pageSize = self::PAGE_SIZE;
+        do {
+            yield from $this->getPage($offset, $pageSize);
+            $offset += $pageSize;
+        } while ($offset <= self::MAX_OFFSET);
+    }
+
+    /**
+     * @param int $offset
+     * @param int $pageSize
+     * @return \Generator
+     * @throws \RuntimeException if the CssSelector Component is not available
+     * @throws \Vantoozz\ProxyScrapper\Exceptions\ScraperException
+     */
+    private function getPage(int $offset, int $pageSize): \Generator
+    {
         try {
-            $html = $this->httpClient->get(static::BASE_URL, []);
+            $html = $this->httpClient->get(sprintf(static::PAGE_URL, $pageSize, $offset), []);
         } catch (HttpClientException $e) {
             throw new ScraperException($e->getMessage(), $e->getCode(), $e);
         }
 
-        $rows = (new Dom($html))->filter('#proxylisttable tbody tr');
+        $rows = (new Dom($html))->filter('table tbody tr');
 
         foreach ($rows as $row) {
             try {
@@ -68,9 +83,6 @@ final class FreeProxyListScraper implements ScraperInterface
      */
     private function makeProxy(Dom $tr): Proxy
     {
-        $ip = $tr->filter('td')->eq(0)->text();
-        $port = (int)$tr->filter('td')->eq(1)->text();
-
-        return new Proxy(new Ipv4($ip), new Port($port));
+        return (new ProxyString(trim($tr->filter('td')->eq(0)->text())))->asProxy();
     }
 }

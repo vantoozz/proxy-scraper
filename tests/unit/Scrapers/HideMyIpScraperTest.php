@@ -6,7 +6,6 @@ use PHPUnit\Framework\TestCase;
 use Vantoozz\ProxyScrapper\Exceptions\HttpClientException;
 use Vantoozz\ProxyScrapper\HttpClient\HttpClientInterface;
 use Vantoozz\ProxyScrapper\Proxy;
-use Vantoozz\ProxyScrapper\Scrapers\MultiproxyScraper;
 use Vantoozz\ProxyScrapper\Scrapers\HideMyIpScraper;
 
 /**
@@ -79,7 +78,7 @@ final class HideMyIpScraperTest extends TestCase
         $httpClient
             ->expects(static::once())
             ->method('get')
-            ->willReturn(file_get_contents(__DIR__.'/../../fixtures/hideMyIp.html'));
+            ->willReturn(file_get_contents(__DIR__ . '/../../fixtures/hideMyIp.html'));
 
         $scraper = new HideMyIpScraper($httpClient);
         $proxy = $scraper->get()->current();

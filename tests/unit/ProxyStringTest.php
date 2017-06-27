@@ -1,0 +1,66 @@
+<?php declare(strict_types = 1);
+
+namespace Vantoozz\ProxyScrapper\UnitTests;
+
+use PHPUnit\Framework\TestCase;
+use Vantoozz\ProxyScrapper\Exceptions\InvalidArgumentException;
+use Vantoozz\ProxyScrapper\Proxy;
+use Vantoozz\ProxyScrapper\ProxyString;
+
+/**
+ * Class ProxyStringTest
+ * @package Vantoozz\ProxyScrapper
+ */
+final class ProxyStringTest extends TestCase
+{
+    /**
+     * @test
+     */
+    public function it_converts_to_string(): void
+    {
+        $proxyString = new ProxyString('192.168.0.1:1234');
+        $this->assertSame('192.168.0.1:1234', (string)$proxyString);
+    }
+
+    /**
+     * @test
+     */
+    public function it_converts_to_proxy(): void
+    {
+        $proxyString = new ProxyString('192.168.0.1:1234');
+        $this->assertInstanceOf(Proxy::class, $proxyString->asProxy());
+        $this->assertSame('192.168.0.1:1234', (string)$proxyString->asProxy());
+    }
+
+    /**
+     * @test
+     * @dataProvider proxiesDataProvider
+     * @param string $string
+     * @param bool $expected
+     */
+    public function is_creates_from_strings(string $string, bool $expected): void
+    {
+        try {
+            new ProxyString($string);
+            $created = true;
+        } catch (InvalidArgumentException $e) {
+            $created = false;
+        }
+
+        $this->assertEquals($created, $expected);
+    }
+
+    /**
+     * @return array
+     */
+    public function proxiesDataProvider(): array
+    {
+        return [
+            ['127.0.0.1:8080', true],
+            ['127.0.0.1:8080 some string', true],
+            ['127.0.0.1 8080', false],
+            ['127.0.0.1 aaa', false],
+            ['127:8080', false],
+        ];
+    }
+}

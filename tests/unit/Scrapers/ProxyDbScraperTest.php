@@ -6,13 +6,13 @@ use PHPUnit\Framework\TestCase;
 use Vantoozz\ProxyScrapper\Exceptions\HttpClientException;
 use Vantoozz\ProxyScrapper\HttpClient\HttpClientInterface;
 use Vantoozz\ProxyScrapper\Proxy;
-use Vantoozz\ProxyScrapper\Scrapers\SpysMeScraper;
+use Vantoozz\ProxyScrapper\Scrapers\ProxyDbScraper;
 
 /**
- * Class SpysMeScraperTest
+ * Class ProxyDbScraperTest
  * @package Vantoozz\ProxyScrapper\Scrapers
  */
-final class SpysMeScraperTest extends TestCase
+final class ProxyDbScraperTest extends TestCase
 {
     /**
      * @test
@@ -28,7 +28,7 @@ final class SpysMeScraperTest extends TestCase
             ->method('get')
             ->willThrowException(new HttpClientException('error message'));
 
-        $scraper = new SpysMeScraper($httpClient);
+        $scraper = new ProxyDbScraper($httpClient);
         $scraper->get()->current();
     }
 
@@ -42,13 +42,13 @@ final class SpysMeScraperTest extends TestCase
         $httpClient
             ->expects(static::once())
             ->method('get')
-            ->willReturn("222.111.222.111:8118\n111.222.111.222:8118");
+            ->willReturn('<table><tbody><tr><td>46.101.55.200:8118</td></tr></table>');
 
-        $scraper = new SpysMeScraper($httpClient);
+        $scraper = new ProxyDbScraper($httpClient);
         $proxy = $scraper->get()->current();
 
         $this->assertInstanceOf(Proxy::class, $proxy);
-        $this->assertSame('222.111.222.111:8118', (string)$proxy);
+        $this->assertSame('46.101.55.200:8118', (string)$proxy);
     }
 
     /**
@@ -59,11 +59,11 @@ final class SpysMeScraperTest extends TestCase
         /** @var HttpClientInterface|\PHPUnit_Framework_MockObject_MockObject $httpClient */
         $httpClient = $this->createMock(HttpClientInterface::class);
         $httpClient
-            ->expects(static::once())
+            ->expects(static::exactly(21))
             ->method('get')
-            ->willReturn('2312318');
+            ->willReturn('<table><tbody><tr><td>bad proxy string</td></tr></table>');
 
-        $scraper = new SpysMeScraper($httpClient);
+        $scraper = new ProxyDbScraper($httpClient);
 
         $this->assertNull($scraper->get()->current());
     }

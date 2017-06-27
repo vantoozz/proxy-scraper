@@ -8,6 +8,6 @@ namespace Vantoozz\ProxyScrapper\Enums;
  */
 abstract class Http
 {
-    const GET = 'GET';
-    const POST = 'POST';
+    public const GET = 'GET';
+    public const POST = 'POST';
 }

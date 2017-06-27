@@ -4,7 +4,6 @@ namespace Vantoozz\ProxyScrapper\IntegrationTests\Scrapers;
 
 use Vantoozz\ProxyScrapper\IntegrationTests\IntegrationTest;
 use Vantoozz\ProxyScrapper\Scrapers\HideMyIpScraper;
-use Vantoozz\ProxyScrapper\Scrapers\SpysMeScraper;
 
 /**
  * Class HideMyIpScraperTest

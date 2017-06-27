@@ -2,6 +2,8 @@
 
 namespace Vantoozz\ProxyScrapper;
 
+use Vantoozz\ProxyScrapper\Exceptions\InvalidArgumentException;
+
 /**
  * Class Proxy
  * @package Vantoozz\ProxyScrapper
@@ -32,7 +34,7 @@ final class Proxy
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return (string)$this->ipv4 . ':' . (string)$this->port;
     }
