@@ -3,16 +3,16 @@
 namespace Vantoozz\ProxyScrapper\Scrapers;
 
 /**
- * Class FreeProxyListScraper
+ * Class UsProxyScraper
  * @package Vantoozz\ProxyScrapper\Scrapers
  */
-final class FreeProxyListScraper extends AbstractFreeProxyListScraper
+final class UsProxyScraper extends AbstractFreeProxyListScraper
 {
     /**
      * @return string
      */
     protected function baseUrl(): string
     {
-        return 'https://www.free-proxy-list.net/';
+        return 'https://www.us-proxy.org/';
     }
 }
