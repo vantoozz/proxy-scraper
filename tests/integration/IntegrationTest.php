@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace Vantoozz\ProxyScrapper\IntegrationTests;
+namespace Vantoozz\ProxyScraper\IntegrationTests;
 
 use GuzzleHttp;
 use Http\Adapter\Guzzle6\Client as GuzzleAdapter;
@@ -11,12 +11,12 @@ use Http\Message\MessageFactory\GuzzleMessageFactory;
 use League\Container\Container;
 use League\Container\ReflectionContainer;
 use PHPUnit\Framework\TestCase;
-use Vantoozz\ProxyScrapper\HttpClient\HttpClientInterface;
-use Vantoozz\ProxyScrapper\HttpClient\HttplugHttpClient;
+use Vantoozz\ProxyScraper\HttpClient\HttpClientInterface;
+use Vantoozz\ProxyScraper\HttpClient\HttplugHttpClient;
 
 /**
  * Class IntegrationTest
- * @package Vantoozz\ProxyScrapper
+ * @package Vantoozz\ProxyScraper
  */
 abstract class IntegrationTest extends TestCase
 {

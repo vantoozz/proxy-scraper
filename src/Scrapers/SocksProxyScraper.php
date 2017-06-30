@@ -1,10 +1,10 @@
 <?php declare(strict_types = 1);
 
-namespace Vantoozz\ProxyScrapper\Scrapers;
+namespace Vantoozz\ProxyScraper\Scrapers;
 
 /**
  * Class SocksProxyScraper
- * @package Vantoozz\ProxyScrapper\Scrapers
+ * @package Vantoozz\ProxyScraper\Scrapers
  */
 final class SocksProxyScraper extends AbstractFreeProxyListScraper
 {

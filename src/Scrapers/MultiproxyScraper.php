@@ -1,10 +1,10 @@
 <?php declare(strict_types = 1);
 
-namespace Vantoozz\ProxyScrapper\Scrapers;
+namespace Vantoozz\ProxyScraper\Scrapers;
 
 /**
  * Class MultiproxyScraper
- * @package Vantoozz\ProxyScrapper\Scrapers
+ * @package Vantoozz\ProxyScraper\Scrapers
  */
 final class MultiproxyScraper extends RemoteTextScraper
 {

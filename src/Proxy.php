@@ -1,10 +1,10 @@
 <?php declare(strict_types = 1);
 
-namespace Vantoozz\ProxyScrapper;
+namespace Vantoozz\ProxyScraper;
 
 /**
  * Class Proxy
- * @package Vantoozz\ProxyScrapper
+ * @package Vantoozz\ProxyScraper
  */
 final class Proxy
 {

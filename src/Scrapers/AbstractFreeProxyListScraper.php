@@ -1,18 +1,18 @@
 <?php declare(strict_types = 1);
 
-namespace Vantoozz\ProxyScrapper\Scrapers;
+namespace Vantoozz\ProxyScraper\Scrapers;
 
 use Symfony\Component\DomCrawler\Crawler as Dom;
-use Vantoozz\ProxyScrapper\Exceptions\HttpClientException;
-use Vantoozz\ProxyScrapper\Exceptions\ScraperException;
-use Vantoozz\ProxyScrapper\HttpClient\HttpClientInterface;
-use Vantoozz\ProxyScrapper\Ipv4;
-use Vantoozz\ProxyScrapper\Port;
-use Vantoozz\ProxyScrapper\Proxy;
+use Vantoozz\ProxyScraper\Exceptions\HttpClientException;
+use Vantoozz\ProxyScraper\Exceptions\ScraperException;
+use Vantoozz\ProxyScraper\HttpClient\HttpClientInterface;
+use Vantoozz\ProxyScraper\Ipv4;
+use Vantoozz\ProxyScraper\Port;
+use Vantoozz\ProxyScraper\Proxy;
 
 /**
  * Class AbstractFreeProxyListScraper
- * @package Vantoozz\ProxyScrapper\Scrapers
+ * @package Vantoozz\ProxyScraper\Scrapers
  */
 abstract class AbstractFreeProxyListScraper
 {
@@ -33,7 +33,7 @@ abstract class AbstractFreeProxyListScraper
     /**
      * @return \Generator|Proxy[]
      * @throws \RuntimeException if the CssSelector Component is not available
-     * @throws \Vantoozz\ProxyScrapper\Exceptions\ScraperException
+     * @throws \Vantoozz\ProxyScraper\Exceptions\ScraperException
      */
     public function get(): \Generator
     {
@@ -59,7 +59,7 @@ abstract class AbstractFreeProxyListScraper
      * @return Proxy
      * @throws \RuntimeException
      * @throws \InvalidArgumentException
-     * @throws \Vantoozz\ProxyScrapper\Exceptions\InvalidArgumentException
+     * @throws \Vantoozz\ProxyScraper\Exceptions\InvalidArgumentException
      */
     private function makeProxy(Dom $row): Proxy
     {

@@ -1,15 +1,15 @@
 <?php declare(strict_types = 1);
 
-namespace Vantoozz\ProxyScrapper\Scrapers;
+namespace Vantoozz\ProxyScraper\Scrapers;
 
-use Vantoozz\ProxyScrapper\Exceptions\HttpClientException;
-use Vantoozz\ProxyScrapper\Exceptions\ScraperException;
-use Vantoozz\ProxyScrapper\HttpClient\HttpClientInterface;
-use Vantoozz\ProxyScrapper\Proxy;
+use Vantoozz\ProxyScraper\Exceptions\HttpClientException;
+use Vantoozz\ProxyScraper\Exceptions\ScraperException;
+use Vantoozz\ProxyScraper\HttpClient\HttpClientInterface;
+use Vantoozz\ProxyScraper\Proxy;
 
 /**
  * Class RemoteTextScraper
- * @package Vantoozz\ProxyScrapper\Scrapers
+ * @package Vantoozz\ProxyScraper\Scrapers
  */
 abstract class RemoteTextScraper
 {
@@ -29,7 +29,7 @@ abstract class RemoteTextScraper
 
     /**
      * @return \Generator|Proxy[]
-     * @throws \Vantoozz\ProxyScrapper\Exceptions\ScraperException
+     * @throws \Vantoozz\ProxyScraper\Exceptions\ScraperException
      */
     public function get(): \Generator
     {

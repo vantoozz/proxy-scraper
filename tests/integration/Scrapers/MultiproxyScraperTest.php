@@ -1,13 +1,13 @@
 <?php declare(strict_types = 1);
 
-namespace Vantoozz\ProxyScrapper\IntegrationTests\Scrapers;
+namespace Vantoozz\ProxyScraper\IntegrationTests\Scrapers;
 
-use Vantoozz\ProxyScrapper\IntegrationTests\IntegrationTest;
-use Vantoozz\ProxyScrapper\Scrapers\MultiproxyScraper;
+use Vantoozz\ProxyScraper\IntegrationTests\IntegrationTest;
+use Vantoozz\ProxyScraper\Scrapers\MultiproxyScraper;
 
 /**
  * Class MultiproxyScraperTest
- * @package Vantoozz\ProxyScrapper\Scrapers
+ * @package Vantoozz\ProxyScraper\Scrapers
  */
 final class MultiproxyScraperTest extends IntegrationTest
 {

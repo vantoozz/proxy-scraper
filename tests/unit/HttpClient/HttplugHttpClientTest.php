@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace Vantoozz\ProxyScrapper\HttpClient;
+namespace Vantoozz\ProxyScraper\HttpClient;
 
 use Http\Client\Exception as ClientException;
 use Http\Client\HttpClient;
@@ -14,7 +14,7 @@ final class HttplugHttpClientTest extends TestCase
 {
     /**
      * @test
-     * @expectedException \Vantoozz\ProxyScrapper\Exceptions\HttpClientException
+     * @expectedException \Vantoozz\ProxyScraper\Exceptions\HttpClientException
      * @expectedExceptionMessage error message
      */
     public function it_throws_an_exception_if_an_error_happens(): void
@@ -42,7 +42,7 @@ final class HttplugHttpClientTest extends TestCase
 
     /**
      * @test
-     * @expectedException \Vantoozz\ProxyScrapper\Exceptions\HttpClientException
+     * @expectedException \Vantoozz\ProxyScraper\Exceptions\HttpClientException
      * @expectedExceptionMessage error message
      */
     public function it_throws_an_exception_if_processing_the_request_is_impossible(): void

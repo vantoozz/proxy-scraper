@@ -1,10 +1,10 @@
 <?php declare(strict_types = 1);
 
-namespace Vantoozz\ProxyScrapper\Enums;
+namespace Vantoozz\ProxyScraper\Enums;
 
 /**
  * Class Http
- * @package Vantoozz\ProxyScrapper\Enums
+ * @package Vantoozz\ProxyScraper\Enums
  */
 abstract class Http
 {

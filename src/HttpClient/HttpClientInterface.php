@@ -1,10 +1,10 @@
 <?php declare(strict_types = 1);
 
-namespace Vantoozz\ProxyScrapper\HttpClient;
+namespace Vantoozz\ProxyScraper\HttpClient;
 
 /**
  * Interface HttpClientInterface
- * @package Vantoozz\ProxyScrapper\HttplugHttpClient
+ * @package Vantoozz\ProxyScraper\HttplugHttpClient
  */
 interface HttpClientInterface
 {

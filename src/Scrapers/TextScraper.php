@@ -1,14 +1,14 @@
 <?php declare(strict_types = 1);
 
-namespace Vantoozz\ProxyScrapper\Scrapers;
+namespace Vantoozz\ProxyScraper\Scrapers;
 
-use Vantoozz\ProxyScrapper\Exceptions\ProxyScrapperException;
-use Vantoozz\ProxyScrapper\Proxy;
-use Vantoozz\ProxyScrapper\ProxyString;
+use Vantoozz\ProxyScraper\Exceptions\ProxyScraperException;
+use Vantoozz\ProxyScraper\Proxy;
+use Vantoozz\ProxyScraper\ProxyString;
 
 /**
  * Class TextScraper
- * @package Vantoozz\ProxyScrapper\Scrapers
+ * @package Vantoozz\ProxyScraper\Scrapers
  */
 final class TextScraper implements ScraperInterface
 {
@@ -28,14 +28,14 @@ final class TextScraper implements ScraperInterface
 
     /**
      * @return \Generator|Proxy[]
-     * @throws \Vantoozz\ProxyScrapper\Exceptions\ScraperException
+     * @throws \Vantoozz\ProxyScraper\Exceptions\ScraperException
      */
     public function get(): \Generator
     {
         foreach (explode("\n", $this->text) as $line) {
             try {
                 yield (new ProxyString($line))->asProxy();
-            } catch (ProxyScrapperException $e) {
+            } catch (ProxyScraperException $e) {
                 continue;
             }
         }

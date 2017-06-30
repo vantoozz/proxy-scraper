@@ -1,14 +1,14 @@
 <?php declare(strict_types = 1);
 
-namespace Vantoozz\ProxyScrapper\UnitTests\Scrapers;
+namespace Vantoozz\ProxyScraper\UnitTests\Scrapers;
 
 use PHPUnit\Framework\TestCase;
-use Vantoozz\ProxyScrapper\Proxy;
-use Vantoozz\ProxyScrapper\Scrapers\TextScraper;
+use Vantoozz\ProxyScraper\Proxy;
+use Vantoozz\ProxyScraper\Scrapers\TextScraper;
 
 /**
  * Class TextScraperTest
- * @package Vantoozz\ProxyScrapper\Scrapers
+ * @package Vantoozz\ProxyScraper\Scrapers
  */
 final class TextScraperTest extends TestCase
 {

@@ -1,16 +1,16 @@
 <?php declare(strict_types = 1);
 
-namespace Vantoozz\ProxyScrapper\HttpClient;
+namespace Vantoozz\ProxyScraper\HttpClient;
 
 use Http\Client\Exception as ClientException;
 use Http\Client\HttpClient as Client;
 use Http\Message\MessageFactory;
-use Vantoozz\ProxyScrapper\Enums\Http;
-use Vantoozz\ProxyScrapper\Exceptions\HttpClientException;
+use Vantoozz\ProxyScraper\Enums\Http;
+use Vantoozz\ProxyScraper\Exceptions\HttpClientException;
 
 /**
  * Class HttplugHttpClient
- * @package Vantoozz\ProxyScrapper
+ * @package Vantoozz\ProxyScraper
  */
 final class HttplugHttpClient implements HttpClientInterface
 {

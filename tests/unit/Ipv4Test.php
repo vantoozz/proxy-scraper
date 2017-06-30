@@ -1,13 +1,13 @@
 <?php declare(strict_types = 1);
 
-namespace Vantoozz\ProxyScrapper\UnitTests;
+namespace Vantoozz\ProxyScraper\UnitTests;
 
 use PHPUnit\Framework\TestCase;
-use Vantoozz\ProxyScrapper\Ipv4;
+use Vantoozz\ProxyScraper\Ipv4;
 
 /**
  * Class Ipv4Test
- * @package Vantoozz\ProxyScrapper
+ * @package Vantoozz\ProxyScraper
  */
 final class Ipv4Test extends TestCase
 {
@@ -22,7 +22,7 @@ final class Ipv4Test extends TestCase
     /**
      * @test
      * @expectedExceptionMessage Invalid ipv4 string: some string
-     * @expectedException \Vantoozz\ProxyScrapper\Exceptions\InvalidArgumentException
+     * @expectedException \Vantoozz\ProxyScraper\Exceptions\InvalidArgumentException
      */
     public function it_rejects_not_ip4v(): void
     {
@@ -32,7 +32,7 @@ final class Ipv4Test extends TestCase
     /**
      * @test
      * @expectedExceptionMessage Invalid ipv4 string: 0:0:0:0:0:0:0:1
-     * @expectedException \Vantoozz\ProxyScrapper\Exceptions\InvalidArgumentException
+     * @expectedException \Vantoozz\ProxyScraper\Exceptions\InvalidArgumentException
      */
     public function it_rejects_ipv6_addresses(): void
     {

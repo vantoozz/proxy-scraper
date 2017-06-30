@@ -3,9 +3,9 @@
 namespace Vantoozz\ProxyScraper\Exceptions;
 
 /**
- * Class InvalidArgumentException
+ * Class ProxyScraperException
  * @package Vantoozz\ProxyScraper\Exceptions
  */
-class InvalidArgumentException extends ProxyScraperException
+class ProxyScraperException extends \Exception
 {
 }

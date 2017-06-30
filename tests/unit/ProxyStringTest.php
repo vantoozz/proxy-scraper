@@ -1,15 +1,15 @@
 <?php declare(strict_types = 1);
 
-namespace Vantoozz\ProxyScrapper\UnitTests;
+namespace Vantoozz\ProxyScraper\UnitTests;
 
 use PHPUnit\Framework\TestCase;
-use Vantoozz\ProxyScrapper\Exceptions\InvalidArgumentException;
-use Vantoozz\ProxyScrapper\Proxy;
-use Vantoozz\ProxyScrapper\ProxyString;
+use Vantoozz\ProxyScraper\Exceptions\InvalidArgumentException;
+use Vantoozz\ProxyScraper\Proxy;
+use Vantoozz\ProxyScraper\ProxyString;
 
 /**
  * Class ProxyStringTest
- * @package Vantoozz\ProxyScrapper
+ * @package Vantoozz\ProxyScraper
  */
 final class ProxyStringTest extends TestCase
 {

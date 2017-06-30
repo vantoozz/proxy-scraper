@@ -1,22 +1,22 @@
 <?php declare(strict_types = 1);
 
-namespace Vantoozz\ProxyScrapper\UnitTests\Scrapers;
+namespace Vantoozz\ProxyScraper\UnitTests\Scrapers;
 
 use PHPUnit\Framework\TestCase;
-use Vantoozz\ProxyScrapper\Exceptions\HttpClientException;
-use Vantoozz\ProxyScrapper\HttpClient\HttpClientInterface;
-use Vantoozz\ProxyScrapper\Proxy;
-use Vantoozz\ProxyScrapper\Scrapers\HideMyIpScraper;
+use Vantoozz\ProxyScraper\Exceptions\HttpClientException;
+use Vantoozz\ProxyScraper\HttpClient\HttpClientInterface;
+use Vantoozz\ProxyScraper\Proxy;
+use Vantoozz\ProxyScraper\Scrapers\HideMyIpScraper;
 
 /**
  * Class HideMyIpScraperTest
- * @package Vantoozz\ProxyScrapper\Scrapers
+ * @package Vantoozz\ProxyScraper\Scrapers
  */
 final class HideMyIpScraperTest extends TestCase
 {
     /**
      * @test
-     * @expectedException \Vantoozz\ProxyScrapper\Exceptions\ScraperException
+     * @expectedException \Vantoozz\ProxyScraper\Exceptions\ScraperException
      * @expectedExceptionMessage error message
      */
     public function it_throws_an_exception_on_http_client_error(): void
@@ -34,7 +34,7 @@ final class HideMyIpScraperTest extends TestCase
 
     /**
      * @test
-     * @expectedException \Vantoozz\ProxyScrapper\Exceptions\ScraperException
+     * @expectedException \Vantoozz\ProxyScraper\Exceptions\ScraperException
      * @expectedExceptionMessage Unknown markup
      */
     public function it_throws_an_exception_if_unknown_markdown_got(): void
@@ -52,7 +52,7 @@ final class HideMyIpScraperTest extends TestCase
 
     /**
      * @test
-     * @expectedException \Vantoozz\ProxyScrapper\Exceptions\ScraperException
+     * @expectedException \Vantoozz\ProxyScraper\Exceptions\ScraperException
      * @expectedExceptionMessage Cannot parse json: Syntax error
      */
     public function it_throws_an_exception_if_bad_json_got(): void

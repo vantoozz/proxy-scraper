@@ -1,17 +1,17 @@
 <?php declare(strict_types = 1);
 
-namespace Vantoozz\ProxyScrapper\Scrapers;
+namespace Vantoozz\ProxyScraper\Scrapers;
 
 use Symfony\Component\DomCrawler\Crawler as Dom;
-use Vantoozz\ProxyScrapper\Exceptions\HttpClientException;
-use Vantoozz\ProxyScrapper\Exceptions\ScraperException;
-use Vantoozz\ProxyScrapper\HttpClient\HttpClientInterface;
-use Vantoozz\ProxyScrapper\Proxy;
-use Vantoozz\ProxyScrapper\ProxyString;
+use Vantoozz\ProxyScraper\Exceptions\HttpClientException;
+use Vantoozz\ProxyScraper\Exceptions\ScraperException;
+use Vantoozz\ProxyScraper\HttpClient\HttpClientInterface;
+use Vantoozz\ProxyScraper\Proxy;
+use Vantoozz\ProxyScraper\ProxyString;
 
 /**
  * Class ProxyDbScraper
- * @package Vantoozz\ProxyScrapper\Scrapers
+ * @package Vantoozz\ProxyScraper\Scrapers
  */
 final class ProxyDbScraper implements ScraperInterface
 {
@@ -36,7 +36,7 @@ final class ProxyDbScraper implements ScraperInterface
     /**
      * @return \Generator|Proxy[]
      * @throws \RuntimeException
-     * @throws \Vantoozz\ProxyScrapper\Exceptions\ScraperException
+     * @throws \Vantoozz\ProxyScraper\Exceptions\ScraperException
      */
     public function get(): \Generator
     {
@@ -53,7 +53,7 @@ final class ProxyDbScraper implements ScraperInterface
      * @param int $pageSize
      * @return \Generator
      * @throws \RuntimeException if the CssSelector Component is not available
-     * @throws \Vantoozz\ProxyScrapper\Exceptions\ScraperException
+     * @throws \Vantoozz\ProxyScraper\Exceptions\ScraperException
      */
     private function getPage(int $offset, int $pageSize): \Generator
     {
@@ -79,7 +79,7 @@ final class ProxyDbScraper implements ScraperInterface
      * @return Proxy
      * @throws \RuntimeException
      * @throws \InvalidArgumentException
-     * @throws \Vantoozz\ProxyScrapper\Exceptions\InvalidArgumentException
+     * @throws \Vantoozz\ProxyScraper\Exceptions\InvalidArgumentException
      */
     private function makeProxy(Dom $tr): Proxy
     {

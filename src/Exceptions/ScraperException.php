@@ -1,11 +1,11 @@
 <?php declare(strict_types = 1);
 
-namespace Vantoozz\ProxyScrapper\Exceptions;
+namespace Vantoozz\ProxyScraper\Exceptions;
 
 /**
  * Class ScraperException
- * @package Vantoozz\ProxyScrapper\Exceptions
+ * @package Vantoozz\ProxyScraper\Exceptions
  */
-class ScraperException extends ProxyScrapperException
+class ScraperException extends ProxyScraperException
 {
 }

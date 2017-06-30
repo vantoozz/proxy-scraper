@@ -1,18 +1,18 @@
 <?php declare(strict_types = 1);
 
-namespace Vantoozz\ProxyScrapper\Scrapers;
+namespace Vantoozz\ProxyScraper\Scrapers;
 
-use Vantoozz\ProxyScrapper\Exceptions\HttpClientException;
-use Vantoozz\ProxyScrapper\Exceptions\InvalidArgumentException;
-use Vantoozz\ProxyScrapper\Exceptions\ScraperException;
-use Vantoozz\ProxyScrapper\HttpClient\HttpClientInterface;
-use Vantoozz\ProxyScrapper\Ipv4;
-use Vantoozz\ProxyScrapper\Port;
-use Vantoozz\ProxyScrapper\Proxy;
+use Vantoozz\ProxyScraper\Exceptions\HttpClientException;
+use Vantoozz\ProxyScraper\Exceptions\InvalidArgumentException;
+use Vantoozz\ProxyScraper\Exceptions\ScraperException;
+use Vantoozz\ProxyScraper\HttpClient\HttpClientInterface;
+use Vantoozz\ProxyScraper\Ipv4;
+use Vantoozz\ProxyScraper\Port;
+use Vantoozz\ProxyScraper\Proxy;
 
 /**
  * Class HideMyIpScraper
- * @package Vantoozz\ProxyScrapper\Scrapers
+ * @package Vantoozz\ProxyScraper\Scrapers
  */
 final class HideMyIpScraper implements ScraperInterface
 {
@@ -37,7 +37,7 @@ final class HideMyIpScraper implements ScraperInterface
 
     /**
      * @return \Generator|Proxy[]
-     * @throws \Vantoozz\ProxyScrapper\Exceptions\ScraperException
+     * @throws \Vantoozz\ProxyScraper\Exceptions\ScraperException
      */
     public function get(): \Generator
     {
@@ -89,7 +89,7 @@ final class HideMyIpScraper implements ScraperInterface
     /**
      * @param array $item
      * @return Proxy
-     * @throws \Vantoozz\ProxyScrapper\Exceptions\InvalidArgumentException
+     * @throws \Vantoozz\ProxyScraper\Exceptions\InvalidArgumentException
      */
     private function makeProxy(array $item): Proxy
     {

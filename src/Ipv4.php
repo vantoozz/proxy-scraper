@@ -1,12 +1,12 @@
 <?php declare(strict_types = 1);
 
-namespace Vantoozz\ProxyScrapper;
+namespace Vantoozz\ProxyScraper;
 
-use Vantoozz\ProxyScrapper\Exceptions\InvalidArgumentException;
+use Vantoozz\ProxyScraper\Exceptions\InvalidArgumentException;
 
 /**
  * Class Ipv4
- * @package Vantoozz\ProxyScrapper
+ * @package Vantoozz\ProxyScraper
  */
 final class Ipv4
 {
