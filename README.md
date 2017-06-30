@@ -135,7 +135,7 @@ An error occurs: some error
 192.168.0.1:8888
 ```
 
-_Note. Examples uses Guzzle as HTTP client._
+_Note. Examples use Guzzle as HTTP client._
 
 
 ### Testing
