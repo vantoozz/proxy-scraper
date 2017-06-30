@@ -101,6 +101,11 @@ $httpClient = new HttplugHttpClient(
 
 $compositeScraper = new Scrapers\CompositeScraper;
 
+// Set exception handler
+$compositeScraper->handleScraperExceptionWith(function (ScraperException $e) {
+    echo 'An error occurs: ' . $e->getMessage() . "\n";
+});
+
 // Throws an exception
 $compositeScraper->addScraper(new class implements Scrapers\ScraperInterface
 {
@@ -119,11 +124,7 @@ $compositeScraper->addScraper(new class implements Scrapers\ScraperInterface
     }
 });
 
-// Set exception handler
-$compositeScraper->handleScraperExceptionWith(function (ScraperException $e) {
-    echo 'An error occurs: ' . $e->getMessage() . "\n";
-});
-
+//Run scraper
 foreach ($compositeScraper->get() as $proxy) {
     echo (string)$proxy . "\n";
 }
