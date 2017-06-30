@@ -1,8 +1,8 @@
 {
-  "name": "vantoozz/proxy-scrapper",
+  "name": "vantoozz/proxy-scraper",
   "license": "MIT",
   "type": "library",
-  "description": "Free proxy scrapper",
+  "description": "Free proxies scraper",
   "authors": [
     {
       "name": "Ivan Nikitin",
@@ -55,10 +55,10 @@
   },
   "scripts": {
     "post-install-cmd": [
-      "bash bin/setup.sh"
+      "bash .githooks/setup.sh"
     ],
     "post-update-cmd": [
-      "bash bin/setup.sh"
+      "bash .githooks/setup.sh"
     ]
   }
 }
