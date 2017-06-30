@@ -21,7 +21,7 @@ composer require vantoozz/proxy-scraper
 
 ### Usage
 
-##### Single scraper
+#### Single scraper
 ```php
 <?php declare(strict_types = 1);
 
@@ -45,7 +45,7 @@ foreach ($scraper->get() as $proxy) {
 }
 ```
 
-##### Composite scraper
+#### Composite scraper
 You can easily get data from many scrapers at once
 ```php
 <?php declare(strict_types = 1);
@@ -77,8 +77,8 @@ foreach ($compositeScraper->get() as $proxy) {
 }
 ```
 
-##### Error handling
-Sometimes things goes wrong. This example shows how to handle errors while getting data from many scrapers:
+#### Error handling
+Sometimes things go wrong. This example shows how to handle errors while getting data from many scrapers:
 ```php
 <?php declare(strict_types = 1);
 
