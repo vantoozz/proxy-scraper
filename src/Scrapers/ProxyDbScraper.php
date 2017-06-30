@@ -75,14 +75,14 @@ final class ProxyDbScraper implements ScraperInterface
     }
 
     /**
-     * @param Dom $tr
+     * @param Dom $row
      * @return Proxy
      * @throws \RuntimeException
      * @throws \InvalidArgumentException
      * @throws \Vantoozz\ProxyScraper\Exceptions\InvalidArgumentException
      */
-    private function makeProxy(Dom $tr): Proxy
+    private function makeProxy(Dom $row): Proxy
     {
-        return (new ProxyString(trim($tr->filter('td')->eq(0)->text())))->asProxy();
+        return (new ProxyString(trim($row->filter('td')->eq(0)->text())))->asProxy();
     }
 }
