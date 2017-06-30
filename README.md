@@ -46,7 +46,7 @@ foreach ($scraper->get() as $proxy) {
 ```
 
 #### Composite scraper
-You can easily get data from many scrapers at once
+You can easily get data from many scrapers at once:
 ```php
 <?php declare(strict_types = 1);
 
