@@ -33,6 +33,9 @@
     "league/container": "~2",
     "povils/phpmnd": "~1"
   },
+  "suggest": {
+    "php-http/guzzle6-adapter": "to use Guzzle as HTTP client"
+  },
   "autoload": {
     "psr-4": {
       "Vantoozz\\ProxyScraper\\": [
