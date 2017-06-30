@@ -6,16 +6,31 @@ Library for scraping free proxies lists
 [![Coverage Status](https://coveralls.io/repos/github/vantoozz/proxy-scraper/badge.svg?branch=master)](https://coveralls.io/github/vantoozz/proxy-scraper?branch=master)
 
 
-## Tests
+### Setup
 
-### Unit
+Proxy-scrapper library is built on top of [HTTPlug](http://httplug.io/) and requires a compatible HTTP client. Available clients are listed on Packagist: https://packagist.org/providers/php-http/client-implementation. To use the library you have to install any of them, e.g.:
+
+```bash
+composer require php-http/guzzle6-adapter
+```
+
+Then install proxy-scrapper library itself:
+```bash
+composer require vantoozz/proxy-scraper
+```
+
+
+### Tests
+
+##### Unit tests
 ```bash
 ./vendor/bin/phpunit --testsuite=unit
 ```
 
-### Integration
+##### Integration tests
 ```bash
 ./vendor/bin/phpunit --testsuite=integration
 ```
+
 
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/d5cffc7f-030f-49b3-ac7f-3769db037ee7/big.png)](https://insight.sensiolabs.com/projects/d5cffc7f-030f-49b3-ac7f-3769db037ee7)
