@@ -33,7 +33,7 @@ $compositeScraper->addScraper(new class implements Scrapers\ScraperInterface
 {
     public function get(): \Generator
     {
-        yield new Proxy(new Ipv4('127.0.0.1'), new Port(8888));
+        yield new Proxy(new Ipv4('192.168.0.1'), new Port(8888));
     }
 });
 
