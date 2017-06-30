@@ -11,7 +11,7 @@ use Vantoozz\ProxyScraper\Proxy;
  * Class RemoteTextScraper
  * @package Vantoozz\ProxyScraper\Scrapers
  */
-abstract class RemoteTextScraper
+abstract class RemoteTextScraper implements ScraperInterface
 {
     /**
      * @var HttpClientInterface

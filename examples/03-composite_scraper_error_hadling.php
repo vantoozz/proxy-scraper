@@ -3,7 +3,11 @@
 use GuzzleHttp\Client as GuzzleClient;
 use Http\Adapter\Guzzle6\Client as GuzzleAdapter;
 use Http\Message\MessageFactory\GuzzleMessageFactory;
+use Vantoozz\ProxyScraper\Exceptions\ScraperException;
 use Vantoozz\ProxyScraper\HttpClient\HttplugHttpClient;
+use Vantoozz\ProxyScraper\Ipv4;
+use Vantoozz\ProxyScraper\Port;
+use Vantoozz\ProxyScraper\Proxy;
 use Vantoozz\ProxyScraper\Scrapers;
 
 require_once __DIR__ . '/../vendor/autoload.php';
@@ -15,13 +19,28 @@ $httpClient = new HttplugHttpClient(
 
 $compositeScraper = new Scrapers\CompositeScraper;
 
-$compositeScraper->addScraper(new Scrapers\FreeProxyListScraper($httpClient));
-$compositeScraper->addScraper(new Scrapers\HideMyIpScraper($httpClient));
-$compositeScraper->addScraper(new Scrapers\MultiproxyScraper($httpClient));
-$compositeScraper->addScraper(new Scrapers\ProxyDbScraper($httpClient));
-$compositeScraper->addScraper(new Scrapers\SocksProxyScraper($httpClient));
-$compositeScraper->addScraper(new Scrapers\SpysMeScraper($httpClient));
-$compositeScraper->addScraper(new Scrapers\UsProxyScraper($httpClient));
+// Throws an exception
+$compositeScraper->addScraper(new class implements Scrapers\ScraperInterface
+{
+    public function get(): \Generator
+    {
+        throw new ScraperException('some error');
+    }
+});
+
+// No exceptions
+$compositeScraper->addScraper(new class implements Scrapers\ScraperInterface
+{
+    public function get(): \Generator
+    {
+        yield new Proxy(new Ipv4('127.0.0.1'), new Port(8888));
+    }
+});
+
+// Set exception handler
+$compositeScraper->handleScraperExceptionWith(function (ScraperException $e) {
+    echo 'An error occurs: ' . $e->getMessage() . "\n";
+});
 
 foreach ($compositeScraper->get() as $proxy) {
     echo (string)$proxy . "\n";

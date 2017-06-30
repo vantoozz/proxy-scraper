@@ -14,7 +14,7 @@ use Vantoozz\ProxyScraper\Proxy;
  * Class AbstractFreeProxyListScraper
  * @package Vantoozz\ProxyScraper\Scrapers
  */
-abstract class AbstractFreeProxyListScraper
+abstract class AbstractFreeProxyListScraper implements ScraperInterface
 {
     /**
      * @var HttpClientInterface

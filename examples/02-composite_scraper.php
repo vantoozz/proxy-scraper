@@ -16,7 +16,6 @@ $httpClient = new HttplugHttpClient(
 $compositeScraper = new Scrapers\CompositeScraper;
 
 $compositeScraper->addScraper(new Scrapers\FreeProxyListScraper($httpClient));
-$compositeScraper->addScraper(new Scrapers\HideMyIpScraper($httpClient));
 $compositeScraper->addScraper(new Scrapers\MultiproxyScraper($httpClient));
 $compositeScraper->addScraper(new Scrapers\ProxyDbScraper($httpClient));
 $compositeScraper->addScraper(new Scrapers\SocksProxyScraper($httpClient));

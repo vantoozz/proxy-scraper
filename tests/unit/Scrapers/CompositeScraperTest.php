@@ -3,64 +3,85 @@
 namespace Vantoozz\ProxyScraper\UnitTests\Scrapers;
 
 use PHPUnit\Framework\TestCase;
-use Vantoozz\ProxyScraper\Exceptions\HttpClientException;
-use Vantoozz\ProxyScraper\HttpClient\HttpClientInterface;
+use Vantoozz\ProxyScraper\Exceptions\ScraperException;
 use Vantoozz\ProxyScraper\Proxy;
-use Vantoozz\ProxyScraper\Scrapers\UsProxyScraper;
+use Vantoozz\ProxyScraper\ProxyString;
+use Vantoozz\ProxyScraper\Scrapers\CompositeScraper;
+use Vantoozz\ProxyScraper\Scrapers\ScraperInterface;
 
-final class UsProxyScraperTest extends TestCase
+final class CompositeScraperTest extends TestCase
 {
     /**
      * @test
+     */
+    public function it_calls_inner_scrapers(): void
+    {
+        $compositeScraper = new CompositeScraper();
+        $compositeScraper->addScraper(new class implements ScraperInterface
+        {
+            public function get(): \Generator
+            {
+                yield (new ProxyString('127.0.0.1:8080'))->asProxy();
+            }
+        });
+
+        $compositeScraper->addScraper(new class implements ScraperInterface
+        {
+            public function get(): \Generator
+            {
+                yield (new ProxyString('127.0.0.2:8080'))->asProxy();
+            }
+        });
+
+        $expected = ['127.0.0.1:8080', '127.0.0.2:8080'];
+        $i = 0;
+        foreach ($compositeScraper->get() as $proxy) {
+            $this->assertInstanceOf(Proxy::class, $proxy);
+            $this->assertSame($expected[$i++], (string)$proxy);
+        }
+    }
+
+    /**
+     * @test
      * @expectedException \Vantoozz\ProxyScraper\Exceptions\ScraperException
-     * @expectedExceptionMessage error message
+     * @expectedExceptionMessage some error
      */
-    public function it_throws_an_exception_on_http_client_error(): void
+    public function it_throws_exceptions_from_inner_scrapers(): void
     {
-        /** @var HttpClientInterface|\PHPUnit_Framework_MockObject_MockObject $httpClient */
-        $httpClient = $this->createMock(HttpClientInterface::class);
-        $httpClient
-            ->expects(static::once())
-            ->method('get')
-            ->willThrowException(new HttpClientException('error message'));
-
-        $scraper = new UsProxyScraper($httpClient);
-        $scraper->get()->current();
+        $compositeScraper = new CompositeScraper();
+        $compositeScraper->addScraper(new class implements ScraperInterface
+        {
+            /** @noinspection PhpInconsistentReturnPointsInspection */
+            public function get(): \Generator
+            {
+                throw new ScraperException('some error');
+            }
+        });
+        $compositeScraper->get()->current();
     }
 
     /**
      * @test
      */
-    public function it_returns_a_proxy(): void
+    public function it_handles_exceptions_from_inner_scrapper(): void
     {
-        /** @var HttpClientInterface|\PHPUnit_Framework_MockObject_MockObject $httpClient */
-        $httpClient = $this->createMock(HttpClientInterface::class);
-        $httpClient
-            ->expects(static::once())
-            ->method('get')
-            ->willReturn('<table id="proxylisttable"><tbody><tr><td>46.101.55.200</td><td>8118</td></tr></table>');
+        $compositeScraper = new CompositeScraper();
+        $compositeScraper->addScraper(new class implements ScraperInterface
+        {
+            /** @noinspection PhpInconsistentReturnPointsInspection */
+            public function get(): \Generator
+            {
+                throw new ScraperException('some error');
+            }
+        });
 
-        $scraper = new UsProxyScraper($httpClient);
-        $proxy = $scraper->get()->current();
+        $handledErrorMessage = '';
+        $compositeScraper->handleScraperExceptionWith(function (ScraperException $e) use (&$handledErrorMessage) {
+            $handledErrorMessage = $e->getMessage();
+        });
 
-        $this->assertInstanceOf(Proxy::class, $proxy);
-        $this->assertSame('46.101.55.200:8118', (string)$proxy);
-    }
+        $compositeScraper->get()->current();
 
-    /**
-     * @test
-     */
-    public function it_skips_bad_rows(): void
-    {
-        /** @var HttpClientInterface|\PHPUnit_Framework_MockObject_MockObject $httpClient */
-        $httpClient = $this->createMock(HttpClientInterface::class);
-        $httpClient
-            ->expects(static::once())
-            ->method('get')
-            ->willReturn('<table id="proxylisttable"><tbody><tr><td>111</td><td>111</td></tr></table>');
-
-        $scraper = new UsProxyScraper($httpClient);
-
-        $this->assertNull($scraper->get()->current());
+        $this->assertSame('some error', $handledErrorMessage);
     }
 }
