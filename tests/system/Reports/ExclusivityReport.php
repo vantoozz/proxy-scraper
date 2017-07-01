@@ -49,7 +49,8 @@ final class ExclusivityReport implements ReportInterface
             if (!isset($otherProxies[$ipv4])) {
                 continue;
             }
-            foreach ($ports as $port => $proxy) {
+            $ports = array_keys($ports);
+            foreach ($ports as $port) {
                 if (!isset($otherProxies[$ipv4][$port])) {
                     continue;
                 }
