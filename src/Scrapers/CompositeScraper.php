@@ -38,6 +38,7 @@ final class CompositeScraper implements ScraperInterface
 
     /**
      * @param ScraperInterface $scraper
+     * @return void
      */
     public function addScraper(ScraperInterface $scraper): void
     {
@@ -46,6 +47,7 @@ final class CompositeScraper implements ScraperInterface
 
     /**
      * @param callable $exceptionHandler
+     * @return void
      */
     public function handleScraperExceptionWith(callable $exceptionHandler): void
     {
@@ -55,6 +57,7 @@ final class CompositeScraper implements ScraperInterface
     /**
      * @param ScraperException $e
      * @throws ScraperException
+     * @return void
      */
     private function handleScraperException(ScraperException $e): void
     {
