@@ -17,6 +17,7 @@ script:
   - vendor/bin/phpcs --standard=psr2 --colors src
   - vendor/bin/phpmd src text phpmd.xml
   - vendor/bin/phploc --ansi src
+  - php tests/systemTests.php
 
 after_script:
   - vendor/bin/coveralls -v
