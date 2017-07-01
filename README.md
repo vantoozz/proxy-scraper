@@ -150,5 +150,10 @@ _Note. Examples use Guzzle as HTTP client._
 ./vendor/bin/phpunit --testsuite=integration
 ```
 
+##### System tests
+```bash
+php ./tests/systemTests.php
+```
+
 
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/d5cffc7f-030f-49b3-ac7f-3769db037ee7/big.png)](https://insight.sensiolabs.com/projects/d5cffc7f-030f-49b3-ac7f-3769db037ee7)

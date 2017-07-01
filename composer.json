@@ -50,6 +50,9 @@
       ],
       "Vantoozz\\ProxyScraper\\IntegrationTests\\": [
         "tests/integration"
+      ],
+      "Vantoozz\\ProxyScraper\\SystemTests\\": [
+        "tests/system"
       ]
     }
   },
