@@ -58,7 +58,7 @@ final class ProxyDbScraper implements ScraperInterface
     private function getPage(int $offset, int $pageSize): \Generator
     {
         try {
-            $html = $this->httpClient->get(sprintf(static::PAGE_URL, $pageSize, $offset), []);
+            $html = $this->httpClient->get(sprintf(static::PAGE_URL, $pageSize, $offset));
         } catch (HttpClientException $e) {
             throw new ScraperException($e->getMessage(), $e->getCode(), $e);
         }

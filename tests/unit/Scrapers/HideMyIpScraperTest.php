@@ -84,7 +84,7 @@ final class HideMyIpScraperTest extends TestCase
         $proxy = $scraper->get()->current();
 
         $this->assertInstanceOf(Proxy::class, $proxy);
-        $this->assertSame('104.41.154.213:8118', (string)$proxy);
+        $this->assertSame('218.161.1.189:3128', (string)$proxy);
     }
 
     /**

@@ -41,8 +41,13 @@ foreach ([
          ] as $class) {
     $miner->addScraper($container->get($class));
 }
+
+$cacheFilename = __DIR__ . '/.cached_proxies';
+if (in_array('--refresh', $argv, true)) {
+    unlink($cacheFilename);
+}
 if (in_array('--cached', $argv, true)) {
-    $miner = new Cached($miner, __DIR__ . '/.cached_proxies');
+    $miner = new Cached($miner, $cacheFilename);
 }
 
 $pipeline = new ReportsPipeline;

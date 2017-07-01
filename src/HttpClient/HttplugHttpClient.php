@@ -38,13 +38,12 @@ final class HttplugHttpClient implements HttpClientInterface
 
     /**
      * @param string $uri
-     * @param array $headers
      * @return string
      * @throws HttpClientException
      */
-    public function get(string $uri, array $headers): string
+    public function get(string $uri): string
     {
-        $request = $this->messageFactory->createRequest(Http::GET, $uri, $headers);
+        $request = $this->messageFactory->createRequest(Http::GET, $uri);
         try {
             return $this->httpClient->sendRequest($request)->getBody()->getContents();
         } catch (ClientException  $e) {

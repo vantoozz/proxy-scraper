@@ -38,7 +38,7 @@ abstract class AbstractFreeProxyListScraper implements ScraperInterface
     public function get(): \Generator
     {
         try {
-            $html = $this->httpClient->get($this->baseUrl(), []);
+            $html = $this->httpClient->get($this->baseUrl());
         } catch (HttpClientException $e) {
             throw new ScraperException($e->getMessage(), $e->getCode(), $e);
         }

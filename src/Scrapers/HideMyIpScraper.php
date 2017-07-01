@@ -2,6 +2,8 @@
 
 namespace Vantoozz\ProxyScraper\Scrapers;
 
+use Faker\Generator as Faker;
+use Faker\Provider\UserAgent;
 use Vantoozz\ProxyScraper\Exceptions\HttpClientException;
 use Vantoozz\ProxyScraper\Exceptions\InvalidArgumentException;
 use Vantoozz\ProxyScraper\Exceptions\ScraperException;
@@ -24,7 +26,7 @@ final class HideMyIpScraper implements ScraperInterface
     /**
      *
      */
-    private const URL = 'https://www.hide-my-ip.com/proxylist.shtml';
+    private const URL = 'https://www.hide-my-ip.com/%s/proxylist.shtml';
 
     /**
      * FreeProxyListScraper constructor.
@@ -42,14 +44,7 @@ final class HideMyIpScraper implements ScraperInterface
     public function get(): \Generator
     {
         try {
-            $html = $this->httpClient->get(
-                static::URL,
-                [
-                    'User-Agent' =>
-                        'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) ' .
-                        'Chrome/41.0.2228.0 Safari/537.36',
-                ]
-            );
+            $html = $this->httpClient->get($this->makeUrl());
         } catch (HttpClientException $e) {
             throw new ScraperException($e->getMessage(), $e->getCode(), $e);
         }
@@ -67,6 +62,21 @@ final class HideMyIpScraper implements ScraperInterface
     }
 
     /**
+     * @return string
+     */
+    private function makeUrl(): string
+    {
+        $languages = [
+            'es', 'fr', 'it', 'pt', 'nl', 'de', 'se',
+            'dk', 'pl', 'tr', 'ar', 'ru', 'ro',
+            'cn', 'kr', 'jp', 'vn', 'th', 'sr',
+
+        ];
+
+        return sprintf(static::URL, $languages[array_rand($languages)]);
+    }
+
+    /**
      * @param string $html
      * @return array
      * @throws ScraperException
@@ -78,7 +88,7 @@ final class HideMyIpScraper implements ScraperInterface
         if ($expectedPartsCount !== count($parts)) {
             throw new ScraperException('Unknown markup');
         }
-        $json = trim(explode(';<!-- proxylist -->', $parts[1])[0]);
+        $json = trim(explode(";\n\n", $parts[1])[0]);
         $data = json_decode($json, true);
         if (!$data) {
             throw new ScraperException('Cannot parse json: ' . json_last_error_msg());
