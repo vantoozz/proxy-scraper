@@ -36,6 +36,7 @@ foreach ([
              Scrapers\ProxyDbScraper::class,
              Scrapers\SocksProxyScraper::class,
              Scrapers\SpysMeScraper::class,
+             Scrapers\SslProxiesScraper::class,
              Scrapers\UsProxyScraper::class,
          ] as $class) {
     $miner->addScraper($container->get($class));

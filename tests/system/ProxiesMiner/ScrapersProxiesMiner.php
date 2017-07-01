@@ -31,7 +31,6 @@ final class ScrapersProxiesMiner implements ProxiesMinerInterface
      */
     public function getProxies(): array
     {
-
         $proxies = [];
         foreach ($this->scrapers as $class => $scraper) {
             try {
