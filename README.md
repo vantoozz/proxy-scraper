@@ -67,7 +67,6 @@ $compositeScraper = new Scrapers\CompositeScraper;
 
 $compositeScraper->addScraper(new Scrapers\FreeProxyListScraper($httpClient));
 $compositeScraper->addScraper(new Scrapers\MultiproxyScraper($httpClient));
-$compositeScraper->addScraper(new Scrapers\ProxyDbScraper($httpClient));
 $compositeScraper->addScraper(new Scrapers\SocksProxyScraper($httpClient));
 $compositeScraper->addScraper(new Scrapers\SpysMeScraper($httpClient));
 $compositeScraper->addScraper(new Scrapers\UsProxyScraper($httpClient));
@@ -93,11 +92,6 @@ use Vantoozz\ProxyScraper\Proxy;
 use Vantoozz\ProxyScraper\Scrapers;
 
 require_once __DIR__ . '/vendor/autoload.php';
-
-$httpClient = new HttplugHttpClient(
-    new GuzzleAdapter(new GuzzleClient),
-    new GuzzleMessageFactory
-);
 
 $compositeScraper = new Scrapers\CompositeScraper;
 

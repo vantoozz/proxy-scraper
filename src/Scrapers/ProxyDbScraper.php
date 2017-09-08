@@ -8,6 +8,7 @@ use Vantoozz\ProxyScraper\Exceptions\ScraperException;
 use Vantoozz\ProxyScraper\HttpClient\HttpClientInterface;
 use Vantoozz\ProxyScraper\Proxy;
 use Vantoozz\ProxyScraper\ProxyString;
+use Vantoozz\ProxyScraper\Text;
 
 /**
  * Class ProxyDbScraper
@@ -61,6 +62,10 @@ final class ProxyDbScraper implements ScraperInterface
             $html = $this->httpClient->get(sprintf(static::PAGE_URL, $pageSize, $offset));
         } catch (HttpClientException $e) {
             throw new ScraperException($e->getMessage(), $e->getCode(), $e);
+        }
+
+        if (!(new Text($html))->isHtml()) {
+            throw new ScraperException($html);
         }
 
         $rows = (new Dom($html))->filter('table tbody tr');

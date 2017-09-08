@@ -31,6 +31,23 @@ final class ProxyDbScraperTest extends TestCase
         $scraper = new ProxyDbScraper($httpClient);
         $scraper->get()->current();
     }
+    /**
+     * @test
+     * @expectedException \Vantoozz\ProxyScraper\Exceptions\ScraperException
+     * @expectedExceptionMessage some text
+     */
+    public function it_throws_an_exception_on_non_html_response(): void
+    {
+        /** @var HttpClientInterface|\PHPUnit_Framework_MockObject_MockObject $httpClient */
+        $httpClient = $this->createMock(HttpClientInterface::class);
+        $httpClient
+            ->expects(static::once())
+            ->method('get')
+            ->willReturn('some text');
+
+        $scraper = new ProxyDbScraper($httpClient);
+        $scraper->get()->current();
+    }
 
     /**
      * @test

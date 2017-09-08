@@ -13,6 +13,6 @@ final class SpysMeScraper extends RemoteTextScraper
      */
     protected function remoteTextUrl(): string
     {
-        return 'http://spys.me/proxy.txt';
+        return 'http://spys.one/pl.txt';
     }
 }
