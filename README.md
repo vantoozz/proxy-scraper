@@ -26,19 +26,16 @@ composer require vantoozz/proxy-scraper
 <?php declare(strict_types = 1);
 
 use GuzzleHttp\Client as GuzzleClient;
-use Http\Adapter\Guzzle6\Client as GuzzleAdapter;
-use Http\Message\MessageFactory\GuzzleMessageFactory;
-use Vantoozz\ProxyScraper\HttpClient\HttplugHttpClient;
+use Vantoozz\ProxyScraper\HttpClient\GuzzleHttpClient;
 use Vantoozz\ProxyScraper\Scrapers;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-$httpClient = new HttplugHttpClient(
-    new GuzzleAdapter(new GuzzleClient),
-    new GuzzleMessageFactory
-);
-
-$scraper = new Scrapers\FreeProxyListScraper($httpClient);
+$httpClient = new GuzzleHttpClient(new GuzzleClient([
+    'connect_timeout' => 2,
+    'timeout' => 3,
+]));
+$scraper = new Scrapers\FoxToolsScraper($httpClient);
 
 foreach ($scraper->get() as $proxy) {
     echo (string)$proxy . "\n";
@@ -51,17 +48,15 @@ You can easily get data from many scrapers at once:
 <?php declare(strict_types = 1);
 
 use GuzzleHttp\Client as GuzzleClient;
-use Http\Adapter\Guzzle6\Client as GuzzleAdapter;
-use Http\Message\MessageFactory\GuzzleMessageFactory;
-use Vantoozz\ProxyScraper\HttpClient\HttplugHttpClient;
+use Vantoozz\ProxyScraper\HttpClient\GuzzleHttpClient;
 use Vantoozz\ProxyScraper\Scrapers;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-$httpClient = new HttplugHttpClient(
-    new GuzzleAdapter(new GuzzleClient),
-    new GuzzleMessageFactory
-);
+$httpClient = new GuzzleHttpClient(new GuzzleClient([
+    'connect_timeout' => 3,
+    'timeout' => 4,
+]));
 
 $compositeScraper = new Scrapers\CompositeScraper;
 
@@ -69,7 +64,6 @@ $compositeScraper->addScraper(new Scrapers\FreeProxyListScraper($httpClient));
 $compositeScraper->addScraper(new Scrapers\MultiproxyScraper($httpClient));
 $compositeScraper->addScraper(new Scrapers\SocksProxyScraper($httpClient));
 $compositeScraper->addScraper(new Scrapers\SpysMeScraper($httpClient));
-$compositeScraper->addScraper(new Scrapers\UsProxyScraper($httpClient));
 
 foreach ($compositeScraper->get() as $proxy) {
     echo (string)$proxy . "\n";
@@ -81,11 +75,7 @@ Sometimes things go wrong. This example shows how to handle errors while getting
 ```php
 <?php declare(strict_types = 1);
 
-use GuzzleHttp\Client as GuzzleClient;
-use Http\Adapter\Guzzle6\Client as GuzzleAdapter;
-use Http\Message\MessageFactory\GuzzleMessageFactory;
 use Vantoozz\ProxyScraper\Exceptions\ScraperException;
-use Vantoozz\ProxyScraper\HttpClient\HttplugHttpClient;
 use Vantoozz\ProxyScraper\Ipv4;
 use Vantoozz\ProxyScraper\Port;
 use Vantoozz\ProxyScraper\Proxy;
@@ -127,6 +117,47 @@ Will output
 ```
 An error occurs: some error
 192.168.0.1:8888
+```
+
+#### Validating proxies
+Validation steps may be added:
+```php
+<?php declare(strict_types = 1);
+
+use Vantoozz\ProxyScraper\Exceptions\ValidationException;
+use Vantoozz\ProxyScraper\Ipv4;
+use Vantoozz\ProxyScraper\Port;
+use Vantoozz\ProxyScraper\Proxy;
+use Vantoozz\ProxyScraper\Scrapers;
+use Vantoozz\ProxyScraper\Validators;
+
+require_once __DIR__ . '/vendor/autoload.php';
+
+$scraper = new class implements Scrapers\ScraperInterface
+{
+    public function get(): \Generator
+    {
+        yield new Proxy(new Ipv4('104.202.117.106'), new Port(1234));
+        yield new Proxy(new Ipv4('192.168.0.1'), new Port(8888));
+    }
+};
+
+$validator = new Validators\ValidatorPipeline;
+$validator->addStep(new Validators\Ipv4RangeValidator);
+
+foreach ($scraper->get() as $proxy) {
+    try {
+        $validator->validate($proxy);
+        echo '[OK] ' . (string)$proxy . "\n";
+    } catch (ValidationException $e) {
+        echo '[Error] ' . $e->getMessage() . ': ' . (string)$proxy . "\n";
+    }
+}
+```
+Will output
+```
+[OK] 104.202.117.106:1234
+[Error] IPv4 is in private range: 192.168.0.1:8888
 ```
 
 _Note. Examples use Guzzle as HTTP client._

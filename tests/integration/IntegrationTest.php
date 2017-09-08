@@ -2,17 +2,12 @@
 
 namespace Vantoozz\ProxyScraper\IntegrationTests;
 
-use GuzzleHttp;
-use Http\Adapter\Guzzle6\Client as GuzzleAdapter;
-use Http\Client\HttpAsyncClient;
-use Http\Client\HttpClient;
-use Http\Message\MessageFactory;
-use Http\Message\MessageFactory\GuzzleMessageFactory;
+use GuzzleHttp\Client as GuzzleClient;
 use League\Container\Container;
 use League\Container\ReflectionContainer;
 use PHPUnit\Framework\TestCase;
+use Vantoozz\ProxyScraper\HttpClient\GuzzleHttpClient;
 use Vantoozz\ProxyScraper\HttpClient\HttpClientInterface;
-use Vantoozz\ProxyScraper\HttpClient\HttplugHttpClient;
 
 /**
  * Class IntegrationTest
@@ -42,16 +37,10 @@ abstract class IntegrationTest extends TestCase
 
         $container->delegate(new ReflectionContainer);
 
-        $container->add(GuzzleHttp\ClientInterface::class, GuzzleHttp\Client::class, true);
-        $container->add(HttpClient::class, function () use ($container) {
-            return new GuzzleAdapter($container->get(GuzzleHttp\ClientInterface::class), true);
-        });
-        $container->add(HttpAsyncClient::class, function () use ($container) {
-            return new GuzzleAdapter($container->get(GuzzleHttp\ClientInterface::class), true);
-        });
-        $container->add(MessageFactory::class, GuzzleMessageFactory::class, true);
-
-        $httpClient = $container->get(HttplugHttpClient::class);
+        $httpClient = new GuzzleHttpClient(new GuzzleClient([
+            'connect_timeout' => 2,
+            'timeout' => 3,
+        ]));
         $container->add(HttpClientInterface::class, $httpClient, true);
 
         return $container;

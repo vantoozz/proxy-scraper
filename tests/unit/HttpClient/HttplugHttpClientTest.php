@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace Vantoozz\ProxyScraper\HttpClient;
+namespace Vantoozz\ProxyScraper\UnitTests\HttpClient;
 
 use Http\Client\Exception as ClientException;
 use Http\Client\HttpClient;
@@ -9,7 +9,12 @@ use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
+use Vantoozz\ProxyScraper\HttpClient\HttplugHttpClient;
 
+/**
+ * Class HttplugHttpClientTest
+ * @package Vantoozz\ProxyScraper\UnitTests\HttpClient
+ */
 final class HttplugHttpClientTest extends TestCase
 {
     /**
@@ -19,7 +24,7 @@ final class HttplugHttpClientTest extends TestCase
      */
     public function it_throws_an_exception_if_an_error_happens(): void
     {
-        /** @var RequestInterface|\PHPUnit_Framework_MockObject_MockObject $messageFactory $request */
+        /** @var RequestInterface|\PHPUnit_Framework_MockObject_MockObject $request */
         $request = $this->createMock(RequestInterface::class);
 
         /** @var \Http\Message\MessageFactory|\PHPUnit_Framework_MockObject_MockObject $messageFactory */
@@ -111,5 +116,21 @@ final class HttplugHttpClientTest extends TestCase
         $httpClient = new HttplugHttpClient($client, $messageFactory);
 
         $this->assertEquals('some string', $httpClient->get('some url'));
+    }
+
+    /**
+     * @test
+     * @expectedException \Vantoozz\ProxyScraper\Exceptions\RuntimeException
+     * @expectedExceptionMessage Method not implemented
+     */
+    public function it_does_not_support_proxied_calls(): void
+    {
+        /** @var HttpClient|\PHPUnit_Framework_MockObject_MockObject $client */
+        $client = $this->createMock(HttpClient::class);
+        /** @var \Http\Message\MessageFactory|\PHPUnit_Framework_MockObject_MockObject $messageFactory */
+        $messageFactory = $this->createMock(MessageFactory::class);
+        $httpClient = new HttplugHttpClient($client, $messageFactory);
+
+        $httpClient->getProxied('url', 'proxy');
     }
 }

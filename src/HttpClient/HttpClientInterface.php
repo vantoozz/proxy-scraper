@@ -11,6 +11,15 @@ interface HttpClientInterface
     /**
      * @param string $uri
      * @return string
+     * @throws \Vantoozz\ProxyScraper\Exceptions\HttpClientException
      */
     public function get(string $uri): string;
+
+    /**
+     * @param string $uri
+     * @param string $proxy
+     * @return string
+     * @throws \Vantoozz\ProxyScraper\Exceptions\HttpClientException
+     */
+    public function getProxied(string $uri, string $proxy): string;
 }

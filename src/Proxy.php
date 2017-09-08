@@ -36,4 +36,12 @@ final class Proxy
     {
         return (string)$this->ipv4 . ':' . (string)$this->port;
     }
+
+    /**
+     * @return Ipv4
+     */
+    public function getIpv4(): Ipv4
+    {
+        return $this->ipv4;
+    }
 }

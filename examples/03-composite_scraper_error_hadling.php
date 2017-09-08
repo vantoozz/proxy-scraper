@@ -1,10 +1,6 @@
 <?php declare(strict_types = 1);
 
-use GuzzleHttp\Client as GuzzleClient;
-use Http\Adapter\Guzzle6\Client as GuzzleAdapter;
-use Http\Message\MessageFactory\GuzzleMessageFactory;
 use Vantoozz\ProxyScraper\Exceptions\ScraperException;
-use Vantoozz\ProxyScraper\HttpClient\HttplugHttpClient;
 use Vantoozz\ProxyScraper\Ipv4;
 use Vantoozz\ProxyScraper\Port;
 use Vantoozz\ProxyScraper\Proxy;
@@ -12,12 +8,12 @@ use Vantoozz\ProxyScraper\Scrapers;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-$httpClient = new HttplugHttpClient(
-    new GuzzleAdapter(new GuzzleClient),
-    new GuzzleMessageFactory
-);
-
 $compositeScraper = new Scrapers\CompositeScraper;
+
+// Set exception handler
+$compositeScraper->handleScraperExceptionWith(function (ScraperException $e) {
+    echo 'An error occurs: ' . $e->getMessage() . "\n";
+});
 
 // Throws an exception
 $compositeScraper->addScraper(new class implements Scrapers\ScraperInterface
@@ -37,11 +33,7 @@ $compositeScraper->addScraper(new class implements Scrapers\ScraperInterface
     }
 });
 
-// Set exception handler
-$compositeScraper->handleScraperExceptionWith(function (ScraperException $e) {
-    echo 'An error occurs: ' . $e->getMessage() . "\n";
-});
-
+//Run scraper
 foreach ($compositeScraper->get() as $proxy) {
     echo (string)$proxy . "\n";
 }
