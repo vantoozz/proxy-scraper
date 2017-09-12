@@ -44,4 +44,12 @@ final class Proxy
     {
         return $this->ipv4;
     }
+
+    /**
+     * @return Port
+     */
+    public function getPort(): Port
+    {
+        return $this->port;
+    }
 }

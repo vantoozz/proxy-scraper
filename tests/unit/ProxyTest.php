@@ -31,4 +31,14 @@ final class ProxyTest extends TestCase
         $proxy = new Proxy($ipv4, new Port(1234));
         $this->assertSame($ipv4, $proxy->getIpv4());
     }
+
+    /**
+     * @test
+     */
+    public function it_returns_port(): void
+    {
+        $port = new Port(1234);
+        $proxy = new Proxy(new Ipv4('192.168.0.1'), $port);
+        $this->assertSame($port, $proxy->getPort());
+    }
 }
