@@ -55,25 +55,25 @@ final class Appraiser
         try {
             $json = $this->httpClient->getProxied('http://' . $this->whoamiHost, (string)$proxy);
         } catch (HttpClientException $e) {
-            yield new Metric(Metrics::AVAILABLE, 0);
+            yield new Metric(Metrics::AVAILABLE, false);
             return;
         }
 
         try {
             $data = $this->decodeResponse($json);
         } catch (AppraiserException $e) {
-            yield new Metric(Metrics::AVAILABLE, 0);
+            yield new Metric(Metrics::AVAILABLE, false);
             return;
         }
 
         yield new Metric(Metrics::ANONYMITY, $this->makeAnonymity($data));
-        yield new Metric(Metrics::AVAILABLE, 1);
+        yield new Metric(Metrics::AVAILABLE, true);
 
         try {
             $this->decodeResponse($this->httpClient->getProxied('https://' . $this->whoamiHost, (string)$proxy));
-            yield new Metric(Metrics::HTTPS, 1);
+            yield new Metric(Metrics::HTTPS, true);
         } catch (HttpClientException | AppraiserException $e) {
-            yield new Metric(Metrics::HTTPS, 0);
+            yield new Metric(Metrics::HTTPS, false);
         }
     }
 
