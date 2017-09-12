@@ -68,6 +68,13 @@ final class Appraiser
 
         yield new Metric(Metrics::ANONYMITY, $this->makeAnonymity($data));
         yield new Metric(Metrics::AVAILABLE, 1);
+
+        try {
+            $this->decodeResponse($this->httpClient->getProxied('https://' . $this->whoamiHost, (string)$proxy));
+            yield new Metric(Metrics::HTTPS, 1);
+        } catch (HttpClientException | AppraiserException $e) {
+            yield new Metric(Metrics::HTTPS, 0);
+        }
     }
 
     /**

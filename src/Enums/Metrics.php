@@ -11,4 +11,5 @@ abstract class Metrics
     public const AVAILABLE = 'Available';
     public const ANONYMITY = 'Anonymity';
     public const RESPONSE_TIME = 'Response Time';
+    public const HTTPS = 'HTTPS';
 }

@@ -11,6 +11,10 @@ use Vantoozz\ProxyScraper\Ipv4;
 use Vantoozz\ProxyScraper\Port;
 use Vantoozz\ProxyScraper\Proxy;
 
+/**
+ * Class AppraiserTest
+ * @package Vantoozz\ProxyScraper\UnitTests
+ */
 final class AppraiserTest extends TestCase
 {
     /**
@@ -133,6 +137,48 @@ final class AppraiserTest extends TestCase
         static::assertSame($expected, $metrics);
     }
 
+
+
+
+    /**
+     * @test
+     */
+    public function it_returns_failed_https_metric(): void
+    {
+
+
+        /** @var HttpClientInterface|\PHPUnit_Framework_MockObject_MockObject $client */
+        $client = $this->createMock(HttpClientInterface::class);
+
+        $client
+            ->expects(static::once())
+            ->method('get')
+            ->willReturn(json_encode(['remote_address' => '127.0.0.1', 'headers' => []]));
+
+        $client
+            ->expects(static::at(1))
+            ->method('getProxied')
+            ->willReturn(json_encode(['remote_address' => '127.0.0.2', 'headers' => []]));
+
+        $client
+            ->expects(static::at(2))
+            ->method('getProxied')
+            ->willThrowException(new HttpClientException('error message'));
+
+        $appraiser = new Appraiser($client, 'some url');
+
+        $expected = ['Available' => 1, 'Anonymity' => 'Elite', 'HTTPS' => 0];
+
+        $metrics = [];
+        foreach ($appraiser->appraise(new Proxy(new Ipv4('8.8.8.8'), new Port(8888))) as $metric) {
+            $metrics[$metric->getName()] = $metric->getValue();
+        }
+        ksort($expected);
+        ksort($metrics);
+
+        static::assertSame($expected, $metrics);
+    }
+
     /**
      * @return array
      */
@@ -141,19 +187,19 @@ final class AppraiserTest extends TestCase
         return [
             [
                 ['remote_address' => '127.0.0.1', 'headers' => []],
-                ['Available' => 1, 'Anonymity' => 'Transparent'],
+                ['Available' => 1, 'Anonymity' => 'Transparent', 'HTTPS' => 1],
             ],
             [
                 ['remote_address' => '127.0.0.2', 'headers' => []],
-                ['Available' => 1, 'Anonymity' => 'Elite'],
+                ['Available' => 1, 'Anonymity' => 'Elite', 'HTTPS' => 1],
             ],
             [
                 ['remote_address' => '127.0.0.2', 'headers' => ['X-Real-Ip' => '127.0.0.1']],
-                ['Available' => 1, 'Anonymity' => 'Transparent'],
+                ['Available' => 1, 'Anonymity' => 'Transparent', 'HTTPS' => 1],
             ],
             [
                 ['remote_address' => '127.0.0.2', 'headers' => ['X-Real-Ip' => '127.0.0.3']],
-                ['Available' => 1, 'Anonymity' => 'Anonymous'],
+                ['Available' => 1, 'Anonymity' => 'Anonymous', 'HTTPS' => 1],
             ],
             [
                 [],

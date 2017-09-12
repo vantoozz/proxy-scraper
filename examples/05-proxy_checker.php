@@ -14,13 +14,16 @@ $httpClient = new GuzzleHttpClient(new GuzzleClient([
 
 $scraper = new Scrapers\FreeProxyListScraper($httpClient);
 
+
+// See https://github.com/vantoozz/whoami
 $whoamiHost = getenv('WHOAMI_HOST');
+
 if (!$whoamiHost) {
     exit('No whoami host given');
 }
 $proxyAppraiser = new Appraiser($httpClient, $whoamiHost);
 
-$proxiesToCheck = 10;
+$proxiesToCheck = 100;
 
 foreach ($scraper->get() as $proxy) {
     echo (string)$proxy . " =>\n";
