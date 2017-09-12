@@ -53,7 +53,7 @@ final class AppraiserTest extends TestCase
         );
         $appraiser = new Appraiser($client, 'some url');
 
-        $expected = ['Available' => false];
+        $expected = ['available' => false];
 
         $metrics = [];
         foreach ($appraiser->appraise(new Proxy(new Ipv4('8.8.8.8'), new Port(8888))) as $metric) {
@@ -125,7 +125,7 @@ final class AppraiserTest extends TestCase
 
         $appraiser = new Appraiser($client, 'some url');
 
-        $expected = ['Available' => false];
+        $expected = ['available' => false];
 
         $metrics = [];
         foreach ($appraiser->appraise(new Proxy(new Ipv4('8.8.8.8'), new Port(8888))) as $metric) {
@@ -167,7 +167,7 @@ final class AppraiserTest extends TestCase
 
         $appraiser = new Appraiser($client, 'some url');
 
-        $expected = ['Available' => true, 'Anonymity' => 'Elite', 'HTTPS' => false];
+        $expected = ['available' => true, 'anonymity' => 'elite', 'https' => false];
 
         $metrics = [];
         foreach ($appraiser->appraise(new Proxy(new Ipv4('8.8.8.8'), new Port(8888))) as $metric) {
@@ -187,31 +187,31 @@ final class AppraiserTest extends TestCase
         return [
             [
                 ['remote_address' => '127.0.0.1', 'headers' => []],
-                ['Available' => true, 'Anonymity' => 'Transparent', 'HTTPS' => true],
+                ['available' => true, 'anonymity' => 'transparent', 'https' => true],
             ],
             [
                 ['remote_address' => '127.0.0.2', 'headers' => []],
-                ['Available' => true, 'Anonymity' => 'Elite', 'HTTPS' => true],
+                ['available' => true, 'anonymity' => 'elite', 'https' => true],
             ],
             [
                 ['remote_address' => '127.0.0.2', 'headers' => ['X-Real-Ip' => '127.0.0.1']],
-                ['Available' => true, 'Anonymity' => 'Transparent', 'HTTPS' => true],
+                ['available' => true, 'anonymity' => 'transparent', 'https' => true],
             ],
             [
                 ['remote_address' => '127.0.0.2', 'headers' => ['X-Real-Ip' => '127.0.0.3']],
-                ['Available' => true, 'Anonymity' => 'Anonymous', 'HTTPS' => true],
+                ['available' => true, 'anonymity' => 'anonymous', 'https' => true],
             ],
             [
                 [],
-                ['Available' => false],
+                ['available' => false],
             ],
             [
                 ['remote_address' => 123, 'headers' => 123],
-                ['Available' => false],
+                ['available' => false],
             ],
             [
                 ['remote_address' => '127.0.0.1', 'headers' => 123],
-                ['Available' => false],
+                ['available' => false],
             ],
         ];
     }

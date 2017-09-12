@@ -8,8 +8,8 @@ namespace Vantoozz\ProxyScraper\Enums;
  */
 abstract class Metrics
 {
-    public const AVAILABLE = 'Available';
-    public const ANONYMITY = 'Anonymity';
-    public const RESPONSE_TIME = 'Response Time';
-    public const HTTPS = 'HTTPS';
+    public const AVAILABLE = 'available';
+    public const ANONYMITY = 'anonymity';
+    public const RESPONSE_TIME = 'response_time';
+    public const HTTPS = 'https';
 }

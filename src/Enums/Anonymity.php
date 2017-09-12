@@ -8,7 +8,7 @@ namespace Vantoozz\ProxyScraper\Enums;
  */
 abstract class Anonymity
 {
-    public const TRANSPARENT = 'Transparent';
-    public const ANONYMOUS = 'Anonymous';
-    public const ELITE = 'Elite';
+    public const TRANSPARENT = 'transparent';
+    public const ANONYMOUS = 'anonymous';
+    public const ELITE = 'elite';
 }
