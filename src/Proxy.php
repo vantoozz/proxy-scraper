@@ -19,6 +19,11 @@ final class Proxy
     private $port;
 
     /**
+     * @var array
+     */
+    private $metrics = [];
+
+    /**
      * Proxy constructor.
      * @param Ipv4 $ipv4
      * @param Port $port
@@ -27,6 +32,22 @@ final class Proxy
     {
         $this->ipv4 = $ipv4;
         $this->port = $port;
+    }
+
+    /**
+     * @param Metric $metric
+     */
+    public function addMetric(Metric $metric): void
+    {
+        $this->metrics[] = $metric;
+    }
+
+    /**
+     * @return Metric[]
+     */
+    public function getMetrics(): array
+    {
+        return $this->metrics;
     }
 
     /**

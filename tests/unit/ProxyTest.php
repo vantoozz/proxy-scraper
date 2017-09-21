@@ -4,6 +4,7 @@ namespace Vantoozz\ProxyScraper\UnitTests;
 
 use PHPUnit\Framework\TestCase;
 use Vantoozz\ProxyScraper\Ipv4;
+use Vantoozz\ProxyScraper\Metric;
 use Vantoozz\ProxyScraper\Port;
 use Vantoozz\ProxyScraper\Proxy;
 
@@ -40,5 +41,21 @@ final class ProxyTest extends TestCase
         $port = new Port(1234);
         $proxy = new Proxy(new Ipv4('192.168.0.1'), $port);
         $this->assertSame($port, $proxy->getPort());
+    }
+
+    /**
+     * @test
+     */
+    public function it_stores_metrics(): void
+    {
+        $one = new Metric('one', 111);
+        $two = new Metric('two', 222);
+
+        $proxy = new Proxy(new Ipv4('8.8.8.8'), new Port(8888));
+
+        $proxy->addMetric($one);
+        $proxy->addMetric($two);
+
+        $this->assertSame([$one, $two], $proxy->getMetrics());
     }
 }
