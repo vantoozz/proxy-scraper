@@ -6,6 +6,6 @@ namespace Vantoozz\ProxyScraper\Exceptions;
  * Class ValidationException
  * @package Vantoozz\ProxyScraper\Exceptions
  */
-class ValidationException extends ProxyScraperException
+final class ValidationException extends ProxyScraperException
 {
 }

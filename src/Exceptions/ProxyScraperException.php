@@ -6,6 +6,6 @@ namespace Vantoozz\ProxyScraper\Exceptions;
  * Class ProxyScraperException
  * @package Vantoozz\ProxyScraper\Exceptions
  */
-class ProxyScraperException extends \Exception
+abstract class ProxyScraperException extends \Exception
 {
 }

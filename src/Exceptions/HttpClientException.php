@@ -6,6 +6,6 @@ namespace Vantoozz\ProxyScraper\Exceptions;
  * Class HttpClientException
  * @package Vantoozz\ProxyScraper\Exceptions
  */
-class HttpClientException extends ProxyScraperException
+final class HttpClientException extends ProxyScraperException
 {
 }

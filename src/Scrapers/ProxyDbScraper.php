@@ -65,7 +65,7 @@ final class ProxyDbScraper implements ScraperInterface
         }
 
         if (!(new Text($html))->isHtml()) {
-            throw new ScraperException($html);
+            throw new ScraperException('Unexpected markup');
         }
 
         $rows = (new Dom($html))->filter('table tbody tr');

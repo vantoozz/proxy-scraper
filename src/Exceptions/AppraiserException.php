@@ -6,6 +6,6 @@ namespace Vantoozz\ProxyScraper\Exceptions;
  * Class AppraiserException
  * @package Vantoozz\ProxyScraper\Exceptions
  */
-class AppraiserException extends ProxyScraperException
+final class AppraiserException extends ProxyScraperException
 {
 }

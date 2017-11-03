@@ -6,13 +6,14 @@ use PHPUnit\Framework\TestCase;
 use Vantoozz\ProxyScraper\Exceptions\HttpClientException;
 use Vantoozz\ProxyScraper\HttpClient\HttpClientInterface;
 use Vantoozz\ProxyScraper\Proxy;
-use Vantoozz\ProxyScraper\Scrapers\ProxyDbScraper;
+use Vantoozz\ProxyScraper\Scrapers\FoxToolsScraper;
+use Vantoozz\ProxyScraper\Scrapers\PrimeSpeedScraper;
 
 /**
- * Class ProxyDbScraperTest
+ * Class PrimeSpeedScraperTest
  * @package Vantoozz\ProxyScraper\Scrapers
  */
-final class ProxyDbScraperTest extends TestCase
+final class PrimeSpeedScraperTest extends TestCase
 {
     /**
      * @test
@@ -28,24 +29,7 @@ final class ProxyDbScraperTest extends TestCase
             ->method('get')
             ->willThrowException(new HttpClientException('error message'));
 
-        $scraper = new ProxyDbScraper($httpClient);
-        $scraper->get()->current();
-    }
-    /**
-     * @test
-     * @expectedException \Vantoozz\ProxyScraper\Exceptions\ScraperException
-     * @expectedExceptionMessage Unexpected markup
-     */
-    public function it_throws_an_exception_on_non_html_response(): void
-    {
-        /** @var HttpClientInterface|\PHPUnit_Framework_MockObject_MockObject $httpClient */
-        $httpClient = $this->createMock(HttpClientInterface::class);
-        $httpClient
-            ->expects(static::once())
-            ->method('get')
-            ->willReturn('some text');
-
-        $scraper = new ProxyDbScraper($httpClient);
+        $scraper = new PrimeSpeedScraper($httpClient);
         $scraper->get()->current();
     }
 
@@ -54,34 +38,91 @@ final class ProxyDbScraperTest extends TestCase
      */
     public function it_returns_a_proxy(): void
     {
+
+        $html  = <<<HTML
+<pre>
+format:
+&lt;proxy_server_name&gt; : &lt;proxy_port_number&gt;
+
+0.0.0.0:80
+222.111.222.111:8118
+222.111.222.122:8118
+
+
+
+</pre>
+
+HTML;
+
+
         /** @var HttpClientInterface|\PHPUnit_Framework_MockObject_MockObject $httpClient */
         $httpClient = $this->createMock(HttpClientInterface::class);
         $httpClient
             ->expects(static::once())
             ->method('get')
-            ->willReturn('<table><tbody><tr><td>46.101.55.200:8118</td></tr></table>');
+            ->willReturn($html);
 
-        $scraper = new ProxyDbScraper($httpClient);
-        $proxy = $scraper->get()->current();
+        $scraper = new PrimeSpeedScraper($httpClient);
+        $proxies = iterator_to_array($scraper->get(), false);
 
-        $this->assertInstanceOf(Proxy::class, $proxy);
-        $this->assertSame('46.101.55.200:8118', (string)$proxy);
+        $this->assertInstanceOf(Proxy::class, $proxies[0]);
+        $this->assertSame('222.111.222.111:8118', (string)$proxies[0]);
     }
+
 
     /**
      * @test
+     * @expectedException \Vantoozz\ProxyScraper\Exceptions\ScraperException
+     * @expectedExceptionMessage Unexpected markup
      */
-    public function it_skips_bad_rows(): void
+    public function it_throws_an_exception_on_unexpected_markup(): void
     {
+        $html  = <<<HTML
+<pre>
+</pre>
+HTML;
+
+
         /** @var HttpClientInterface|\PHPUnit_Framework_MockObject_MockObject $httpClient */
         $httpClient = $this->createMock(HttpClientInterface::class);
         $httpClient
-            ->expects(static::exactly(21))
+            ->expects(static::once())
             ->method('get')
-            ->willReturn('<table><tbody><tr><td>bad proxy string</td></tr></table>');
+            ->willReturn($html);
 
-        $scraper = new ProxyDbScraper($httpClient);
-
-        $this->assertNull($scraper->get()->current());
+        $scraper = new PrimeSpeedScraper($httpClient);
+        $scraper->get()->current();
     }
+
+
+    /**
+     * @test
+     * @expectedException \Vantoozz\ProxyScraper\Exceptions\ScraperException
+     * @expectedExceptionMessage Unexpected markup
+     */
+    public function it_throws_more_exceptions_on_unexpected_markup(): void
+    {
+        $html  = <<<HTML
+<pre>
+format:
+&lt;proxy_server_name&gt; : &lt;proxy_port_number&gt;
+
+0.0.0.0:80
+222.111.222.111:8118
+222.111.222.122:8118
+
+HTML;
+
+
+        /** @var HttpClientInterface|\PHPUnit_Framework_MockObject_MockObject $httpClient */
+        $httpClient = $this->createMock(HttpClientInterface::class);
+        $httpClient
+            ->expects(static::once())
+            ->method('get')
+            ->willReturn($html);
+
+        $scraper = new PrimeSpeedScraper($httpClient);
+        $scraper->get()->current();
+    }
+
 }
