@@ -27,6 +27,7 @@ $container->add(HttpClientInterface::class, $httpClient, true);
 
 $miner = new ProxiesMiner\ScrapersProxiesMiner;
 foreach ([
+             Scrapers\CoolProxyScraper::class,
              Scrapers\FoxToolsScraper::class,
              Scrapers\FreeProxyListScraper::class,
              Scrapers\HideMyIpScraper::class,

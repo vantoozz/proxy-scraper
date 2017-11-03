@@ -12,6 +12,7 @@ use Vantoozz\ProxyScraper\HttpClient\HttpClientInterface;
 /**
  * Class ProxyAppraiser
  * @package Vantoozz\ProxyScraper\Appraisers
+ * @deprecated
  */
 final class Appraiser
 {

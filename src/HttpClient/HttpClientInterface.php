@@ -20,6 +20,7 @@ interface HttpClientInterface
      * @param string $proxy
      * @return string
      * @throws \Vantoozz\ProxyScraper\Exceptions\HttpClientException
+     * @deprecated
      */
     public function getProxied(string $uri, string $proxy): string;
 }
