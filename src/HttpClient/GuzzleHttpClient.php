@@ -51,7 +51,7 @@ final class GuzzleHttpClient implements HttpClientInterface
 
     /**
      * @param string $uri
-     * @param string|null $proxy
+     * @param string $proxy
      * @return string
      * @throws \Vantoozz\ProxyScraper\Exceptions\HttpClientException
      */

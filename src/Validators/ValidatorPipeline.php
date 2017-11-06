@@ -18,6 +18,7 @@ final class ValidatorPipeline implements ValidatorInterface
 
     /**
      * @param ValidatorInterface $step
+     * @return void
      */
     public function addStep(ValidatorInterface $step): void
     {
@@ -26,6 +27,7 @@ final class ValidatorPipeline implements ValidatorInterface
 
     /**
      * @param Proxy $proxy
+     * @return void
      * @throws ValidationException
      */
     public function validate(Proxy $proxy): void

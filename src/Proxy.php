@@ -36,6 +36,7 @@ final class Proxy
 
     /**
      * @param Metric $metric
+     * @return void
      */
     public function addMetric(Metric $metric): void
     {

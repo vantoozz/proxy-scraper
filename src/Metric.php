@@ -21,7 +21,7 @@ final class Metric
     /**
      * Metric constructor.
      * @param string $name
-     * @param $value
+     * @param mixed $value
      */
     public function __construct(string $name, $value)
     {

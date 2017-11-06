@@ -13,6 +13,7 @@ final class Ipv4RangeValidator implements ValidatorInterface
 {
     /**
      * @param Proxy $proxy
+     * @return void
      * @throws ValidationException
      */
     public function validate(Proxy $proxy): void
