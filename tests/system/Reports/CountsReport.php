@@ -2,6 +2,10 @@
 
 namespace Vantoozz\ProxyScraper\SystemTests\Reports;
 
+/**
+ * Class CountsReport
+ * @package Vantoozz\ProxyScraper\SystemTests\Reports
+ */
 final class CountsReport implements ReportInterface
 {
     /**

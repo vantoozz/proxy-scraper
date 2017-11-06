@@ -7,7 +7,6 @@ use Vantoozz\ProxyScraper\Exceptions\HttpClientException;
 use Vantoozz\ProxyScraper\HttpClient\HttpClientInterface;
 use Vantoozz\ProxyScraper\Proxy;
 use Vantoozz\ProxyScraper\Scrapers\CoolProxyScraper;
-use Vantoozz\ProxyScraper\Scrapers\FoxToolsScraper;
 
 /**
  * Class CoolProxyScraperTest

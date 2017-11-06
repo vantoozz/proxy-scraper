@@ -2,6 +2,10 @@
 
 namespace Vantoozz\ProxyScraper\SystemTests\Reports;
 
+/**
+ * Class ExclusivityReport
+ * @package Vantoozz\ProxyScraper\SystemTests\Reports
+ */
 final class ExclusivityReport implements ReportInterface
 {
     /**

@@ -10,7 +10,7 @@ $httpClient = new GuzzleHttpClient(new GuzzleClient([
     'connect_timeout' => 2,
     'timeout' => 3,
 ]));
-$scraper = new Scrapers\FoxToolsScraper($httpClient);
+$scraper = new Scrapers\SpysMeScraper($httpClient);
 
 foreach ($scraper->get() as $proxy) {
     echo (string)$proxy . "\n";
