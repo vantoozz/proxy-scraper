@@ -72,7 +72,7 @@ final class FreeProxyListScraperTest extends TestCase
     /**
      * @test
      */
-    public function it_skips_bad_rows(): void
+    public function it_skips_bad_formatted_data(): void
     {
         /** @var HttpClientInterface|\PHPUnit_Framework_MockObject_MockObject $httpClient */
         $httpClient = $this->createMock(HttpClientInterface::class);
@@ -80,6 +80,23 @@ final class FreeProxyListScraperTest extends TestCase
             ->expects(static::once())
             ->method('get')
             ->willReturn('<table id="proxylisttable"><tbody><tr><td>111</td><td>111</td></tr></table>');
+
+        $scraper = new FreeProxyListScraper($httpClient);
+
+        static::assertNull($scraper->get()->current());
+    }
+
+    /**
+     * @test
+     */
+    public function it_skips_bad_rows(): void
+    {
+        /** @var HttpClientInterface|\PHPUnit_Framework_MockObject_MockObject $httpClient */
+        $httpClient = $this->createMock(HttpClientInterface::class);
+        $httpClient
+            ->expects(static::once())
+            ->method('get')
+            ->willReturn('<table id="proxylisttable"><tbody><tr><td>111</td></tr></table>');
 
         $scraper = new FreeProxyListScraper($httpClient);
 
