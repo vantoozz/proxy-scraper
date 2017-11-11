@@ -31,7 +31,8 @@
     "codacy/coverage": "~1",
     "satooshi/php-coveralls": "~1",
     "league/container": "~2",
-    "povils/phpmnd": "~1"
+    "povils/phpmnd": "~1",
+    "vantoozz/php-density": "~0"
   },
   "suggest": {
     "php-http/guzzle6-adapter": "to use Guzzle as HTTP client"

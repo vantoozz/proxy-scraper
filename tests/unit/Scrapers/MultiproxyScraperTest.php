@@ -3,6 +3,7 @@
 namespace Vantoozz\ProxyScraper\UnitTests\Scrapers;
 
 use PHPUnit\Framework\TestCase;
+use Vantoozz\ProxyScraper\Enums\Metrics;
 use Vantoozz\ProxyScraper\Exceptions\HttpClientException;
 use Vantoozz\ProxyScraper\HttpClient\HttpClientInterface;
 use Vantoozz\ProxyScraper\Proxy;
@@ -35,6 +36,27 @@ final class MultiproxyScraperTest extends TestCase
     /**
      * @test
      */
+    public function it_returns_source_metric(): void
+    {
+        /** @var HttpClientInterface|\PHPUnit_Framework_MockObject_MockObject $httpClient */
+        $httpClient = $this->createMock(HttpClientInterface::class);
+        $httpClient
+            ->expects(static::once())
+            ->method('get')
+            ->willReturn("222.111.222.111:8118\n111.222.111.222:8118");
+
+        $scraper = new MultiproxyScraper($httpClient);
+        $proxy = $scraper->get()->current();
+
+        static::assertInstanceOf(Proxy::class, $proxy);
+        /** @var Proxy $proxy */
+        static::assertSame(Metrics::SOURCE, $proxy->getMetrics()[0]->getName());
+        static::assertSame(MultiproxyScraper::class, $proxy->getMetrics()[0]->getValue());
+    }
+
+    /**
+     * @test
+     */
     public function it_returns_a_proxy(): void
     {
         /** @var HttpClientInterface|\PHPUnit_Framework_MockObject_MockObject $httpClient */
@@ -47,8 +69,8 @@ final class MultiproxyScraperTest extends TestCase
         $scraper = new MultiproxyScraper($httpClient);
         $proxy = $scraper->get()->current();
 
-        $this->assertInstanceOf(Proxy::class, $proxy);
-        $this->assertSame('222.111.222.111:8118', (string)$proxy);
+        static::assertInstanceOf(Proxy::class, $proxy);
+        static::assertSame('222.111.222.111:8118', (string)$proxy);
     }
 
     /**
@@ -65,6 +87,6 @@ final class MultiproxyScraperTest extends TestCase
 
         $scraper = new MultiproxyScraper($httpClient);
 
-        $this->assertNull($scraper->get()->current());
+        static::assertNull($scraper->get()->current());
     }
 }

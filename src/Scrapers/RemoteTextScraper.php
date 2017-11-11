@@ -2,9 +2,11 @@
 
 namespace Vantoozz\ProxyScraper\Scrapers;
 
+use Vantoozz\ProxyScraper\Enums\Metrics;
 use Vantoozz\ProxyScraper\Exceptions\HttpClientException;
 use Vantoozz\ProxyScraper\Exceptions\ScraperException;
 use Vantoozz\ProxyScraper\HttpClient\HttpClientInterface;
+use Vantoozz\ProxyScraper\Metric;
 use Vantoozz\ProxyScraper\Proxy;
 
 /**
@@ -39,7 +41,10 @@ abstract class RemoteTextScraper implements ScraperInterface
             throw new ScraperException($e->getMessage(), $e->getCode(), $e);
         }
 
-        yield from (new TextScraper($text))->get();
+        foreach ((new TextScraper($text))->get() as $proxy) {
+            $proxy->addMetric(new Metric(Metrics::SOURCE, static::class));
+            yield $proxy;
+        }
     }
 
     /**

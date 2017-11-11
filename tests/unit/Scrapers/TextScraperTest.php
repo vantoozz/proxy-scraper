@@ -15,13 +15,26 @@ final class TextScraperTest extends TestCase
     /**
      * @test
      */
+    public function it_has_no_source_metric(): void
+    {
+        $scraper = new TextScraper("222.111.222.111:8118\n111.222.111.222:8118");
+        $proxy = $scraper->get()->current();
+
+        static::assertInstanceOf(Proxy::class, $proxy);
+        /** @var Proxy $proxy */
+        static::assertCount(0, $proxy->getMetrics());
+    }
+
+    /**
+     * @test
+     */
     public function it_returns_a_proxy(): void
     {
         $scraper = new TextScraper("222.111.222.111:8118\n111.222.111.222:8118");
         $proxy = $scraper->get()->current();
 
-        $this->assertInstanceOf(Proxy::class, $proxy);
-        $this->assertSame('222.111.222.111:8118', (string)$proxy);
+        static::assertInstanceOf(Proxy::class, $proxy);
+        static::assertSame('222.111.222.111:8118', (string)$proxy);
     }
 
     /**
@@ -31,6 +44,6 @@ final class TextScraperTest extends TestCase
     {
         $scraper = new TextScraper('2312318');
 
-        $this->assertNull($scraper->get()->current());
+        static::assertNull($scraper->get()->current());
     }
 }

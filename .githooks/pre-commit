@@ -21,6 +21,14 @@
 		exit 1
 	fi
 
+
+./vendor/bin/density analyze src --non-zero-exit-on-violation
+	if [ $? != 0 ]
+	then
+		echo "Decrease source code density"
+		exit 1
+	fi
+
 ./vendor/bin/phpcs --standard=psr2 src
 	if [ $? != 0 ]
 	then

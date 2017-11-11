@@ -22,6 +22,6 @@ final class CheckProxyScraperTest extends IntegrationTest
 
         $proxies = iterator_to_array($scrapper->get(), false);
 
-        $this->assertGreaterThanOrEqual(100, count($proxies));
+        static::assertGreaterThanOrEqual(100, count($proxies));
     }
 }

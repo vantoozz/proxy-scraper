@@ -2,13 +2,13 @@
 
 namespace Vantoozz\ProxyScraper\Scrapers;
 
-use Faker\Generator as Faker;
-use Faker\Provider\UserAgent;
+use Vantoozz\ProxyScraper\Enums\Metrics;
 use Vantoozz\ProxyScraper\Exceptions\HttpClientException;
 use Vantoozz\ProxyScraper\Exceptions\InvalidArgumentException;
 use Vantoozz\ProxyScraper\Exceptions\ScraperException;
 use Vantoozz\ProxyScraper\HttpClient\HttpClientInterface;
 use Vantoozz\ProxyScraper\Ipv4;
+use Vantoozz\ProxyScraper\Metric;
 use Vantoozz\ProxyScraper\Port;
 use Vantoozz\ProxyScraper\Proxy;
 
@@ -107,6 +107,9 @@ final class HideMyIpScraper implements ScraperInterface
             throw new InvalidArgumentException('Bad data');
         }
 
-        return new Proxy(new Ipv4((string)$item['i']), new Port((int)$item['p']));
+        $proxy = new Proxy(new Ipv4((string)$item['i']), new Port((int)$item['p']));
+        $proxy->addMetric(new Metric(Metrics::SOURCE, static::class));
+
+        return $proxy;
     }
 }

@@ -3,9 +3,11 @@
 namespace Vantoozz\ProxyScraper\Scrapers;
 
 use Symfony\Component\DomCrawler\Crawler as Dom;
+use Vantoozz\ProxyScraper\Enums\Metrics;
 use Vantoozz\ProxyScraper\Exceptions\HttpClientException;
 use Vantoozz\ProxyScraper\HttpClient\HttpClientInterface;
 use Vantoozz\ProxyScraper\Ipv4;
+use Vantoozz\ProxyScraper\Metric;
 use Vantoozz\ProxyScraper\Port;
 use Vantoozz\ProxyScraper\Proxy;
 
@@ -86,6 +88,9 @@ final class CoolProxyScraper implements ScraperInterface
 
         $port = (int)$row->filter('td')->eq(1)->text();
 
-        return new Proxy(new Ipv4($ipv4), new Port($port));
+        $proxy = new Proxy(new Ipv4($ipv4), new Port($port));
+        $proxy->addMetric(new Metric(Metrics::SOURCE, static::class));
+
+        return $proxy;
     }
 }

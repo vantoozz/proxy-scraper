@@ -2,9 +2,11 @@
 
 namespace Vantoozz\ProxyScraper\Scrapers;
 
+use Vantoozz\ProxyScraper\Enums\Metrics;
 use Vantoozz\ProxyScraper\Exceptions\HttpClientException;
 use Vantoozz\ProxyScraper\Exceptions\ScraperException;
 use Vantoozz\ProxyScraper\HttpClient\HttpClientInterface;
+use Vantoozz\ProxyScraper\Metric;
 use Vantoozz\ProxyScraper\Proxy;
 
 /**
@@ -43,7 +45,10 @@ final class PrimeSpeedScraper implements ScraperInterface
 
         $list = $this->extractList($html);
 
-        yield from (new TextScraper($list))->get();
+        foreach ((new TextScraper($list))->get() as $proxy) {
+            $proxy->addMetric(new Metric(Metrics::SOURCE, static::class));
+            yield $proxy;
+        }
     }
 
     /**

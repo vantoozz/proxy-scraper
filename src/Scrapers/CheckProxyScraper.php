@@ -3,10 +3,12 @@
 namespace Vantoozz\ProxyScraper\Scrapers;
 
 use DateTimeImmutable;
+use Vantoozz\ProxyScraper\Enums\Metrics;
 use Vantoozz\ProxyScraper\Exceptions\HttpClientException;
 use Vantoozz\ProxyScraper\Exceptions\InvalidArgumentException;
 use Vantoozz\ProxyScraper\Exceptions\ScraperException;
 use Vantoozz\ProxyScraper\HttpClient\HttpClientInterface;
+use Vantoozz\ProxyScraper\Metric;
 use Vantoozz\ProxyScraper\Proxy;
 use Vantoozz\ProxyScraper\ProxyString;
 
@@ -55,11 +57,16 @@ final class CheckProxyScraper implements ScraperInterface
             if (!array_key_exists('addr', $item)) {
                 continue;
             }
+
             try {
-                yield (new ProxyString($item['addr']))->asProxy();
+                $proxy = (new ProxyString($item['addr']))->asProxy();
             } catch (InvalidArgumentException $e) {
                 continue;
             }
+
+            $proxy->addMetric(new Metric(Metrics::SOURCE, static::class));
+
+            yield $proxy;
         }
     }
 

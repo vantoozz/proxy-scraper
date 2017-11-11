@@ -3,6 +3,7 @@
 namespace Vantoozz\ProxyScraper\UnitTests\Scrapers;
 
 use PHPUnit\Framework\TestCase;
+use Vantoozz\ProxyScraper\Enums\Metrics;
 use Vantoozz\ProxyScraper\Exceptions\HttpClientException;
 use Vantoozz\ProxyScraper\HttpClient\HttpClientInterface;
 use Vantoozz\ProxyScraper\Proxy;
@@ -31,6 +32,45 @@ final class PrimeSpeedScraperTest extends TestCase
 
         $scraper = new PrimeSpeedScraper($httpClient);
         $scraper->get()->current();
+    }
+
+    /**
+     * @test
+     */
+    public function it_returns_source_metric(): void
+    {
+
+        $html  = <<<HTML
+<pre>
+format:
+&lt;proxy_server_name&gt; : &lt;proxy_port_number&gt;
+
+0.0.0.0:80
+222.111.222.111:8118
+222.111.222.122:8118
+
+
+
+</pre>
+
+HTML;
+
+
+        /** @var HttpClientInterface|\PHPUnit_Framework_MockObject_MockObject $httpClient */
+        $httpClient = $this->createMock(HttpClientInterface::class);
+        $httpClient
+            ->expects(static::once())
+            ->method('get')
+            ->willReturn($html);
+
+        $scraper = new PrimeSpeedScraper($httpClient);
+        $proxies = iterator_to_array($scraper->get(), false);
+        $proxy = $proxies[0];
+
+        static::assertInstanceOf(Proxy::class, $proxy);
+        /** @var Proxy $proxy */
+        static::assertSame(Metrics::SOURCE, $proxy->getMetrics()[0]->getName());
+        static::assertSame(PrimeSpeedScraper::class, $proxy->getMetrics()[0]->getValue());
     }
 
     /**
@@ -65,8 +105,8 @@ HTML;
         $scraper = new PrimeSpeedScraper($httpClient);
         $proxies = iterator_to_array($scraper->get(), false);
 
-        $this->assertInstanceOf(Proxy::class, $proxies[0]);
-        $this->assertSame('222.111.222.111:8118', (string)$proxies[0]);
+        static::assertInstanceOf(Proxy::class, $proxies[0]);
+        static::assertSame('222.111.222.111:8118', (string)$proxies[0]);
     }
 
 

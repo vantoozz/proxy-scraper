@@ -46,6 +46,6 @@ final class PortTest extends TestCase
      */
     public function it_converts_to_string(): void
     {
-        $this->assertSame('1234', (string)new Port(1234));
+        static::assertSame('1234', (string)new Port(1234));
     }
 }

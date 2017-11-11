@@ -3,9 +3,11 @@
 namespace Vantoozz\ProxyScraper\Scrapers;
 
 use Symfony\Component\DomCrawler\Crawler as Dom;
+use Vantoozz\ProxyScraper\Enums\Metrics;
 use Vantoozz\ProxyScraper\Exceptions\HttpClientException;
 use Vantoozz\ProxyScraper\Exceptions\ScraperException;
 use Vantoozz\ProxyScraper\HttpClient\HttpClientInterface;
+use Vantoozz\ProxyScraper\Metric;
 use Vantoozz\ProxyScraper\Proxy;
 use Vantoozz\ProxyScraper\ProxyString;
 use Vantoozz\ProxyScraper\Text;
@@ -88,6 +90,9 @@ final class ProxyDbScraper implements ScraperInterface
      */
     private function makeProxy(Dom $row): Proxy
     {
-        return (new ProxyString(trim($row->filter('td')->eq(0)->text())))->asProxy();
+        $proxy = (new ProxyString(trim($row->filter('td')->eq(0)->text())))->asProxy();
+        $proxy->addMetric(new Metric(Metrics::SOURCE, static::class));
+
+        return $proxy;
     }
 }

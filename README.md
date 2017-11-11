@@ -160,6 +160,38 @@ Will output
 [Error] IPv4 is in private range: 192.168.0.1:8888
 ```
 
+#### Metrics
+A Proxy object may have metrics (metadata) associated with.
+
+By default Proxy object has _source_ metric:
+```php
+<?php declare(strict_types = 1);
+
+use GuzzleHttp\Client as GuzzleClient;
+use Vantoozz\ProxyScraper\HttpClient\GuzzleHttpClient;
+use Vantoozz\ProxyScraper\Scrapers;
+
+require_once __DIR__ . '/vendor/autoload.php';
+
+$httpClient = new GuzzleHttpClient(new GuzzleClient([
+    'connect_timeout' => 2,
+    'timeout' => 3,
+]));
+$scraper = new Scrapers\SpysMeScraper($httpClient);
+
+/** @var \Vantoozz\ProxyScraper\Proxy $proxy */
+$proxy = $scraper->get()->current();
+
+foreach ($proxy->getMetrics() as $metric) {
+    echo $metric->getName() . ': ' . $metric->getValue() . "\n";
+}
+```
+Will output
+```
+source: Vantoozz\ProxyScraper\Scrapers\SpysMeScraper
+```
+
+
 _Note. Examples use Guzzle as HTTP client._
 
 

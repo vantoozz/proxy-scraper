@@ -5,6 +5,7 @@ namespace Vantoozz\ProxyScraper\Enums;
 /**
  * Class Anonymity
  * @package Vantoozz\ProxyScraper\Enums
+ * @deprecated
  */
 abstract class Anonymity
 {

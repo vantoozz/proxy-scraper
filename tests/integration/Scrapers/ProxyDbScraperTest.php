@@ -26,6 +26,6 @@ final class ProxyDbScraperTest extends IntegrationTest
             $proxiesCount++;
         }
 
-        $this->assertSame(100, $proxiesCount);
+        static::assertSame(100, $proxiesCount);
     }
 }

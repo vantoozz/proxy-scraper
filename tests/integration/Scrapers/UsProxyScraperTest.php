@@ -19,6 +19,6 @@ final class UsProxyScraperTest extends IntegrationTest
         $scrapper = new UsProxyScraper($this->httpClient());
 
         $proxies = iterator_to_array($scrapper->get());
-        $this->assertGreaterThanOrEqual(100, count($proxies));
+        static::assertGreaterThanOrEqual(100, count($proxies));
     }
 }

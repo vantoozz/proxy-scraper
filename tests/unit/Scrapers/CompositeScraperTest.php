@@ -36,8 +36,8 @@ final class CompositeScraperTest extends TestCase
         $expected = ['127.0.0.1:8080', '127.0.0.2:8080'];
         $i = 0;
         foreach ($compositeScraper->get() as $proxy) {
-            $this->assertInstanceOf(Proxy::class, $proxy);
-            $this->assertSame($expected[$i++], (string)$proxy);
+            static::assertInstanceOf(Proxy::class, $proxy);
+            static::assertSame($expected[$i++], (string)$proxy);
         }
     }
 
@@ -82,6 +82,6 @@ final class CompositeScraperTest extends TestCase
 
         $compositeScraper->get()->current();
 
-        $this->assertSame('some error', $handledErrorMessage);
+        static::assertSame('some error', $handledErrorMessage);
     }
 }

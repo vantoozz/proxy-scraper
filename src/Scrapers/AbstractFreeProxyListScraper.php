@@ -3,12 +3,14 @@
 namespace Vantoozz\ProxyScraper\Scrapers;
 
 use Symfony\Component\DomCrawler\Crawler as Dom;
+use Vantoozz\ProxyScraper\Enums\Metrics;
 use Vantoozz\ProxyScraper\Exceptions\HttpClientException;
+use Vantoozz\ProxyScraper\Exceptions\InvalidArgumentException;
 use Vantoozz\ProxyScraper\Exceptions\ScraperException;
 use Vantoozz\ProxyScraper\HttpClient\HttpClientInterface;
-use Vantoozz\ProxyScraper\Ipv4;
-use Vantoozz\ProxyScraper\Port;
+use Vantoozz\ProxyScraper\Metric;
 use Vantoozz\ProxyScraper\Proxy;
+use Vantoozz\ProxyScraper\ProxyString;
 
 /**
  * Class AbstractFreeProxyListScraper
@@ -48,7 +50,7 @@ abstract class AbstractFreeProxyListScraper implements ScraperInterface
         foreach ($rows as $row) {
             try {
                 yield $this->makeProxy(new Dom($row));
-            } catch (\Exception $e) {
+            } catch (InvalidArgumentException $e) {
                 continue;
             }
         }
@@ -57,16 +59,21 @@ abstract class AbstractFreeProxyListScraper implements ScraperInterface
     /**
      * @param Dom $row
      * @return Proxy
-     * @throws \RuntimeException
-     * @throws \InvalidArgumentException
-     * @throws \Vantoozz\ProxyScraper\Exceptions\InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     private function makeProxy(Dom $row): Proxy
     {
-        $ipv4 = $row->filter('td')->eq(0)->text();
-        $port = (int)$row->filter('td')->eq(1)->text();
+        try {
+            $ipv4 = $row->filter('td')->eq(0)->text();
+            $port = (int)$row->filter('td')->eq(1)->text();
+        } catch (\Exception $e) {
+            throw new InvalidArgumentException($e->getMessage(), $e->getCode(), $e);
+        }
 
-        return new Proxy(new Ipv4($ipv4), new Port($port));
+        $proxy = (new ProxyString($ipv4 . ':' . $port))->asProxy();
+        $proxy->addMetric(new Metric(Metrics::SOURCE, static::class));
+
+        return $proxy;
     }
 
     /**

@@ -20,6 +20,6 @@ final class FoxToolsScraperTest extends IntegrationTest
 
         $proxies = iterator_to_array($scrapper->get());
 
-        $this->assertGreaterThanOrEqual(80, count($proxies));
+        static::assertGreaterThanOrEqual(80, count($proxies));
     }
 }

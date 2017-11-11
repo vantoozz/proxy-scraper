@@ -115,7 +115,7 @@ final class HttplugHttpClientTest extends TestCase
 
         $httpClient = new HttplugHttpClient($client, $messageFactory);
 
-        $this->assertEquals('some string', $httpClient->get('some url'));
+        static::assertEquals('some string', $httpClient->get('some url'));
     }
 
     /**

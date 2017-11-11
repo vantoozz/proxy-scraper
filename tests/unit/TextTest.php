@@ -19,7 +19,7 @@ final class TextTest extends TestCase
      */
     public function it_detects_html(string $string, bool $expected): void
     {
-        $this->assertEquals((new Text($string))->isHtml(), $expected);
+        static::assertEquals((new Text($string))->isHtml(), $expected);
     }
 
     /**
