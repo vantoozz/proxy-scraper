@@ -18,9 +18,9 @@ use Vantoozz\ProxyScraper\Text;
  */
 final class ProxyDbScraper implements ScraperInterface
 {
-    private const PAGE_SIZE = 50;
+    private const PAGE_SIZE = 15;
     private const MAX_OFFSET = 1000;
-    private const PAGE_URL = 'http://proxydb.net/?limit=%d&offset=%d';
+    private const PAGE_URL = 'http://proxydb.net?offset=%d';
 
     /**
      * @var HttpClientInterface
@@ -46,22 +46,21 @@ final class ProxyDbScraper implements ScraperInterface
         $offset = 0;
         $pageSize = self::PAGE_SIZE;
         do {
-            yield from $this->getPage($offset, $pageSize);
+            yield from $this->getPage($offset);
             $offset += $pageSize;
         } while ($offset <= self::MAX_OFFSET);
     }
 
     /**
      * @param int $offset
-     * @param int $pageSize
      * @return \Generator
      * @throws \RuntimeException if the CssSelector Component is not available
      * @throws \Vantoozz\ProxyScraper\Exceptions\ScraperException
      */
-    private function getPage(int $offset, int $pageSize): \Generator
+    private function getPage(int $offset): \Generator
     {
         try {
-            $html = $this->httpClient->get(sprintf(static::PAGE_URL, $pageSize, $offset));
+            $html = $this->httpClient->get(sprintf(static::PAGE_URL, $offset));
         } catch (HttpClientException $e) {
             throw new ScraperException($e->getMessage(), $e->getCode(), $e);
         }
@@ -90,9 +89,41 @@ final class ProxyDbScraper implements ScraperInterface
      */
     private function makeProxy(Dom $row): Proxy
     {
-        $proxy = (new ProxyString(trim($row->filter('td')->eq(0)->text())))->asProxy();
+        $encoded = trim($row->filter('td')->eq(0)->text());
+
+        $proxy = (new ProxyString($this->decode($encoded)))->asProxy();
         $proxy->addMetric(new Metric(Metrics::SOURCE, static::class));
 
         return $proxy;
+    }
+
+    /**
+     * @param string $encoded
+     * @return string
+     */
+    private function decode(string $encoded): string
+    {
+        $result = '';
+
+        $matches = [];
+        preg_match("/var n = \'(.+)'\.split\(\'\'\)\.reverse\(\)\.join\(\'\'\);/", $encoded, $matches);
+
+        if (array_key_exists(1, $matches)) {
+            $result .= strrev($matches[1]);
+        }
+
+        preg_match("/var yy = atob\(\'(.+)\'\.replace/", $encoded, $matches);
+
+        if (array_key_exists(1, $matches)) {
+            $result .= base64_decode($matches[1]);
+        }
+
+        preg_match("/var pp = (.+)\s\+\s(.+);/", $encoded, $matches);
+
+        if (array_key_exists(2, $matches)) {
+            $result .= ':' . ((int)$matches[1] + (int)$matches[2]);
+        }
+
+        return $result;
     }
 }

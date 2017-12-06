@@ -55,12 +55,25 @@ final class ProxyDbScraperTest extends TestCase
      */
     public function it_returns_source_metric(): void
     {
+        $html  = <<<HTML
+<table><tbody><tr>
+<td>
+<script>
+    var n = '1.631.312'.split('').reverse().join('');
+    var yy = atob('\x4d\x44\x55\x75\x4e\x6a\x49\x3d'.replace(/\\x([0-9A-Fa-f]{2})/g,function(){return String.fromCharCode(parseInt(arguments[1], 16))}));
+    var pp = -14920 + 18048;
+    document.write('<a href="/' + n + yy + '/' + pp + '#http" title="lsocit-213.136.105.62.aviso.ci">' + n + yy + String.fromCharCode(58) + pp + '</a>');
+    proxies.push(n + yy + String.fromCharCode(58) + pp);
+</script>
+</td>
+</tr></table>
+HTML;
         /** @var HttpClientInterface|\PHPUnit_Framework_MockObject_MockObject $httpClient */
         $httpClient = $this->createMock(HttpClientInterface::class);
         $httpClient
             ->expects(static::once())
             ->method('get')
-            ->willReturn('<table><tbody><tr><td>46.101.55.200:8118</td></tr></table>');
+            ->willReturn($html);
 
         $scraper = new ProxyDbScraper($httpClient);
         $proxy = $scraper->get()->current();
@@ -76,18 +89,34 @@ final class ProxyDbScraperTest extends TestCase
      */
     public function it_returns_a_proxy(): void
     {
+
+        $html  = <<<HTML
+<table><tbody><tr>
+<td>
+<script>
+    var n = '1.631.312'.split('').reverse().join('');
+    var yy = atob('\x4d\x44\x55\x75\x4e\x6a\x49\x3d'.replace(/\\x([0-9A-Fa-f]{2})/g,function(){return String.fromCharCode(parseInt(arguments[1], 16))}));
+    var pp = -14920 + 18048;
+    document.write('<a href="/' + n + yy + '/' + pp + '#http" title="lsocit-213.136.105.62.aviso.ci">' + n + yy + String.fromCharCode(58) + pp + '</a>');
+    proxies.push(n + yy + String.fromCharCode(58) + pp);
+</script>
+</td>
+</tr></table>
+HTML;
+
+
         /** @var HttpClientInterface|\PHPUnit_Framework_MockObject_MockObject $httpClient */
         $httpClient = $this->createMock(HttpClientInterface::class);
         $httpClient
             ->expects(static::once())
             ->method('get')
-            ->willReturn('<table><tbody><tr><td>46.101.55.200:8118</td></tr></table>');
+            ->willReturn($html);
 
         $scraper = new ProxyDbScraper($httpClient);
         $proxy = $scraper->get()->current();
 
         static::assertInstanceOf(Proxy::class, $proxy);
-        static::assertSame('46.101.55.200:8118', (string)$proxy);
+        static::assertSame('213.136.105.62:3128', (string)$proxy);
     }
 
     /**
@@ -98,7 +127,7 @@ final class ProxyDbScraperTest extends TestCase
         /** @var HttpClientInterface|\PHPUnit_Framework_MockObject_MockObject $httpClient */
         $httpClient = $this->createMock(HttpClientInterface::class);
         $httpClient
-            ->expects(static::exactly(21))
+            ->expects(static::exactly(67))
             ->method('get')
             ->willReturn('<table><tbody><tr><td>bad proxy string</td></tr></table>');
 
