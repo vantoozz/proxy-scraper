@@ -57,7 +57,6 @@ final class CoolProxyScraper implements ScraperInterface
      * @return \Generator
      * @throws \Vantoozz\ProxyScraper\Exceptions\HttpClientException
      * @throws \RuntimeException if the CssSelector Component is not available
-     * @throws \Vantoozz\ProxyScraper\Exceptions\ScraperException
      */
     private function getPage(int $page): \Generator
     {
@@ -78,9 +77,7 @@ final class CoolProxyScraper implements ScraperInterface
     /**
      * @param Dom $row
      * @return Proxy
-     * @throws \Vantoozz\ProxyScraper\Exceptions\InvalidArgumentException
-     * @throws \RuntimeException
-     * @throws \InvalidArgumentException
+     * @throws \Throwable
      */
     private function makeProxy(Dom $row): Proxy
     {

@@ -74,7 +74,7 @@ final class ProxyDbScraper implements ScraperInterface
         foreach ($rows as $row) {
             try {
                 yield $this->makeProxy(new Dom($row));
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
                 continue;
             }
         }
@@ -83,9 +83,7 @@ final class ProxyDbScraper implements ScraperInterface
     /**
      * @param Dom $row
      * @return Proxy
-     * @throws \RuntimeException
-     * @throws \InvalidArgumentException
-     * @throws \Vantoozz\ProxyScraper\Exceptions\InvalidArgumentException
+     * @throws \Throwable
      */
     private function makeProxy(Dom $row): Proxy
     {
