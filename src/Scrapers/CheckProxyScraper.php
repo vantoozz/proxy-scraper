@@ -85,12 +85,12 @@ final class CheckProxyScraper implements ScraperInterface
 
         $data = json_decode($json, true);
 
-        if (!is_array($data)) {
+        if (!\is_array($data)) {
             $data = [];
         }
 
         $data = array_filter($data, function ($item) {
-            return is_array($item);
+            return \is_array($item);
         });
 
         return $data;

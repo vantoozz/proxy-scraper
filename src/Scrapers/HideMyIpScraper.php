@@ -50,7 +50,7 @@ final class HideMyIpScraper implements ScraperInterface
         }
 
         foreach ($this->extractData($html) as $item) {
-            if (!is_array($item)) {
+            if (!\is_array($item)) {
                 continue;
             }
             try {

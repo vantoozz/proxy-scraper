@@ -17,7 +17,7 @@ final class CompositeScraper implements ScraperInterface
     private $scrapers = [];
 
     /**
-     * @var callable
+     * @var
      */
     private $exceptionHandler;
 
@@ -61,9 +61,9 @@ final class CompositeScraper implements ScraperInterface
      */
     private function handleScraperException(ScraperException $e): void
     {
-        if (!is_callable($this->exceptionHandler)) {
+        if (!\is_callable($this->exceptionHandler)) {
             throw $e;
         }
-        call_user_func($this->exceptionHandler, $e);
+        \call_user_func($this->exceptionHandler, $e);
     }
 }

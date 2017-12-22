@@ -37,7 +37,6 @@ final class CoolProxyScraper implements ScraperInterface
     /**
      * @return \Generator|Proxy[]
      * @throws \RuntimeException
-     * @throws \Vantoozz\ProxyScraper\Exceptions\ScraperException
      */
     public function get(): \Generator
     {

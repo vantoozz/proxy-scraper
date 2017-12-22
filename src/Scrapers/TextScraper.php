@@ -2,9 +2,7 @@
 
 namespace Vantoozz\ProxyScraper\Scrapers;
 
-use Vantoozz\ProxyScraper\Enums\Metrics;
-use Vantoozz\ProxyScraper\Exceptions\ProxyScraperException;
-use Vantoozz\ProxyScraper\Metric;
+use Vantoozz\ProxyScraper\Exceptions\InvalidArgumentException;
 use Vantoozz\ProxyScraper\Proxy;
 use Vantoozz\ProxyScraper\ProxyString;
 
@@ -30,14 +28,13 @@ final class TextScraper implements ScraperInterface
 
     /**
      * @return \Generator|Proxy[]
-     * @throws \Vantoozz\ProxyScraper\Exceptions\ScraperException
      */
     public function get(): \Generator
     {
         foreach (explode("\n", $this->text) as $line) {
             try {
                 $proxy = (new ProxyString($line))->asProxy();
-            } catch (ProxyScraperException $e) {
+            } catch (InvalidArgumentException $e) {
                 continue;
             }
 
