@@ -4,10 +4,16 @@ php:
   - 7.1
   - 7.2
 
+env:
+  matrix:
+    - PREFER_LOWEST="--prefer-lowest --prefer-stable"
+    - PREFER_LOWEST=""
+
 before_script:
-  - composer install
+  - composer update $PREFER_LOWEST
 
 script:
+  - composer validate --no-check-all --strict
   - mkdir -p build/logs
   - phpunit --testsuite=unit --coverage-text  --coverage-clover build/logs/clover.xml
   - vendor/bin/phpstan analyze src --level=1
