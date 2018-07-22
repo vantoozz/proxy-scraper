@@ -33,10 +33,8 @@ foreach ([
              Scrapers\FreeProxyListScraper::class,
              Scrapers\HideMyIpScraper::class,
              Scrapers\MultiproxyScraper::class,
-             Scrapers\PrimeSpeedScraper::class,
              Scrapers\ProxyDbScraper::class,
              Scrapers\SocksProxyScraper::class,
-             Scrapers\SpysMeScraper::class,
              Scrapers\SslProxiesScraper::class,
              Scrapers\UsProxyScraper::class,
          ] as $class) {
