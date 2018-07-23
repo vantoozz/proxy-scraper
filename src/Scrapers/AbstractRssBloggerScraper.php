@@ -58,8 +58,8 @@ abstract class AbstractRssBloggerScraper implements ScraperInterface
      */
     private function fetchFeed(\SimpleXMLElement $feed)
     {
-        foreach ($feed->entry->content as $listContent) {
-            preg_match_all('/\d+\.\d+\.\d+\.\d+:\d{1,5}/m', (string)$listContent, $matches);
+        foreach ($feed->entry as $entry) {
+            preg_match_all('/\d+\.\d+\.\d+\.\d+:\d{1,5}/m', (string)$entry->content, $matches);
             foreach ($matches[0] as $proxyString) {
                 $proxy = (new ProxyString($proxyString))->asProxy();
                 $proxy->addMetric(new Metric(Metrics::SOURCE, static::class));
