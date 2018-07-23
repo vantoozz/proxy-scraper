@@ -29,4 +29,12 @@ final class Text
     {
         return $this->text !== strip_tags($this->text);
     }
+
+    /**
+     * @return bool
+     */
+    public function isXml(): bool
+    {
+        return substr($this->text, 0, 5) == "<?xml";
+    }
 }

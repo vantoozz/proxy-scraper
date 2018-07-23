@@ -2,10 +2,13 @@
 
 namespace Vantoozz\ProxyScraper\Scrapers;
 
+use Vantoozz\ProxyScraper\Enums\Metrics;
 use Vantoozz\ProxyScraper\Exceptions\HttpClientException;
 use Vantoozz\ProxyScraper\Exceptions\ScraperException;
 use Vantoozz\ProxyScraper\HttpClient\HttpClientInterface;
+use Vantoozz\ProxyScraper\Metric;
 use Vantoozz\ProxyScraper\ProxyString;
+use Vantoozz\ProxyScraper\Text;
 
 /**
  * Class AbstractRssBloggerScraper
@@ -36,15 +39,32 @@ abstract class AbstractRssBloggerScraper implements ScraperInterface
     {
         try {
             $html = $this->httpClient->get($this->rssBloggerUrl());
-            $feed = simplexml_load_string($html);
-            foreach ($feed->entry->content as $listContent) {
-                preg_match_all('/\d+\.\d+\.\d+\.\d+:\d{1,5}/m', (string)$listContent, $matches);
-                foreach ($matches[0] as $proxyString) {
-                    yield (new ProxyString($proxyString))->asProxy();
-                }
+
+            if (!(new Text($html))->isXml()) {
+                throw new ScraperException('Invalid XML');
             }
+
+            $feed = simplexml_load_string($html);
+            yield from $this->fetchFeed($feed);
         } catch (HttpClientException $e) {
             throw new ScraperException($e->getMessage(), $e->getCode(), $e);
+        }
+    }
+
+    /**
+     * @param \SimpleXMLElement $feed
+     * @return \Generator
+     * @throws \Vantoozz\ProxyScraper\Exceptions\InvalidArgumentException
+     */
+    private function fetchFeed(\SimpleXMLElement $feed)
+    {
+        foreach ($feed->entry->content as $listContent) {
+            preg_match_all('/\d+\.\d+\.\d+\.\d+:\d{1,5}/m', (string)$listContent, $matches);
+            foreach ($matches[0] as $proxyString) {
+                $proxy = (new ProxyString($proxyString))->asProxy();
+                $proxy->addMetric(new Metric(Metrics::SOURCE, static::class));
+                yield $proxy;
+            }
         }
     }
 
