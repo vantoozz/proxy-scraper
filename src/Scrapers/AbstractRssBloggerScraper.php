@@ -35,7 +35,6 @@ abstract class AbstractRssBloggerScraper implements ScraperInterface
     /**
      * @return \Generator|Proxy[]
      * @throws ScraperException
-     * @throws \Vantoozz\ProxyScraper\Exceptions\InvalidArgumentException
      */
     public function get(): \Generator
     {
@@ -56,7 +55,6 @@ abstract class AbstractRssBloggerScraper implements ScraperInterface
     /**
      * @param \SimpleXMLElement $feed
      * @return \Generator
-     * @throws \Vantoozz\ProxyScraper\Exceptions\InvalidArgumentException
      */
     private function fetchFeed(\SimpleXMLElement $feed)
     {
@@ -67,8 +65,8 @@ abstract class AbstractRssBloggerScraper implements ScraperInterface
                     $proxy = (new ProxyString($proxyString))->asProxy();
                     $proxy->addMetric(new Metric(Metrics::SOURCE, static::class));
                     yield $proxy;
-                } catch (\Exception $e) {
-                    throw new InvalidArgumentException($e->getMessage(), $e->getCode(), $e);
+                } catch (InvalidArgumentException $e) {
+                    continue;
                 }
             }
         }
