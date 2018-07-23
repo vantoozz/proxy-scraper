@@ -4,9 +4,11 @@ namespace Vantoozz\ProxyScraper\Scrapers;
 
 use Vantoozz\ProxyScraper\Enums\Metrics;
 use Vantoozz\ProxyScraper\Exceptions\HttpClientException;
+use Vantoozz\ProxyScraper\Exceptions\InvalidArgumentException;
 use Vantoozz\ProxyScraper\Exceptions\ScraperException;
 use Vantoozz\ProxyScraper\HttpClient\HttpClientInterface;
 use Vantoozz\ProxyScraper\Metric;
+use Vantoozz\ProxyScraper\Proxy;
 use Vantoozz\ProxyScraper\ProxyString;
 use Vantoozz\ProxyScraper\Text;
 
@@ -31,7 +33,7 @@ abstract class AbstractRssBloggerScraper implements ScraperInterface
     }
 
     /**
-     * @return \Generator
+     * @return \Generator|Proxy[]
      * @throws ScraperException
      * @throws \Vantoozz\ProxyScraper\Exceptions\InvalidArgumentException
      */
@@ -39,16 +41,16 @@ abstract class AbstractRssBloggerScraper implements ScraperInterface
     {
         try {
             $html = $this->httpClient->get($this->rssBloggerUrl());
-
-            if (!(new Text($html))->isXml()) {
-                throw new ScraperException('Invalid XML');
-            }
-
-            $feed = simplexml_load_string($html);
-            yield from $this->fetchFeed($feed);
         } catch (HttpClientException $e) {
             throw new ScraperException($e->getMessage(), $e->getCode(), $e);
         }
+
+        if (!(new Text($html))->isXml()) {
+            throw new ScraperException('Invalid XML');
+        }
+
+        $feed = simplexml_load_string($html);
+        yield from $this->fetchFeed($feed);
     }
 
     /**
@@ -61,9 +63,13 @@ abstract class AbstractRssBloggerScraper implements ScraperInterface
         foreach ($feed->entry as $entry) {
             preg_match_all('/\d+\.\d+\.\d+\.\d+:\d{1,5}/m', (string)$entry->content, $matches);
             foreach ($matches[0] as $proxyString) {
-                $proxy = (new ProxyString($proxyString))->asProxy();
-                $proxy->addMetric(new Metric(Metrics::SOURCE, static::class));
-                yield $proxy;
+                try {
+                    $proxy = (new ProxyString($proxyString))->asProxy();
+                    $proxy->addMetric(new Metric(Metrics::SOURCE, static::class));
+                    yield $proxy;
+                } catch (\Exception $e) {
+                    throw new InvalidArgumentException($e->getMessage(), $e->getCode(), $e);
+                }
             }
         }
     }
