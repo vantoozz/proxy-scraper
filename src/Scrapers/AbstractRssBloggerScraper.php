@@ -49,6 +49,7 @@ abstract class AbstractRssBloggerScraper implements ScraperInterface
         }
 
         $feed = simplexml_load_string($html);
+
         yield from $this->fetchFeed($feed);
     }
 
@@ -58,12 +59,13 @@ abstract class AbstractRssBloggerScraper implements ScraperInterface
      */
     private function fetchFeed(\SimpleXMLElement $feed)
     {
-        foreach ($feed->entry as $entry) {
+        foreach ($feed->entry ?? [] as $entry) {
             preg_match_all('/\d+\.\d+\.\d+\.\d+:\d{1,5}/m', (string)$entry->content, $matches);
             foreach ($matches[0] as $proxyString) {
                 try {
                     $proxy = (new ProxyString($proxyString))->asProxy();
                     $proxy->addMetric(new Metric(Metrics::SOURCE, static::class));
+
                     yield $proxy;
                 } catch (InvalidArgumentException $e) {
                     continue;
