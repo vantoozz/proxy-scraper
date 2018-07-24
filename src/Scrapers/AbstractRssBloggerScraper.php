@@ -24,7 +24,7 @@ abstract class AbstractRssBloggerScraper implements ScraperInterface
     private $httpClient;
 
     /**
-     * FreeProxyListScraper constructor.
+     * AbstractRssBloggerScraper constructor.
      * @param HttpClientInterface $httpClient
      */
     public function __construct(HttpClientInterface $httpClient)

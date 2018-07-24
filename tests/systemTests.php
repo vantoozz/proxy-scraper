@@ -1,4 +1,4 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Vantoozz\ProxyScraper\SystemTests;
 
@@ -7,7 +7,6 @@ require_once __DIR__ . '/../vendor/autoload.php';
 use GuzzleHttp\Client as GuzzleClient;
 use League\Container\Container;
 use League\Container\ReflectionContainer;
-use Vantoozz\ProxyScraper\Exceptions\ScraperException;
 use Vantoozz\ProxyScraper\HttpClient\GuzzleHttpClient;
 use Vantoozz\ProxyScraper\HttpClient\HttpClientInterface;
 use Vantoozz\ProxyScraper\Scrapers;
@@ -28,14 +27,17 @@ $container->add(HttpClientInterface::class, $httpClient, true);
 
 $miner = new ProxiesMiner\ScrapersProxiesMiner;
 foreach ([
+             Scrapers\BlogspotProxyScraper::class,
              Scrapers\CheckProxyScraper::class,
              Scrapers\CoolProxyScraper::class,
              Scrapers\FreeProxyListScraper::class,
              Scrapers\HideMyIpScraper::class,
              Scrapers\MultiproxyScraper::class,
+             Scrapers\ProxyServerlistScraper::class,
              Scrapers\SocksProxyScraper::class,
              Scrapers\SslProxiesScraper::class,
              Scrapers\UsProxyScraper::class,
+             Scrapers\TopProxysScraper::class,
          ] as $class) {
     $miner->addScraper($container->get($class));
 }
