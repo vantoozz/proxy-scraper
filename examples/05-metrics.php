@@ -11,7 +11,7 @@ $httpClient = new GuzzleHttpClient(new GuzzleClient([
     'connect_timeout' => 2,
     'timeout' => 3,
 ]));
-$scraper = new Scrapers\SpysMeScraper($httpClient);
+$scraper = new Scrapers\FreeProxyListScraper($httpClient);
 
 /** @var Proxy $proxy */
 $proxy = $scraper->get()->current();

@@ -36,7 +36,7 @@ $httpClient = new GuzzleHttpClient(new GuzzleClient([
     'connect_timeout' => 2,
     'timeout' => 3,
 ]));
-$scraper = new Scrapers\SpysMeScraper($httpClient);
+$scraper = new Scrapers\FreeProxyListScraper($httpClient);
 
 foreach ($scraper->get() as $proxy) {
     echo (string)$proxy . "\n";
@@ -64,7 +64,7 @@ $compositeScraper = new Scrapers\CompositeScraper;
 $compositeScraper->addScraper(new Scrapers\FreeProxyListScraper($httpClient));
 $compositeScraper->addScraper(new Scrapers\MultiproxyScraper($httpClient));
 $compositeScraper->addScraper(new Scrapers\SocksProxyScraper($httpClient));
-$compositeScraper->addScraper(new Scrapers\SpysMeScraper($httpClient));
+$compositeScraper->addScraper(new Scrapers\FreeProxyListScraper($httpClient));
 
 foreach ($compositeScraper->get() as $proxy) {
     echo (string)$proxy . "\n";
@@ -178,7 +178,7 @@ $httpClient = new GuzzleHttpClient(new GuzzleClient([
     'connect_timeout' => 2,
     'timeout' => 3,
 ]));
-$scraper = new Scrapers\SpysMeScraper($httpClient);
+$scraper = new Scrapers\FreeProxyListScraper($httpClient);
 
 /** @var \Vantoozz\ProxyScraper\Proxy $proxy */
 $proxy = $scraper->get()->current();
@@ -189,7 +189,7 @@ foreach ($proxy->getMetrics() as $metric) {
 ```
 Will output
 ```
-source: Vantoozz\ProxyScraper\Scrapers\SpysMeScraper
+source: Vantoozz\ProxyScraper\Scrapers\FreeProxyListScraper
 ```
 
 

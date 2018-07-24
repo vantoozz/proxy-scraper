@@ -16,7 +16,6 @@ $compositeScraper = new Scrapers\CompositeScraper;
 $compositeScraper->addScraper(new Scrapers\FreeProxyListScraper($httpClient));
 $compositeScraper->addScraper(new Scrapers\MultiproxyScraper($httpClient));
 $compositeScraper->addScraper(new Scrapers\SocksProxyScraper($httpClient));
-$compositeScraper->addScraper(new Scrapers\SpysMeScraper($httpClient));
 
 foreach ($compositeScraper->get() as $proxy) {
     echo (string)$proxy . "\n";

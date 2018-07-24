@@ -88,7 +88,7 @@ final class HideMyIpScraper implements ScraperInterface
         if ($expectedPartsCount !== count($parts)) {
             throw new ScraperException('Unknown markup');
         }
-        $json = trim(explode(";\n\n", $parts[1])[0]);
+        $json = trim(explode(";", $parts[1])[0]);
         $data = json_decode($json, true);
         if (!$data) {
             throw new ScraperException('Cannot parse json: ' . json_last_error_msg());

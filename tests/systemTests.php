@@ -7,6 +7,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 use GuzzleHttp\Client as GuzzleClient;
 use League\Container\Container;
 use League\Container\ReflectionContainer;
+use Vantoozz\ProxyScraper\Exceptions\ScraperException;
 use Vantoozz\ProxyScraper\HttpClient\GuzzleHttpClient;
 use Vantoozz\ProxyScraper\HttpClient\HttpClientInterface;
 use Vantoozz\ProxyScraper\Scrapers;
@@ -29,14 +30,10 @@ $miner = new ProxiesMiner\ScrapersProxiesMiner;
 foreach ([
              Scrapers\CheckProxyScraper::class,
              Scrapers\CoolProxyScraper::class,
-             Scrapers\FoxToolsScraper::class,
              Scrapers\FreeProxyListScraper::class,
              Scrapers\HideMyIpScraper::class,
              Scrapers\MultiproxyScraper::class,
-             Scrapers\PrimeSpeedScraper::class,
-             Scrapers\ProxyDbScraper::class,
              Scrapers\SocksProxyScraper::class,
-             Scrapers\SpysMeScraper::class,
              Scrapers\SslProxiesScraper::class,
              Scrapers\UsProxyScraper::class,
          ] as $class) {

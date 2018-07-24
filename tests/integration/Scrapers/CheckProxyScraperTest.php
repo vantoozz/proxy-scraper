@@ -4,8 +4,6 @@ namespace Vantoozz\ProxyScraper\IntegrationTests\Scrapers;
 
 use Vantoozz\ProxyScraper\IntegrationTests\IntegrationTest;
 use Vantoozz\ProxyScraper\Scrapers\CheckProxyScraper;
-use Vantoozz\ProxyScraper\Scrapers\CoolProxyScraper;
-use Vantoozz\ProxyScraper\Scrapers\FoxToolsScraper;
 
 /**
  * Class CheckProxyScraperTest
