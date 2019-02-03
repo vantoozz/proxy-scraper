@@ -22,7 +22,7 @@
 	fi
 
 
-./vendor/bin/density analyze src --non-zero-exit-on-violation
+./vendor/bin/phpcdm src --non-zero-exit-on-violation
 	if [ $? != 0 ]
 	then
 		echo "Decrease source code density"
