@@ -1,69 +1,23 @@
 #!/usr/bin/env bash
 
-./vendor/bin/parallel-lint --no-colors --exclude vendor --exclude .idea .
-	if [ $? != 0 ]
-	then
-		echo "Fix errors before commit."
-		exit 1
-	fi
+docker run --rm  -v "$(realpath $(pwd))":/app "$(docker build -q -f=docker/qa.dockerfile docker)" /bin/bash -c \
+  "php /composer/vendor/bin/phpcs --standard=psr2 src \
+&& php /composer/vendor/bin/phpunit --testsuite=unit\
+&& php /composer/vendor/bin/phpmd src text phpmd.xml\
+&& php /composer/vendor/bin/phpcpd src\
+&& php /composer/vendor/bin/phpmnd src --non-zero-exit-on-violation\
+&& php /composer/vendor/bin/phpcdm src --non-zero-exit-on-violation\
+&& php /composer/vendor/bin/phpdoccheck -d src\
+&& php /composer/vendor/bin/phpcs --standard=psr2 src\
+&& php /composer/vendor/bin/phpstan analyze src --level=1"
+if [ $? != 0 ]; then
+  echo "Fix errors before commit."
+  echo "Try run \
+  docker run --rm -it -v \"\$(realpath \$(pwd))\":/app \"\$(docker build -q -f=qa.dockerfile docker)\" \
+  php /composer/vendor/bin/phpcbf --standard=psr2 src"
+  exit 1
+fi
 
-./vendor/bin/phpstan analyze src --level=1
-	if [ $? != 0 ]
-	then
-		echo "Fix errors before commit."
-		exit 1
-	fi
-
-./vendor/bin/phpmnd src --non-zero-exit-on-violation
-	if [ $? != 0 ]
-	then
-		echo "Avoid magic numbers usage."
-		exit 1
-	fi
-
-
-./vendor/bin/phpcdm src --non-zero-exit-on-violation
-	if [ $? != 0 ]
-	then
-		echo "Decrease source code density"
-		exit 1
-	fi
-
-./vendor/bin/phpcs --standard=psr2 src
-	if [ $? != 0 ]
-	then
-		echo "Fix code style before commit."
-		echo "Try run ./vendor/bin/phpcbf --standard=psr2 src"
-		exit 1
-	fi
-
-./vendor/bin/phpdoccheck -d src
-	if [ $? != 0 ]
-	then
-		echo "Add docblocks before commit."
-		exit 1
-	fi
-
-./vendor/bin/phpcpd src
-	if [ $? != 0 ]
-	then
-		echo "Copy-paste detected"
-		exit 1
-	fi
-
-./vendor/bin/phpmd src text phpmd.xml
-	if [ $? != 0 ]
-	then
-		echo "Fix errors before commit."
-		exit 1
-	fi
-
-./vendor/bin/phpunit --testsuite=unit
-	if [ $? != 0 ]
-	then
-		echo "Fix tests before commit."
-		exit 1
-	fi
 
 for file in ./examples/*.php
 do
