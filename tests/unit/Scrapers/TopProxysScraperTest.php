@@ -1,12 +1,14 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Vantoozz\ProxyScraper\UnitTests\Scrapers;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Vantoozz\ProxyScraper\Enums\Metrics;
 use Vantoozz\ProxyScraper\Exceptions\HttpClientException;
+use Vantoozz\ProxyScraper\Exceptions\ScraperException;
 use Vantoozz\ProxyScraper\HttpClient\HttpClientInterface;
 use Vantoozz\ProxyScraper\Proxy;
-use Vantoozz\ProxyScraper\Enums\Metrics;
 use Vantoozz\ProxyScraper\Scrapers\TopProxysScraper;
 
 /**
@@ -17,12 +19,13 @@ final class TopProxysScraperTest extends TestCase
 {
     /**
      * @test
-     * @expectedException \Vantoozz\ProxyScraper\Exceptions\ScraperException
-     * @expectedExceptionMessage error message
      */
     public function it_throws_an_exception_on_http_client_error(): void
     {
-        /** @var HttpClientInterface|\PHPUnit_Framework_MockObject_MockObject $httpClient */
+        $this->expectException(ScraperException::class);
+        $this->expectExceptionMessage('error message');
+
+        /** @var HttpClientInterface|MockObject $httpClient */
         $httpClient = $this->createMock(HttpClientInterface::class);
         $httpClient
             ->expects(static::once())
@@ -35,12 +38,13 @@ final class TopProxysScraperTest extends TestCase
 
     /**
      * @test
-     * @expectedException \Vantoozz\ProxyScraper\Exceptions\ScraperException
-     * @expectedExceptionMessage Invalid XML
      */
     public function it_throws_an_exception_if_unknown_XML_got(): void
     {
-        /** @var HttpClientInterface|\PHPUnit_Framework_MockObject_MockObject $httpClient */
+        $this->expectException(ScraperException::class);
+        $this->expectExceptionMessage('Invalid XML');
+
+        /** @var HttpClientInterface|MockObject $httpClient */
         $httpClient = $this->createMock(HttpClientInterface::class);
         $httpClient
             ->expects(static::once())
@@ -56,7 +60,7 @@ final class TopProxysScraperTest extends TestCase
      */
     public function it_returns_source_metric(): void
     {
-        /** @var HttpClientInterface|\PHPUnit_Framework_MockObject_MockObject $httpClient */
+        /** @var HttpClientInterface|MockObject $httpClient */
         $httpClient = $this->createMock(HttpClientInterface::class);
         $httpClient
             ->expects(static::once())
@@ -77,7 +81,7 @@ final class TopProxysScraperTest extends TestCase
      */
     public function it_returns_a_proxy(): void
     {
-        /** @var HttpClientInterface|\PHPUnit_Framework_MockObject_MockObject $httpClient */
+        /** @var HttpClientInterface|MockObject $httpClient */
         $httpClient = $this->createMock(HttpClientInterface::class);
         $httpClient
             ->expects(static::once())

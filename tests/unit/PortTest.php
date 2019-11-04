@@ -1,8 +1,9 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Vantoozz\ProxyScraper\UnitTests;
 
 use PHPUnit\Framework\TestCase;
+use Vantoozz\ProxyScraper\Exceptions\InvalidArgumentException;
 use Vantoozz\ProxyScraper\Port;
 
 /**
@@ -13,31 +14,34 @@ final class PortTest extends TestCase
 {
     /**
      * @test
-     * @expectedExceptionMessage Bad port number: -1
-     * @expectedException \Vantoozz\ProxyScraper\Exceptions\InvalidArgumentException
      */
     public function it_rejects_negative_port_number(): void
     {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Bad port number: -1');
+
         new Port(-1);
     }
 
     /**
      * @test
-     * @expectedExceptionMessage Bad port number: 0
-     * @expectedException \Vantoozz\ProxyScraper\Exceptions\InvalidArgumentException
      */
     public function it_rejects_zero_as_port_number(): void
     {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Bad port number: 0');
+
         new Port(0);
     }
 
     /**
      * @test
-     * @expectedExceptionMessage Bad port number: 999999
-     * @expectedException \Vantoozz\ProxyScraper\Exceptions\InvalidArgumentException
      */
     public function it_rejects_too_large_port_number(): void
     {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Bad port number: 999999');
+
         new Port(999999);
     }
 

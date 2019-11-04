@@ -1,11 +1,11 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Vantoozz\ProxyScraper\IntegrationTests\Scrapers;
 
+use GuzzleHttp\Client as GuzzleClient;
 use Vantoozz\ProxyScraper\HttpClient\GuzzleHttpClient;
 use Vantoozz\ProxyScraper\IntegrationTests\IntegrationTest;
 use Vantoozz\ProxyScraper\Scrapers\TopProxysScraper;
-use GuzzleHttp\Client as GuzzleClient;
 
 /**
  * Class TopProxysScraper

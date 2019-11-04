@@ -1,14 +1,18 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Vantoozz\ProxyScraper\UnitTests\HttpClient;
 
+use Exception;
 use Http\Client\Exception as ClientException;
 use Http\Client\HttpClient;
 use Http\Message\MessageFactory;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
+use Vantoozz\ProxyScraper\Exceptions\HttpClientException;
+use Vantoozz\ProxyScraper\Exceptions\RuntimeException;
 use Vantoozz\ProxyScraper\HttpClient\HttplugHttpClient;
 
 /**
@@ -19,27 +23,29 @@ final class HttplugHttpClientTest extends TestCase
 {
     /**
      * @test
-     * @expectedException \Vantoozz\ProxyScraper\Exceptions\HttpClientException
-     * @expectedExceptionMessage error message
      */
     public function it_throws_an_exception_if_an_error_happens(): void
     {
-        /** @var RequestInterface|\PHPUnit_Framework_MockObject_MockObject $request */
+
+        $this->expectException(HttpClientException::class);
+        $this->expectExceptionMessage('error message');
+
+        /** @var RequestInterface|MockObject $request */
         $request = $this->createMock(RequestInterface::class);
 
-        /** @var \Http\Message\MessageFactory|\PHPUnit_Framework_MockObject_MockObject $messageFactory */
+        /** @var MessageFactory|MockObject $messageFactory */
         $messageFactory = $this->createMock(MessageFactory::class);
         $messageFactory
             ->expects(static::once())
             ->method('createRequest')
             ->willReturn($request);
 
-        /** @var HttpClient|\PHPUnit_Framework_MockObject_MockObject $client */
+        /** @var HttpClient|MockObject $client */
         $client = $this->createMock(HttpClient::class);
         $client
             ->expects(static::once())
             ->method('sendRequest')
-            ->willThrowException(new \Exception('error message'));
+            ->willThrowException(new Exception('error message'));
 
         $httpClient = new HttplugHttpClient($client, $messageFactory);
         $httpClient->get('some url');
@@ -47,27 +53,28 @@ final class HttplugHttpClientTest extends TestCase
 
     /**
      * @test
-     * @expectedException \Vantoozz\ProxyScraper\Exceptions\HttpClientException
-     * @expectedExceptionMessage error message
      */
     public function it_throws_an_exception_if_processing_the_request_is_impossible(): void
     {
-        /** @var RequestInterface|\PHPUnit_Framework_MockObject_MockObject $messageFactory $request */
+        $this->expectException(HttpClientException::class);
+        $this->expectExceptionMessage('error message');
+
+        /** @var RequestInterface|MockObject $messageFactory $request */
         $request = $this->createMock(RequestInterface::class);
 
-        /** @var \Http\Message\MessageFactory|\PHPUnit_Framework_MockObject_MockObject $messageFactory */
+        /** @var MessageFactory|MockObject $messageFactory */
         $messageFactory = $this->createMock(MessageFactory::class);
         $messageFactory
             ->expects(static::once())
             ->method('createRequest')
             ->willReturn($request);
 
-        /** @var HttpClient|\PHPUnit_Framework_MockObject_MockObject $client */
+        /** @var HttpClient|MockObject $client */
         $client = $this->createMock(HttpClient::class);
         $client
             ->expects(static::once())
             ->method('sendRequest')
-            ->willThrowException(new class ('error message') extends \Exception implements ClientException
+            ->willThrowException(new class ('error message') extends Exception implements ClientException
             {
             });
 
@@ -80,23 +87,23 @@ final class HttplugHttpClientTest extends TestCase
      */
     public function it_returns_a_string(): void
     {
-        /** @var RequestInterface|\PHPUnit_Framework_MockObject_MockObject $messageFactory $request */
+        /** @var RequestInterface|MockObject $messageFactory $request */
         $request = $this->createMock(RequestInterface::class);
 
-        /** @var ResponseInterface|\PHPUnit_Framework_MockObject_MockObject $messageFactory $response */
+        /** @var ResponseInterface|MockObject $messageFactory $response */
         $response = $this->createMock(ResponseInterface::class);
 
-        /** @var StreamInterface|\PHPUnit_Framework_MockObject_MockObject $messageFactory $body */
+        /** @var StreamInterface|MockObject $messageFactory $body */
         $body = $this->createMock(StreamInterface::class);
 
-        /** @var \Http\Message\MessageFactory|\PHPUnit_Framework_MockObject_MockObject $messageFactory */
+        /** @var MessageFactory|MockObject $messageFactory */
         $messageFactory = $this->createMock(MessageFactory::class);
         $messageFactory
             ->expects(static::once())
             ->method('createRequest')
             ->willReturn($request);
 
-        /** @var HttpClient|\PHPUnit_Framework_MockObject_MockObject $client */
+        /** @var HttpClient|MockObject $client */
         $client = $this->createMock(HttpClient::class);
         $client
             ->expects(static::once())
@@ -120,14 +127,15 @@ final class HttplugHttpClientTest extends TestCase
 
     /**
      * @test
-     * @expectedException \Vantoozz\ProxyScraper\Exceptions\RuntimeException
-     * @expectedExceptionMessage Method not implemented
      */
     public function it_does_not_support_proxied_calls(): void
     {
-        /** @var HttpClient|\PHPUnit_Framework_MockObject_MockObject $client */
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Method not implemented');
+
+        /** @var HttpClient|MockObject $client */
         $client = $this->createMock(HttpClient::class);
-        /** @var \Http\Message\MessageFactory|\PHPUnit_Framework_MockObject_MockObject $messageFactory */
+        /** @var MessageFactory|MockObject $messageFactory */
         $messageFactory = $this->createMock(MessageFactory::class);
         $httpClient = new HttplugHttpClient($client, $messageFactory);
 
