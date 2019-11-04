@@ -1,15 +1,15 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Vantoozz\ProxyScraper\UnitTests\Scrapers;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use PHPUnit_Framework_MockObject_MockObject;
 use Vantoozz\ProxyScraper\Enums\Metrics;
 use Vantoozz\ProxyScraper\Exceptions\HttpClientException;
+use Vantoozz\ProxyScraper\Exceptions\ScraperException;
 use Vantoozz\ProxyScraper\HttpClient\HttpClientInterface;
 use Vantoozz\ProxyScraper\Proxy;
 use Vantoozz\ProxyScraper\Scrapers\CoolProxyScraper;
-use Vantoozz\ProxyScraper\Scrapers\HideMyIpScraper;
 
 /**
  * Class CoolProxyScraperTest
@@ -19,12 +19,13 @@ final class CoolProxyScraperTest extends TestCase
 {
     /**
      * @test
-     * @expectedException \Vantoozz\ProxyScraper\Exceptions\ScraperException
-     * @expectedExceptionMessage error message
      */
     public function it_throws_an_exception_on_http_client_error(): void
     {
-        /** @var HttpClientInterface|\PHPUnit_Framework_MockObject_MockObject $httpClient */
+        $this->expectException(ScraperException::class);
+        $this->expectExceptionMessage('error message');
+
+        /** @var HttpClientInterface|MockObject $httpClient */
         $httpClient = $this->createMock(HttpClientInterface::class);
         $httpClient
             ->expects(static::once())
@@ -40,7 +41,7 @@ final class CoolProxyScraperTest extends TestCase
      */
     public function it_returns_source_metric(): void
     {
-        /** @var HttpClientInterface|PHPUnit_Framework_MockObject_MockObject $httpClient */
+        /** @var HttpClientInterface|MockObject $httpClient */
         $httpClient = $this->createMock(HttpClientInterface::class);
         $httpClient
             ->expects(static::once())
@@ -61,7 +62,7 @@ final class CoolProxyScraperTest extends TestCase
      */
     public function it_returns_a_proxy(): void
     {
-        /** @var HttpClientInterface|PHPUnit_Framework_MockObject_MockObject $httpClient */
+        /** @var HttpClientInterface|MockObject $httpClient */
         $httpClient = $this->createMock(HttpClientInterface::class);
         $httpClient
             ->expects(static::once())
@@ -80,7 +81,7 @@ final class CoolProxyScraperTest extends TestCase
      */
     public function it_skips_rows_with_no_ip(): void
     {
-        /** @var HttpClientInterface|PHPUnit_Framework_MockObject_MockObject $httpClient */
+        /** @var HttpClientInterface|MockObject $httpClient */
         $httpClient = $this->createMock(HttpClientInterface::class);
         $httpClient
             ->expects(static::atLeastOnce())
@@ -97,7 +98,7 @@ final class CoolProxyScraperTest extends TestCase
      */
     public function it_skips_non_array_rows(): void
     {
-        /** @var HttpClientInterface|PHPUnit_Framework_MockObject_MockObject $httpClient */
+        /** @var HttpClientInterface|MockObject $httpClient */
         $httpClient = $this->createMock(HttpClientInterface::class);
         $httpClient
             ->expects(static::atLeastOnce())
@@ -114,7 +115,7 @@ final class CoolProxyScraperTest extends TestCase
      */
     public function it_skips_rows_with_no_port(): void
     {
-        /** @var HttpClientInterface|PHPUnit_Framework_MockObject_MockObject $httpClient */
+        /** @var HttpClientInterface|MockObject $httpClient */
         $httpClient = $this->createMock(HttpClientInterface::class);
         $httpClient
             ->expects(static::atLeastOnce())
@@ -128,12 +129,13 @@ final class CoolProxyScraperTest extends TestCase
 
     /**
      * @test
-     * @expectedException \Vantoozz\ProxyScraper\Exceptions\ScraperException
-     * @expectedExceptionMessage Cannot parse json: Syntax error
      */
     public function it_throws_an_exception_if_bad_json_got(): void
     {
-        /** @var HttpClientInterface|\PHPUnit_Framework_MockObject_MockObject $httpClient */
+        $this->expectException(ScraperException::class);
+        $this->expectExceptionMessage('Cannot parse json: Syntax error');
+
+        /** @var HttpClientInterface|MockObject $httpClient */
         $httpClient = $this->createMock(HttpClientInterface::class);
         $httpClient
             ->expects(static::once())
@@ -146,12 +148,13 @@ final class CoolProxyScraperTest extends TestCase
 
     /**
      * @test
-     * @expectedException \Vantoozz\ProxyScraper\Exceptions\ScraperException
-     * @expectedExceptionMessage No data
      */
     public function it_throws_an_exception_if_no_data_got(): void
     {
-        /** @var HttpClientInterface|\PHPUnit_Framework_MockObject_MockObject $httpClient */
+        $this->expectException(ScraperException::class);
+        $this->expectExceptionMessage('No data');
+
+        /** @var HttpClientInterface|MockObject $httpClient */
         $httpClient = $this->createMock(HttpClientInterface::class);
         $httpClient
             ->expects(static::once())
