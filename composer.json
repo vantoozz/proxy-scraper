@@ -11,6 +11,7 @@
   ],
   "require": {
     "php": "^7.1",
+    "ext-json": "*",
     "php-http/client-implementation": "~1",
     "php-http/message-factory": "^1.0.2",
     "php-http/httplug": "^1.1",

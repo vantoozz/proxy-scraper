@@ -1,10 +1,14 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Vantoozz\ProxyScraper\Scrapers;
 
-use Symfony\Component\DomCrawler\Crawler as Dom;
+use Generator;
+use RuntimeException;
+use Throwable;
 use Vantoozz\ProxyScraper\Enums\Metrics;
 use Vantoozz\ProxyScraper\Exceptions\HttpClientException;
+use Vantoozz\ProxyScraper\Exceptions\InvalidArgumentException;
+use Vantoozz\ProxyScraper\Exceptions\ScraperException;
 use Vantoozz\ProxyScraper\HttpClient\HttpClientInterface;
 use Vantoozz\ProxyScraper\Ipv4;
 use Vantoozz\ProxyScraper\Metric;
@@ -17,8 +21,7 @@ use Vantoozz\ProxyScraper\Proxy;
  */
 final class CoolProxyScraper implements ScraperInterface
 {
-    private const MAX_PAGES_COUNT = 100;
-    private const PAGE_URL = 'https://www.cool-proxy.net/proxies/http_proxy_list/page:%d';
+    private const JSON_URL = 'https://www.cool-proxy.net/proxies.json';
 
     /**
      * @var HttpClientInterface
@@ -35,56 +38,55 @@ final class CoolProxyScraper implements ScraperInterface
     }
 
     /**
-     * @return \Generator|Proxy[]
-     * @throws \RuntimeException
+     * @return Generator|Proxy[]
+     * @throws RuntimeException
+     * @throws ScraperException
      */
-    public function get(): \Generator
+    public function get(): Generator
     {
-        $page = 1;
-        do {
-            try {
-                yield from $this->getPage($page);
-            } catch (HttpClientException $e) {
-                break;
+        try {
+            $json = $this->httpClient->get(sprintf(static::JSON_URL));
+        } catch (HttpClientException $e) {
+            throw new ScraperException($e->getMessage(), $e->getCode(), $e);
+        }
+
+        $data = json_decode($json, true);
+        if (!$data) {
+            throw new ScraperException('Cannot parse json: ' . json_last_error_msg());
+        }
+
+        if (!is_array($data)) {
+            throw new ScraperException('No data');
+        }
+
+        foreach ($data as $item) {
+            if (!is_array($item)) {
+                $item = [];
             }
-            $page++;
-        } while ($page <= static::MAX_PAGES_COUNT);
-    }
-
-    /**
-     * @param int $page
-     * @return \Generator
-     * @throws \Vantoozz\ProxyScraper\Exceptions\HttpClientException
-     * @throws \RuntimeException if the CssSelector Component is not available
-     */
-    private function getPage(int $page): \Generator
-    {
-
-        $html = $this->httpClient->get(sprintf(static::PAGE_URL, $page));
-
-        $rows = (new Dom($html))->filter('table tr');
-
-        foreach ($rows as $row) {
             try {
-                yield $this->makeProxy(new Dom($row));
-            } catch (\Throwable $e) {
+                yield $this->makeProxy($item);
+            } catch (Throwable $e) {
                 continue;
             }
         }
     }
 
+
     /**
-     * @param Dom $row
+     * @param array $item
      * @return Proxy
-     * @throws \Throwable
+     * @throws Throwable
      */
-    private function makeProxy(Dom $row): Proxy
+    private function makeProxy(array $item): Proxy
     {
-        $ipv4 = base64_decode(str_rot13(explode('"', $row->filter('td')->eq(0)->text())[1]));
+        if (!isset($item['ip'])) {
+            throw new InvalidArgumentException('No IP given');
+        }
+        if (!isset($item['port'])) {
+            throw new InvalidArgumentException('No port given');
+        }
 
-        $port = (int)$row->filter('td')->eq(1)->text();
-
-        $proxy = new Proxy(new Ipv4($ipv4), new Port($port));
+        $proxy = new Proxy(new Ipv4($item['ip']), new Port((int)$item['port']));
         $proxy->addMetric(new Metric(Metrics::SOURCE, static::class));
 
         return $proxy;
