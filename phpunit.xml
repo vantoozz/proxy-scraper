@@ -1,18 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/6.1/phpunit.xsd"
-        backupGlobals="false"
-        backupStaticAttributes="false"
+        xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/8.4/phpunit.xsd"
         bootstrap="vendor/autoload.php"
         colors="true"
-        convertErrorsToExceptions="true"
-        convertNoticesToExceptions="true"
-        convertWarningsToExceptions="true"
-        processIsolation="false"
-        stopOnFailure="false"
-        beStrictAboutOutputDuringTests="false"
-        beStrictAboutTestsThatDoNotTestAnything="true"
 >
     <testsuites>
         <testsuite name="integration">

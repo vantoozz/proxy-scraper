@@ -3,9 +3,11 @@
 namespace Vantoozz\ProxyScraper\IntegrationTests;
 
 use GuzzleHttp\Client as GuzzleClient;
+use Http\Adapter\Guzzle6\Client as HttpAdapter;
+use Http\Message\MessageFactory\GuzzleMessageFactory as MessageFactory;
 use PHPUnit\Framework\TestCase;
-use Vantoozz\ProxyScraper\HttpClient\GuzzleHttpClient;
 use Vantoozz\ProxyScraper\HttpClient\HttpClientInterface;
+use Vantoozz\ProxyScraper\HttpClient\HttplugHttpClient;
 
 /**
  * Class IntegrationTest
@@ -18,9 +20,12 @@ abstract class IntegrationTest extends TestCase
      */
     protected function httpClient(): HttpClientInterface
     {
-        return new GuzzleHttpClient(new GuzzleClient([
-            'connect_timeout' => 2,
-            'timeout' => 3,
-        ]));
+        return new HttplugHttpClient(
+            new HttpAdapter(new GuzzleClient([
+                'connect_timeout' => 2,
+                'timeout' => 3,
+            ])),
+            new MessageFactory
+        );
     }
 }

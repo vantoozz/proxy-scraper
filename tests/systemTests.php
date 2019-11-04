@@ -5,10 +5,12 @@ namespace Vantoozz\ProxyScraper\SystemTests;
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use GuzzleHttp\Client as GuzzleClient;
+use Http\Adapter\Guzzle6\Client as HttpAdapter;
+use Http\Message\MessageFactory\GuzzleMessageFactory as MessageFactory;
 use League\Container\Container;
 use League\Container\ReflectionContainer;
-use Vantoozz\ProxyScraper\HttpClient\GuzzleHttpClient;
 use Vantoozz\ProxyScraper\HttpClient\HttpClientInterface;
+use Vantoozz\ProxyScraper\HttpClient\HttplugHttpClient;
 use Vantoozz\ProxyScraper\Scrapers;
 use Vantoozz\ProxyScraper\SystemTests\ProxiesMiner\Cached;
 use Vantoozz\ProxyScraper\SystemTests\Reports\CountsReport;
@@ -16,10 +18,14 @@ use Vantoozz\ProxyScraper\SystemTests\Reports\DuplicatesReport;
 use Vantoozz\ProxyScraper\SystemTests\Reports\ExclusivityReport;
 use Vantoozz\ProxyScraper\SystemTests\Reports\ReportsPipeline;
 
-$httpClient = new GuzzleHttpClient(new GuzzleClient([
-    'connect_timeout' => 2,
-    'timeout' => 3,
-]));
+
+$httpClient = new HttplugHttpClient(
+    new HttpAdapter(new GuzzleClient([
+        'connect_timeout' => 2,
+        'timeout' => 3,
+    ])),
+    new MessageFactory
+);
 
 $container = new Container;
 $container->delegate(new ReflectionContainer);

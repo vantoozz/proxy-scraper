@@ -12,6 +12,7 @@ use Vantoozz\ProxyScraper\Exceptions\HttpClientException;
 /**
  * Class GuzzleHttpClient
  * @package Vantoozz\ProxyScraper\HttpClient
+ * @deprecated Use \Vantoozz\ProxyScraper\HttpClient\HttplugHttpClient
  */
 final class GuzzleHttpClient implements HttpClientInterface
 {
@@ -36,33 +37,7 @@ final class GuzzleHttpClient implements HttpClientInterface
      */
     public function get(string $uri): string
     {
-        return $this->request($uri);
-    }
-
-    /**
-     * @param string $uri
-     * @param string $proxy
-     * @return string
-     * @throws HttpClientException
-     */
-    public function getProxied(string $uri, string $proxy): string
-    {
-        return $this->request($uri, $proxy);
-    }
-
-    /**
-     * @param string $uri
-     * @param string $proxy
-     * @return string
-     * @throws HttpClientException
-     */
-    private function request(string $uri, string $proxy = null): string
-    {
         $options = [];
-
-        if (null !== $proxy) {
-            $options['proxy'] = 'tcp://' . $proxy;
-        }
 
         try {
             $data = $this->guzzle->request(Http::GET, $uri, $options)->getBody()->getContents();

@@ -16,13 +16,4 @@ interface HttpClientInterface
      * @throws HttpClientException
      */
     public function get(string $uri): string;
-
-    /**
-     * @param string $uri
-     * @param string $proxy
-     * @return string
-     * @throws HttpClientException
-     * @deprecated
-     */
-    public function getProxied(string $uri, string $proxy): string;
 }

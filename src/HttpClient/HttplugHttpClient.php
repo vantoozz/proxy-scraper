@@ -8,7 +8,6 @@ use Http\Client\HttpClient as Client;
 use Http\Message\MessageFactory;
 use Vantoozz\ProxyScraper\Enums\Http;
 use Vantoozz\ProxyScraper\Exceptions\HttpClientException;
-use Vantoozz\ProxyScraper\Exceptions\RuntimeException;
 
 /**
  * Class HttplugHttpClient
@@ -53,16 +52,5 @@ final class HttplugHttpClient implements HttpClientInterface
         } catch (Exception $e) {
             throw new HttpClientException($e->getMessage(), $e->getCode(), $e);
         }
-    }
-
-    /**
-     * @param string $uri
-     * @param string $proxy
-     * @return string
-     * @throws RuntimeException
-     */
-    public function getProxied(string $uri, string $proxy): string
-    {
-        throw new RuntimeException('Method not implemented');
     }
 }

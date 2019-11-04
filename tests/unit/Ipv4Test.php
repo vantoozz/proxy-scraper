@@ -3,7 +3,6 @@
 namespace Vantoozz\ProxyScraper\UnitTests;
 
 use PHPUnit\Framework\TestCase;
-use Vantoozz\ProxyScraper\Exceptions\HttpClientException;
 use Vantoozz\ProxyScraper\Exceptions\InvalidArgumentException;
 use Vantoozz\ProxyScraper\Ipv4;
 

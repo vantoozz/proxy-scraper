@@ -12,7 +12,6 @@ use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
 use Vantoozz\ProxyScraper\Exceptions\HttpClientException;
-use Vantoozz\ProxyScraper\Exceptions\RuntimeException;
 use Vantoozz\ProxyScraper\HttpClient\HttplugHttpClient;
 
 /**
@@ -123,22 +122,5 @@ final class HttplugHttpClientTest extends TestCase
         $httpClient = new HttplugHttpClient($client, $messageFactory);
 
         static::assertEquals('some string', $httpClient->get('some url'));
-    }
-
-    /**
-     * @test
-     */
-    public function it_does_not_support_proxied_calls(): void
-    {
-        $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Method not implemented');
-
-        /** @var HttpClient|MockObject $client */
-        $client = $this->createMock(HttpClient::class);
-        /** @var MessageFactory|MockObject $messageFactory */
-        $messageFactory = $this->createMock(MessageFactory::class);
-        $httpClient = new HttplugHttpClient($client, $messageFactory);
-
-        $httpClient->getProxied('url', 'proxy');
     }
 }

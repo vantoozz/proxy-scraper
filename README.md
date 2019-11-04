@@ -27,16 +27,22 @@ composer require vantoozz/proxy-scraper
 <?php declare(strict_types = 1);
 
 use GuzzleHttp\Client as GuzzleClient;
-use Vantoozz\ProxyScraper\HttpClient\GuzzleHttpClient;
+use Http\Adapter\Guzzle6\Client as HttpAdapter;
+use Http\Message\MessageFactory\GuzzleMessageFactory as MessageFactory;
+use Vantoozz\ProxyScraper\HttpClient\HttplugHttpClient;
 use Vantoozz\ProxyScraper\Scrapers;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-$httpClient = new GuzzleHttpClient(new GuzzleClient([
-    'connect_timeout' => 2,
-    'timeout' => 3,
-]));
-$scraper = new Scrapers\FreeProxyListScraper($httpClient);
+$httpClient = new HttplugHttpClient(
+    new HttpAdapter(new GuzzleClient([
+        'connect_timeout' => 2,
+        'timeout' => 3,
+    ])),
+    new MessageFactory
+);
+
+$scraper = new Scrapers\HideMyIpScraper($httpClient);
 
 foreach ($scraper->get() as $proxy) {
     echo (string)$proxy . "\n";
@@ -49,22 +55,26 @@ You can easily get data from many scrapers at once:
 <?php declare(strict_types = 1);
 
 use GuzzleHttp\Client as GuzzleClient;
-use Vantoozz\ProxyScraper\HttpClient\GuzzleHttpClient;
+use Http\Adapter\Guzzle6\Client as HttpAdapter;
+use Http\Message\MessageFactory\GuzzleMessageFactory as MessageFactory;
+use Vantoozz\ProxyScraper\HttpClient\HttplugHttpClient;
 use Vantoozz\ProxyScraper\Scrapers;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-$httpClient = new GuzzleHttpClient(new GuzzleClient([
-    'connect_timeout' => 3,
-    'timeout' => 4,
-]));
+$httpClient = new HttplugHttpClient(
+    new HttpAdapter(new GuzzleClient([
+        'connect_timeout' => 2,
+        'timeout' => 3,
+    ])),
+    new MessageFactory
+);
 
 $compositeScraper = new Scrapers\CompositeScraper;
 
 $compositeScraper->addScraper(new Scrapers\FreeProxyListScraper($httpClient));
 $compositeScraper->addScraper(new Scrapers\MultiproxyScraper($httpClient));
 $compositeScraper->addScraper(new Scrapers\SocksProxyScraper($httpClient));
-$compositeScraper->addScraper(new Scrapers\FreeProxyListScraper($httpClient));
 
 foreach ($compositeScraper->get() as $proxy) {
     echo (string)$proxy . "\n";
@@ -169,18 +179,25 @@ By default Proxy object has _source_ metric:
 <?php declare(strict_types = 1);
 
 use GuzzleHttp\Client as GuzzleClient;
-use Vantoozz\ProxyScraper\HttpClient\GuzzleHttpClient;
+use Http\Adapter\Guzzle6\Client as HttpAdapter;
+use Http\Message\MessageFactory\GuzzleMessageFactory as MessageFactory;
+use Vantoozz\ProxyScraper\HttpClient\HttplugHttpClient;
+use Vantoozz\ProxyScraper\Proxy;
 use Vantoozz\ProxyScraper\Scrapers;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-$httpClient = new GuzzleHttpClient(new GuzzleClient([
-    'connect_timeout' => 2,
-    'timeout' => 3,
-]));
+$httpClient = new HttplugHttpClient(
+    new HttpAdapter(new GuzzleClient([
+        'connect_timeout' => 2,
+        'timeout' => 3,
+    ])),
+    new MessageFactory
+);
+
 $scraper = new Scrapers\FreeProxyListScraper($httpClient);
 
-/** @var \Vantoozz\ProxyScraper\Proxy $proxy */
+/** @var Proxy $proxy */
 $proxy = $scraper->get()->current();
 
 foreach ($proxy->getMetrics() as $metric) {
