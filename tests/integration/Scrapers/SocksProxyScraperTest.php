@@ -7,7 +7,7 @@ use Vantoozz\ProxyScraper\Scrapers\SocksProxyScraper;
 
 /**
  * Class SocksProxyScraperTest
- * @package Vantoozz\ProxyScraper\Scrapers
+ * @package Vantoozz\ProxyScraper\IntegrationTests\Scrapers
  */
 final class SocksProxyScraperTest extends IntegrationTest
 {

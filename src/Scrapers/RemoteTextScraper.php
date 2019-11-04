@@ -1,7 +1,8 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Vantoozz\ProxyScraper\Scrapers;
 
+use Generator;
 use Vantoozz\ProxyScraper\Enums\Metrics;
 use Vantoozz\ProxyScraper\Exceptions\HttpClientException;
 use Vantoozz\ProxyScraper\Exceptions\ScraperException;
@@ -30,10 +31,10 @@ abstract class RemoteTextScraper implements ScraperInterface
     }
 
     /**
-     * @return \Generator|Proxy[]
-     * @throws \Vantoozz\ProxyScraper\Exceptions\ScraperException
+     * @return Generator|Proxy[]
+     * @throws ScraperException
      */
-    public function get(): \Generator
+    public function get(): Generator
     {
         try {
             $text = $this->httpClient->get($this->remoteTextUrl());

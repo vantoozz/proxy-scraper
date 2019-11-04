@@ -6,8 +6,8 @@ use Vantoozz\ProxyScraper\IntegrationTests\IntegrationTest;
 use Vantoozz\ProxyScraper\Scrapers\BlogspotProxyScraper;
 
 /**
- * Class TopProxysScraper
- * @package Vantoozz\ProxyScraper\Scrapers
+ * Class BlogSpotProxyScraperTest
+ * @package Vantoozz\ProxyScraper\IntegrationTests\Scrapers
  */
 final class BlogSpotProxyScraperTest extends IntegrationTest
 {

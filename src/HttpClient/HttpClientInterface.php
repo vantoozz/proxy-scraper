@@ -1,6 +1,8 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Vantoozz\ProxyScraper\HttpClient;
+
+use Vantoozz\ProxyScraper\Exceptions\HttpClientException;
 
 /**
  * Interface HttpClientInterface
@@ -11,7 +13,7 @@ interface HttpClientInterface
     /**
      * @param string $uri
      * @return string
-     * @throws \Vantoozz\ProxyScraper\Exceptions\HttpClientException
+     * @throws HttpClientException
      */
     public function get(string $uri): string;
 
@@ -19,7 +21,7 @@ interface HttpClientInterface
      * @param string $uri
      * @param string $proxy
      * @return string
-     * @throws \Vantoozz\ProxyScraper\Exceptions\HttpClientException
+     * @throws HttpClientException
      * @deprecated
      */
     public function getProxied(string $uri, string $proxy): string;

@@ -1,9 +1,12 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Vantoozz\ProxyScraper\Scrapers;
 
+use Generator;
 use Vantoozz\ProxyScraper\Exceptions\ScraperException;
 use Vantoozz\ProxyScraper\Proxy;
+use function call_user_func;
+use function is_callable;
 
 /**
  * Class CompositeScraper
@@ -22,10 +25,10 @@ final class CompositeScraper implements ScraperInterface
     private $exceptionHandler;
 
     /**
-     * @return \Generator|Proxy[]
-     * @throws \Vantoozz\ProxyScraper\Exceptions\ScraperException
+     * @return Generator|Proxy[]
+     * @throws ScraperException
      */
-    public function get(): \Generator
+    public function get(): Generator
     {
         foreach ($this->scrapers as $scraper) {
             try {
@@ -56,14 +59,14 @@ final class CompositeScraper implements ScraperInterface
 
     /**
      * @param ScraperException $e
-     * @throws ScraperException
      * @return void
+     * @throws ScraperException
      */
     private function handleScraperException(ScraperException $e): void
     {
-        if (!\is_callable($this->exceptionHandler)) {
+        if (!is_callable($this->exceptionHandler)) {
             throw $e;
         }
-        \call_user_func($this->exceptionHandler, $e);
+        call_user_func($this->exceptionHandler, $e);
     }
 }

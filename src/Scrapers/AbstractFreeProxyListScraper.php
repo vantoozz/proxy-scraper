@@ -1,7 +1,10 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Vantoozz\ProxyScraper\Scrapers;
 
+use Exception;
+use Generator;
+use RuntimeException;
 use Symfony\Component\DomCrawler\Crawler as Dom;
 use Vantoozz\ProxyScraper\Enums\Metrics;
 use Vantoozz\ProxyScraper\Exceptions\HttpClientException;
@@ -33,11 +36,11 @@ abstract class AbstractFreeProxyListScraper implements ScraperInterface
     }
 
     /**
-     * @return \Generator|Proxy[]
-     * @throws \RuntimeException if the CssSelector Component is not available
-     * @throws \Vantoozz\ProxyScraper\Exceptions\ScraperException
+     * @return Generator|Proxy[]
+     * @throws RuntimeException if the CssSelector Component is not available
+     * @throws ScraperException
      */
-    public function get(): \Generator
+    public function get(): Generator
     {
         try {
             $html = $this->httpClient->get($this->baseUrl());
@@ -66,7 +69,7 @@ abstract class AbstractFreeProxyListScraper implements ScraperInterface
         try {
             $ipv4 = $row->filter('td')->eq(0)->text();
             $port = (int)$row->filter('td')->eq(1)->text();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw new InvalidArgumentException($e->getMessage(), $e->getCode(), $e);
         }
 

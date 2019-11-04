@@ -7,7 +7,7 @@ use Vantoozz\ProxyScraper\Scrapers\HideMyIpScraper;
 
 /**
  * Class HideMyIpScraperTest
- * @package Vantoozz\ProxyScraper\Scrapers
+ * @package Vantoozz\ProxyScraper\IntegrationTests\Scrapers
  */
 final class HideMyIpScraperTest extends IntegrationTest
 {

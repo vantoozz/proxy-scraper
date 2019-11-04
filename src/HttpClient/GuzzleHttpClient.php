@@ -1,10 +1,11 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Vantoozz\ProxyScraper\HttpClient;
 
 use GuzzleHttp\ClientInterface as Guzzle;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\GuzzleException;
+use RuntimeException;
 use Vantoozz\ProxyScraper\Enums\Http;
 use Vantoozz\ProxyScraper\Exceptions\HttpClientException;
 
@@ -31,7 +32,7 @@ final class GuzzleHttpClient implements HttpClientInterface
     /**
      * @param string $uri
      * @return string
-     * @throws \Vantoozz\ProxyScraper\Exceptions\HttpClientException
+     * @throws HttpClientException
      */
     public function get(string $uri): string
     {
@@ -42,7 +43,7 @@ final class GuzzleHttpClient implements HttpClientInterface
      * @param string $uri
      * @param string $proxy
      * @return string
-     * @throws \Vantoozz\ProxyScraper\Exceptions\HttpClientException
+     * @throws HttpClientException
      */
     public function getProxied(string $uri, string $proxy): string
     {
@@ -53,7 +54,7 @@ final class GuzzleHttpClient implements HttpClientInterface
      * @param string $uri
      * @param string $proxy
      * @return string
-     * @throws \Vantoozz\ProxyScraper\Exceptions\HttpClientException
+     * @throws HttpClientException
      */
     private function request(string $uri, string $proxy = null): string
     {
@@ -65,7 +66,7 @@ final class GuzzleHttpClient implements HttpClientInterface
 
         try {
             $data = $this->guzzle->request(Http::GET, $uri, $options)->getBody()->getContents();
-        } catch (GuzzleException | \RuntimeException | ClientException $e) {
+        } catch (GuzzleException | RuntimeException | ClientException $e) {
             throw new HttpClientException($e->getMessage(), $e->getCode(), $e);
         }
         return $data;

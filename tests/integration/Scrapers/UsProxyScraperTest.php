@@ -7,7 +7,7 @@ use Vantoozz\ProxyScraper\Scrapers\UsProxyScraper;
 
 /**
  * Class UsProxyScraperTest
- * @package Vantoozz\ProxyScraper\Scrapers
+ * @package Vantoozz\ProxyScraper\IntegrationTests\Scrapers
  */
 final class UsProxyScraperTest extends IntegrationTest
 {

@@ -1,7 +1,8 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Vantoozz\ProxyScraper\Scrapers;
 
+use Generator;
 use Vantoozz\ProxyScraper\Enums\Metrics;
 use Vantoozz\ProxyScraper\Exceptions\HttpClientException;
 use Vantoozz\ProxyScraper\Exceptions\InvalidArgumentException;
@@ -11,6 +12,7 @@ use Vantoozz\ProxyScraper\Ipv4;
 use Vantoozz\ProxyScraper\Metric;
 use Vantoozz\ProxyScraper\Port;
 use Vantoozz\ProxyScraper\Proxy;
+use function is_array;
 
 /**
  * Class HideMyIpScraper
@@ -38,10 +40,10 @@ final class HideMyIpScraper implements ScraperInterface
     }
 
     /**
-     * @return \Generator|Proxy[]
-     * @throws \Vantoozz\ProxyScraper\Exceptions\ScraperException
+     * @return Generator|Proxy[]
+     * @throws ScraperException
      */
-    public function get(): \Generator
+    public function get(): Generator
     {
         try {
             $html = $this->httpClient->get($this->makeUrl());
@@ -50,7 +52,7 @@ final class HideMyIpScraper implements ScraperInterface
         }
 
         foreach ($this->extractData($html) as $item) {
-            if (!\is_array($item)) {
+            if (!is_array($item)) {
                 continue;
             }
             try {
@@ -67,9 +69,25 @@ final class HideMyIpScraper implements ScraperInterface
     private function makeUrl(): string
     {
         $languages = [
-            'es', 'fr', 'it', 'pt', 'nl', 'de', 'se',
-            'dk', 'pl', 'tr', 'ar', 'ru', 'ro',
-            'cn', 'kr', 'jp', 'vn', 'th', 'sr',
+            'es',
+            'fr',
+            'it',
+            'pt',
+            'nl',
+            'de',
+            'se',
+            'dk',
+            'pl',
+            'tr',
+            'ar',
+            'ru',
+            'ro',
+            'cn',
+            'kr',
+            'jp',
+            'vn',
+            'th',
+            'sr',
 
         ];
 
@@ -99,7 +117,7 @@ final class HideMyIpScraper implements ScraperInterface
     /**
      * @param array $item
      * @return Proxy
-     * @throws \Vantoozz\ProxyScraper\Exceptions\InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     private function makeProxy(array $item): Proxy
     {

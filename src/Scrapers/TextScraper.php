@@ -1,7 +1,8 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Vantoozz\ProxyScraper\Scrapers;
 
+use Generator;
 use Vantoozz\ProxyScraper\Exceptions\InvalidArgumentException;
 use Vantoozz\ProxyScraper\Proxy;
 use Vantoozz\ProxyScraper\ProxyString;
@@ -27,9 +28,9 @@ final class TextScraper implements ScraperInterface
     }
 
     /**
-     * @return \Generator|Proxy[]
+     * @return Generator|Proxy[]
      */
-    public function get(): \Generator
+    public function get(): Generator
     {
         foreach (explode("\n", $this->text) as $line) {
             try {

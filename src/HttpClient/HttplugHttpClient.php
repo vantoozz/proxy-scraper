@@ -1,7 +1,8 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Vantoozz\ProxyScraper\HttpClient;
 
+use Exception;
 use Http\Client\Exception as ClientException;
 use Http\Client\HttpClient as Client;
 use Http\Message\MessageFactory;
@@ -49,7 +50,7 @@ final class HttplugHttpClient implements HttpClientInterface
             return $this->httpClient->sendRequest($request)->getBody()->getContents();
         } catch (ClientException  $e) {
             throw new HttpClientException($e->getMessage(), $e->getCode(), $e);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw new HttpClientException($e->getMessage(), $e->getCode(), $e);
         }
     }
@@ -58,7 +59,7 @@ final class HttplugHttpClient implements HttpClientInterface
      * @param string $uri
      * @param string $proxy
      * @return string
-     * @throws \Vantoozz\ProxyScraper\Exceptions\RuntimeException
+     * @throws RuntimeException
      */
     public function getProxied(string $uri, string $proxy): string
     {

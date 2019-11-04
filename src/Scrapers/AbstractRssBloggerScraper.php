@@ -1,7 +1,9 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Vantoozz\ProxyScraper\Scrapers;
 
+use Generator;
+use SimpleXMLElement;
 use Vantoozz\ProxyScraper\Enums\Metrics;
 use Vantoozz\ProxyScraper\Exceptions\HttpClientException;
 use Vantoozz\ProxyScraper\Exceptions\InvalidArgumentException;
@@ -33,10 +35,10 @@ abstract class AbstractRssBloggerScraper implements ScraperInterface
     }
 
     /**
-     * @return \Generator|Proxy[]
+     * @return Generator|Proxy[]
      * @throws ScraperException
      */
-    public function get(): \Generator
+    public function get(): Generator
     {
         try {
             $html = $this->httpClient->get($this->rssBloggerUrl());
@@ -54,10 +56,10 @@ abstract class AbstractRssBloggerScraper implements ScraperInterface
     }
 
     /**
-     * @param \SimpleXMLElement $feed
-     * @return \Generator
+     * @param SimpleXMLElement $feed
+     * @return Generator
      */
-    private function fetchFeed(\SimpleXMLElement $feed)
+    private function fetchFeed(SimpleXMLElement $feed)
     {
         foreach ($feed->entry ?? [] as $entry) {
             preg_match_all('/\d+\.\d+\.\d+\.\d+:\d{1,5}/m', (string)$entry->content, $matches);

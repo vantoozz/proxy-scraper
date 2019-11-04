@@ -7,7 +7,7 @@ use Vantoozz\ProxyScraper\Scrapers\SslProxiesScraper;
 
 /**
  * Class SslProxiesScraperTest
- * @package Vantoozz\ProxyScraper\Scrapers
+ * @package Vantoozz\ProxyScraper\IntegrationTests\Scrapers
  */
 final class SslProxiesScraperTest extends IntegrationTest
 {

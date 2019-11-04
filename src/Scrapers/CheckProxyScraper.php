@@ -1,8 +1,10 @@
-<?php declare(strict_types = 1);
+<?php declare(strict_types=1);
 
 namespace Vantoozz\ProxyScraper\Scrapers;
 
 use DateTimeImmutable;
+use DateTimeInterface;
+use Generator;
 use Vantoozz\ProxyScraper\Enums\Metrics;
 use Vantoozz\ProxyScraper\Exceptions\HttpClientException;
 use Vantoozz\ProxyScraper\Exceptions\InvalidArgumentException;
@@ -11,6 +13,7 @@ use Vantoozz\ProxyScraper\HttpClient\HttpClientInterface;
 use Vantoozz\ProxyScraper\Metric;
 use Vantoozz\ProxyScraper\Proxy;
 use Vantoozz\ProxyScraper\ProxyString;
+use function is_array;
 
 /**
  * Class CheckProxyScraper
@@ -36,10 +39,10 @@ final class CheckProxyScraper implements ScraperInterface
     }
 
     /**
-     * @return \Generator|Proxy[]
-     * @throws \Vantoozz\ProxyScraper\Exceptions\ScraperException
+     * @return Generator|Proxy[]
+     * @throws ScraperException
      */
-    public function get(): \Generator
+    public function get(): Generator
     {
         $attempts = static::ATTEMPTS;
         $date = new DateTimeImmutable;
@@ -71,11 +74,11 @@ final class CheckProxyScraper implements ScraperInterface
     }
 
     /**
-     * @param \DateTimeInterface $date
+     * @param DateTimeInterface $date
      * @return array[]
      * @throws ScraperException
      */
-    private function getDailyData(\DateTimeInterface $date): array
+    private function getDailyData(DateTimeInterface $date): array
     {
         try {
             $json = $this->httpClient->get(sprintf(static::URL, $date->format('Y-m-d')));
@@ -85,12 +88,12 @@ final class CheckProxyScraper implements ScraperInterface
 
         $data = json_decode($json, true);
 
-        if (!\is_array($data)) {
+        if (!is_array($data)) {
             $data = [];
         }
 
         $data = array_filter($data, function ($item) {
-            return \is_array($item);
+            return is_array($item);
         });
 
         return $data;

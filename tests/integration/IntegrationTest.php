@@ -9,7 +9,7 @@ use Vantoozz\ProxyScraper\HttpClient\HttpClientInterface;
 
 /**
  * Class IntegrationTest
- * @package Vantoozz\ProxyScraper
+ * @package Vantoozz\ProxyScraper\IntegrationTests
  */
 abstract class IntegrationTest extends TestCase
 {

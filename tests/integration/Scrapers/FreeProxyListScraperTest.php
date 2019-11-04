@@ -7,7 +7,7 @@ use Vantoozz\ProxyScraper\Scrapers\FreeProxyListScraper;
 
 /**
  * Class FreeProxyListScraperTest
- * @package Vantoozz\ProxyScraper\Scrapers
+ * @package Vantoozz\ProxyScraper\IntegrationTests\Scrapers
  */
 final class FreeProxyListScraperTest extends IntegrationTest
 {

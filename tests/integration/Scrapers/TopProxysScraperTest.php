@@ -8,8 +8,8 @@ use Vantoozz\ProxyScraper\IntegrationTests\IntegrationTest;
 use Vantoozz\ProxyScraper\Scrapers\TopProxysScraper;
 
 /**
- * Class TopProxysScraper
- * @package Vantoozz\ProxyScraper\Scrapers
+ * Class TopProxysScraperTest
+ * @package Vantoozz\ProxyScraper\IntegrationTests\Scrapers
  */
 final class TopProxysScraperTest extends IntegrationTest
 {
