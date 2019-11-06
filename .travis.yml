@@ -1,5 +1,8 @@
 language: php
 
+services:
+  - docker
+
 php:
   - 7.2
   - 7.3
@@ -15,10 +18,11 @@ before_script:
 
 script:
   - composer validate --no-check-all --strict
-  - composer require --dev satooshi/php-coveralls:~1 codacy/coverage:~1
+  - composer require --dev codacy/coverage:~1
   - mkdir -p build/logs
   - vendor/bin/phpunit --testsuite=unit --coverage-text  --coverage-clover build/logs/clover.xml
   - php tests/systemTests.php
+  - bash .githooks/pre-commit
 
 after_script:
   - vendor/bin/coveralls -v
