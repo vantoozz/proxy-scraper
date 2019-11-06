@@ -15,7 +15,7 @@ before_script:
 
 script:
   - composer validate --no-check-all --strict
-  - composer require --dev php-coveralls/php-coveralls:~2 codacy/coverage:~1
+  - composer require --dev satooshi/php-coveralls:~1 codacy/coverage:~1
   - mkdir -p build/logs
   - vendor/bin/phpunit --testsuite=unit --coverage-text  --coverage-clover build/logs/clover.xml
   - php tests/systemTests.php
