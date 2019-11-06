@@ -15,16 +15,10 @@ before_script:
 
 script:
   - composer validate --no-check-all --strict
+  - copmoser require --dev php-coveralls/php-coveralls:~2
+  - copmoser require --dev codacy/coverage:~1
   - mkdir -p build/logs
   - vendor/bin/phpunit --testsuite=unit --coverage-text  --coverage-clover build/logs/clover.xml
-  - vendor/bin/phpstan analyze src --level=1
-  - vendor/bin/parallel-lint --no-colors --exclude vendor --exclude .idea .
-  - vendor/bin/phpdoccheck -d src
-  - vendor/bin/phpcpd --ansi src
-  - vendor/bin/phpmnd src --non-zero-exit-on-violation
-  - vendor/bin/phpcs --standard=psr2 --colors src
-  - vendor/bin/phpmd src text phpmd.xml
-  - vendor/bin/phploc --ansi src
   - php tests/systemTests.php
 
 after_script:
