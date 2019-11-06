@@ -18,12 +18,10 @@ before_script:
 
 script:
   - composer validate --no-check-all --strict
-  - composer require --dev codacy/coverage:~1
   - mkdir -p build/logs
   - vendor/bin/phpunit --testsuite=unit --coverage-text  --coverage-clover build/logs/clover.xml
-  - php tests/systemTests.php
   - bash .githooks/pre-commit
+  - php tests/systemTests.php
 
 after_script:
-  - vendor/bin/coveralls -v
-  - vendor/bin/codacycoverage clover build/logs/clover.xml
+  - bash codacy.sh
