@@ -1,7 +1,6 @@
 language: php
 
 php:
-  - 7.1
   - 7.2
   - 7.3
 
@@ -15,7 +14,7 @@ before_script:
 
 script:
   - composer validate --no-check-all --strict
-  - copmoser require --dev php-coveralls/php-coveralls:~2
+  - composer require --dev php-coveralls/php-coveralls:~2
   - copmoser require --dev codacy/coverage:~1
   - mkdir -p build/logs
   - vendor/bin/phpunit --testsuite=unit --coverage-text  --coverage-clover build/logs/clover.xml
