@@ -10,12 +10,12 @@ env:
     - PREFER_LOWEST=""
 
 before_script:
+  - composer global require hirak/prestissimo
   - composer update $PREFER_LOWEST
 
 script:
   - composer validate --no-check-all --strict
-  - composer require --dev php-coveralls/php-coveralls:~2
-  - composer require --dev codacy/coverage:~1
+  - composer require --dev php-coveralls/php-coveralls:~2 codacy/coverage:~1
   - mkdir -p build/logs
   - vendor/bin/phpunit --testsuite=unit --coverage-text  --coverage-clover build/logs/clover.xml
   - php tests/systemTests.php
