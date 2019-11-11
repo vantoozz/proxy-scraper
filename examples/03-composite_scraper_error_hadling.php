@@ -15,7 +15,7 @@ $compositeScraper->handleScraperExceptionWith(function (ScraperException $e) {
     echo 'An error occurs: ' . $e->getMessage() . "\n";
 });
 
-// Throws an exception
+// Fake scraper throwing an exception
 $compositeScraper->addScraper(new class implements Scrapers\ScraperInterface
 {
     public function get(): \Generator
@@ -24,7 +24,7 @@ $compositeScraper->addScraper(new class implements Scrapers\ScraperInterface
     }
 });
 
-// No exceptions
+// Fake scraper with no exceptions
 $compositeScraper->addScraper(new class implements Scrapers\ScraperInterface
 {
     public function get(): \Generator
@@ -33,7 +33,7 @@ $compositeScraper->addScraper(new class implements Scrapers\ScraperInterface
     }
 });
 
-//Run scraper
+//Run composite scraper
 foreach ($compositeScraper->get() as $proxy) {
     echo (string)$proxy . "\n";
 }

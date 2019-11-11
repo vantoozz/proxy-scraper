@@ -16,7 +16,7 @@ $httpClient = new HttplugHttpClient(
     new MessageFactory
 );
 
-$scraper = new Scrapers\HideMyIpScraper($httpClient);
+$scraper = new Scrapers\FreeProxyListScraper($httpClient);
 
 foreach ($scraper->get() as $proxy) {
     echo (string)$proxy . "\n";
