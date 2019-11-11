@@ -2,11 +2,10 @@
 
 namespace Vantoozz\ProxyScraper\UnitTests\Scrapers;
 
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Vantoozz\ProxyScraper\Enums\Metrics;
 use Vantoozz\ProxyScraper\Exceptions\ScraperException;
-use Vantoozz\ProxyScraper\HttpClient\HttpClientInterface;
+use Vantoozz\ProxyScraper\HttpClient\PredefinedDummyHttpClient;
 use Vantoozz\ProxyScraper\Proxy;
 use Vantoozz\ProxyScraper\Scrapers\BlogspotProxyScraper;
 
@@ -25,14 +24,7 @@ final class BlogspotProxyScraperTest extends TestCase
         $this->expectException(ScraperException::class);
         $this->expectExceptionMessage('Invalid XML');
 
-        /** @var HttpClientInterface|MockObject $httpClient */
-        $httpClient = $this->createMock(HttpClientInterface::class);
-        $httpClient
-            ->expects(static::once())
-            ->method('get')
-            ->willReturn('Invalid XML');
-
-        $scraper = new BlogspotProxyScraper($httpClient);
+        $scraper = new BlogspotProxyScraper(new PredefinedDummyHttpClient('Invalid XML'));
         $scraper->get()->current();
     }
 
@@ -41,14 +33,10 @@ final class BlogspotProxyScraperTest extends TestCase
      */
     public function it_returns_source_metric(): void
     {
-        /** @var HttpClientInterface|MockObject $httpClient */
-        $httpClient = $this->createMock(HttpClientInterface::class);
-        $httpClient
-            ->expects(static::once())
-            ->method('get')
-            ->willReturn(file_get_contents(__DIR__ . '/../../fixtures/topProxysBlogger.xml'));
+        $scraper = new BlogspotProxyScraper(
+            new PredefinedDummyHttpClient(file_get_contents(__DIR__ . '/../../fixtures/topProxysBlogger.xml'))
+        );
 
-        $scraper = new BlogspotProxyScraper($httpClient);
         $proxy = $scraper->get()->current();
 
         static::assertInstanceOf(Proxy::class, $proxy);
@@ -62,14 +50,9 @@ final class BlogspotProxyScraperTest extends TestCase
      */
     public function it_returns_a_proxy(): void
     {
-        /** @var HttpClientInterface|MockObject $httpClient */
-        $httpClient = $this->createMock(HttpClientInterface::class);
-        $httpClient
-            ->expects(static::once())
-            ->method('get')
-            ->willReturn(file_get_contents(__DIR__ . '/../../fixtures/topProxysBlogger.xml'));
-
-        $scraper = new BlogspotProxyScraper($httpClient);
+        $scraper = new BlogspotProxyScraper(
+            new PredefinedDummyHttpClient(file_get_contents(__DIR__ . '/../../fixtures/topProxysBlogger.xml'))
+        );
         $proxy = $scraper->get()->current();
 
         static::assertInstanceOf(Proxy::class, $proxy);
@@ -81,12 +64,7 @@ final class BlogspotProxyScraperTest extends TestCase
      */
     public function it_return_nothing_if_no_suitable_proxy_found(): void
     {
-        /** @var HttpClientInterface|MockObject $httpClient */
-        $httpClient = $this->createMock(HttpClientInterface::class);
-        $httpClient
-            ->expects(static::once())
-            ->method('get')
-            ->willReturn(file_get_contents(__DIR__ . '/../../fixtures/noProxyBlogger.xml'));
+        $httpClient = new PredefinedDummyHttpClient(file_get_contents(__DIR__ . '/../../fixtures/noProxyBlogger.xml'));
 
         $proxies = iterator_to_array((new BlogspotProxyScraper($httpClient))->get(), true);
 

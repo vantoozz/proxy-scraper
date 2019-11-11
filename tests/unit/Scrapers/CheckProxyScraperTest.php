@@ -5,9 +5,10 @@ namespace Vantoozz\ProxyScraper\UnitTests\Scrapers;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Vantoozz\ProxyScraper\Enums\Metrics;
-use Vantoozz\ProxyScraper\Exceptions\HttpClientException;
 use Vantoozz\ProxyScraper\Exceptions\ScraperException;
+use Vantoozz\ProxyScraper\HttpClient\FailingDummyHttpClient;
 use Vantoozz\ProxyScraper\HttpClient\HttpClientInterface;
+use Vantoozz\ProxyScraper\HttpClient\PredefinedDummyHttpClient;
 use Vantoozz\ProxyScraper\Proxy;
 use Vantoozz\ProxyScraper\Scrapers\CheckProxyScraper;
 
@@ -25,14 +26,7 @@ final class CheckProxyScraperTest extends TestCase
         $this->expectException(ScraperException::class);
         $this->expectExceptionMessage('error message');
 
-        /** @var HttpClientInterface|MockObject $httpClient */
-        $httpClient = $this->createMock(HttpClientInterface::class);
-        $httpClient
-            ->expects(static::once())
-            ->method('get')
-            ->willThrowException(new HttpClientException('error message'));
-
-        $scraper = new CheckProxyScraper($httpClient);
+        $scraper = new CheckProxyScraper(new FailingDummyHttpClient('error message'));
         $scraper->get()->current();
     }
 
@@ -41,14 +35,10 @@ final class CheckProxyScraperTest extends TestCase
      */
     public function it_returns_source_metric(): void
     {
-        /** @var HttpClientInterface|MockObject $httpClient */
-        $httpClient = $this->createMock(HttpClientInterface::class);
-        $httpClient
-            ->expects(static::once())
-            ->method('get')
-            ->willReturn(json_encode([['addr' => '222.111.222.111:8118']]));
+        $scraper = new CheckProxyScraper(
+            new PredefinedDummyHttpClient(json_encode([['addr' => '222.111.222.111:8118']]))
+        );
 
-        $scraper = new CheckProxyScraper($httpClient);
         $proxy = $scraper->get()->current();
 
         static::assertInstanceOf(Proxy::class, $proxy);
@@ -62,14 +52,10 @@ final class CheckProxyScraperTest extends TestCase
      */
     public function it_returns_a_proxy(): void
     {
-        /** @var HttpClientInterface|MockObject $httpClient */
-        $httpClient = $this->createMock(HttpClientInterface::class);
-        $httpClient
-            ->expects(static::once())
-            ->method('get')
-            ->willReturn(json_encode([['addr' => '222.111.222.111:8118']]));
+        $scraper = new CheckProxyScraper(
+            new PredefinedDummyHttpClient(json_encode([['addr' => '222.111.222.111:8118']]))
+        );
 
-        $scraper = new CheckProxyScraper($httpClient);
         $proxy = $scraper->get()->current();
 
         static::assertInstanceOf(Proxy::class, $proxy);
@@ -108,14 +94,7 @@ final class CheckProxyScraperTest extends TestCase
      */
     public function it_skips_bad_ip_addresses(): void
     {
-        /** @var HttpClientInterface|MockObject $httpClient */
-        $httpClient = $this->createMock(HttpClientInterface::class);
-        $httpClient
-            ->expects(static::once())
-            ->method('get')
-            ->willReturn(json_encode([['addr' => 'some strind']]));
-
-        $scraper = new CheckProxyScraper($httpClient);
+        $scraper = new CheckProxyScraper(new PredefinedDummyHttpClient(json_encode([['addr' => 'some strind']])));
 
         static::assertNull($scraper->get()->current());
     }
@@ -125,14 +104,7 @@ final class CheckProxyScraperTest extends TestCase
      */
     public function it_skips_bad_rows(): void
     {
-        /** @var HttpClientInterface|MockObject $httpClient */
-        $httpClient = $this->createMock(HttpClientInterface::class);
-        $httpClient
-            ->expects(static::once())
-            ->method('get')
-            ->willReturn(json_encode([['one' => 'some strind']]));
-
-        $scraper = new CheckProxyScraper($httpClient);
+        $scraper = new CheckProxyScraper(new PredefinedDummyHttpClient(json_encode([['one' => 'some strind']])));
 
         static::assertNull($scraper->get()->current());
     }
@@ -142,14 +114,8 @@ final class CheckProxyScraperTest extends TestCase
      */
     public function it_skips_bad_data(): void
     {
-        /** @var HttpClientInterface|MockObject $httpClient */
-        $httpClient = $this->createMock(HttpClientInterface::class);
-        $httpClient
-            ->expects(static::any())
-            ->method('get')
-            ->willReturn(json_encode([123, 234]));
 
-        $scraper = new CheckProxyScraper($httpClient);
+        $scraper = new CheckProxyScraper(new PredefinedDummyHttpClient(json_encode([123, 234])));
 
         static::assertNull($scraper->get()->current());
     }
@@ -159,14 +125,7 @@ final class CheckProxyScraperTest extends TestCase
      */
     public function it_skips_bad_json(): void
     {
-        /** @var HttpClientInterface|MockObject $httpClient */
-        $httpClient = $this->createMock(HttpClientInterface::class);
-        $httpClient
-            ->expects(static::any())
-            ->method('get')
-            ->willReturn('some string');
-
-        $scraper = new CheckProxyScraper($httpClient);
+        $scraper = new CheckProxyScraper(new PredefinedDummyHttpClient('some string'));
 
         static::assertNull($scraper->get()->current());
     }

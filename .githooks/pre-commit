@@ -13,7 +13,7 @@ docker run --rm  -v "$(realpath $(pwd))":/app "$(docker build -q -f=docker/qa.do
 if [ $? != 0 ]; then
   echo "Fix errors before commit."
   echo "Try run \
-  docker run --rm -it -v \"\$(realpath \$(pwd))\":/app \"\$(docker build -q -f=qa.dockerfile docker)\" \
+  docker run --rm -it -v \"\$(realpath \$(pwd))\":/app \"\$(docker build -q -f=docker/qa.dockerfile docker)\" \
   php /composer/vendor/bin/phpcbf --standard=psr2 src"
   exit 1
 fi

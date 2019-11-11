@@ -2,12 +2,11 @@
 
 namespace Vantoozz\ProxyScraper\UnitTests\Scrapers;
 
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Vantoozz\ProxyScraper\Enums\Metrics;
-use Vantoozz\ProxyScraper\Exceptions\HttpClientException;
 use Vantoozz\ProxyScraper\Exceptions\ScraperException;
-use Vantoozz\ProxyScraper\HttpClient\HttpClientInterface;
+use Vantoozz\ProxyScraper\HttpClient\FailingDummyHttpClient;
+use Vantoozz\ProxyScraper\HttpClient\PredefinedDummyHttpClient;
 use Vantoozz\ProxyScraper\Proxy;
 use Vantoozz\ProxyScraper\Scrapers\UsProxyScraper;
 
@@ -21,14 +20,7 @@ final class UsProxyScraperTest extends TestCase
         $this->expectException(ScraperException::class);
         $this->expectExceptionMessage('error message');
 
-        /** @var HttpClientInterface|MockObject $httpClient */
-        $httpClient = $this->createMock(HttpClientInterface::class);
-        $httpClient
-            ->expects(static::once())
-            ->method('get')
-            ->willThrowException(new HttpClientException('error message'));
-
-        $scraper = new UsProxyScraper($httpClient);
+        $scraper = new UsProxyScraper(new FailingDummyHttpClient('error message'));
         $scraper->get()->current();
     }
 
@@ -37,14 +29,11 @@ final class UsProxyScraperTest extends TestCase
      */
     public function it_returns_source_metric(): void
     {
-        /** @var HttpClientInterface|MockObject $httpClient */
-        $httpClient = $this->createMock(HttpClientInterface::class);
-        $httpClient
-            ->expects(static::once())
-            ->method('get')
-            ->willReturn('<table id="proxylisttable"><tbody><tr><td>46.101.55.200</td><td>8118</td></tr></table>');
-
-        $scraper = new UsProxyScraper($httpClient);
+        $scraper = new UsProxyScraper(
+            new PredefinedDummyHttpClient(
+                '<table id="proxylisttable"><tbody><tr><td>46.101.55.200</td><td>8118</td></tr></table>'
+            )
+        );
         $proxy = $scraper->get()->current();
 
         static::assertInstanceOf(Proxy::class, $proxy);
@@ -58,14 +47,11 @@ final class UsProxyScraperTest extends TestCase
      */
     public function it_returns_a_proxy(): void
     {
-        /** @var HttpClientInterface|MockObject $httpClient */
-        $httpClient = $this->createMock(HttpClientInterface::class);
-        $httpClient
-            ->expects(static::once())
-            ->method('get')
-            ->willReturn('<table id="proxylisttable"><tbody><tr><td>46.101.55.200</td><td>8118</td></tr></table>');
-
-        $scraper = new UsProxyScraper($httpClient);
+        $scraper = new UsProxyScraper(
+            new PredefinedDummyHttpClient(
+                '<table id="proxylisttable"><tbody><tr><td>46.101.55.200</td><td>8118</td></tr></table>'
+            )
+        );
         $proxy = $scraper->get()->current();
 
         static::assertInstanceOf(Proxy::class, $proxy);
@@ -77,14 +63,11 @@ final class UsProxyScraperTest extends TestCase
      */
     public function it_skips_bad_rows(): void
     {
-        /** @var HttpClientInterface|MockObject $httpClient */
-        $httpClient = $this->createMock(HttpClientInterface::class);
-        $httpClient
-            ->expects(static::once())
-            ->method('get')
-            ->willReturn('<table id="proxylisttable"><tbody><tr><td>111</td><td>111</td></tr></table>');
-
-        $scraper = new UsProxyScraper($httpClient);
+        $scraper = new UsProxyScraper(
+            new PredefinedDummyHttpClient(
+                '<table id="proxylisttable"><tbody><tr><td>111</td><td>111</td></tr></table>'
+            )
+        );
 
         static::assertNull($scraper->get()->current());
     }
