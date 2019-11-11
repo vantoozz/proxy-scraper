@@ -9,7 +9,7 @@ Library for scraping free proxies lists written in PHP
 
 ### Setup
 
-Proxy-scraper library is built on top of [HTTPlug](http://httplug.io/) and requires a compatible HTTP client. Available clients are listed on Packagist: https://packagist.org/providers/php-http/client-implementation. To use the library you have to install any of them, e.g.:
+The library is built on top of [HTTPlug](http://httplug.io/) and requires a compatible HTTP client. Available clients are listed on Packagist: https://packagist.org/providers/php-http/client-implementation. To use the library you have to install any of them, e.g.:
 
 ```bash
 composer require php-http/guzzle6-adapter
