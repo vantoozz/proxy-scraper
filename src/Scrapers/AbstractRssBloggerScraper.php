@@ -62,6 +62,7 @@ abstract class AbstractRssBloggerScraper implements ScraperInterface
     private function fetchFeed(SimpleXMLElement $feed)
     {
         foreach ($feed->entry ?? [] as $entry) {
+            $matches = [];
             preg_match_all('/\d+\.\d+\.\d+\.\d+:\d{1,5}/m', (string)$entry->content, $matches);
             foreach ($matches[0] as $proxyString) {
                 try {

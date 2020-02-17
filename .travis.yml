@@ -6,7 +6,7 @@ services:
 php:
   - 7.2
   - 7.3
-  - 7.4snapshot
+  - 7.4
 
 env:
   matrix:
@@ -20,9 +20,13 @@ before_script:
 script:
   - composer validate --no-check-all --strict
   - mkdir -p build/logs
+  - vendor/bin/phpunit --testsuite=integration
   - vendor/bin/phpunit --testsuite=unit --coverage-text  --coverage-clover build/logs/clover.xml
   - bash .githooks/pre-commit
   - php tests/systemTests.php
 
 after_script:
-  - bash codacy.sh
+  - composer require php-coveralls/php-coveralls
+  - composer require codacy/coverage
+  - vendor/bin/php-coveralls -v
+  - vendor/bin/codacycoverage clover build/logs/clover.xml

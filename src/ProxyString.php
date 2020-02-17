@@ -27,9 +27,7 @@ final class ProxyString
             throw new InvalidArgumentException('Bad formatted proxy string');
         }
 
-        [$ipv4, $port] = $parts;
-
-        $this->proxy = new Proxy(new Ipv4($ipv4), new Port((int)$port));
+        $this->proxy = new Proxy(new Ipv4($parts[0]), new Port((int)$parts[1]));
     }
 
     /**

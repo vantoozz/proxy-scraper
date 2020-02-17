@@ -3,9 +3,9 @@
 namespace Vantoozz\ProxyScraper\HttpClient;
 
 use Exception;
-use Http\Client\Exception as ClientException;
 use Http\Client\HttpClient as Client;
 use Http\Message\MessageFactory;
+use Psr\Http\Client\ClientExceptionInterface;
 use Vantoozz\ProxyScraper\Enums\Http;
 use Vantoozz\ProxyScraper\Exceptions\HttpClientException;
 
@@ -32,7 +32,6 @@ final class HttplugHttpClient implements HttpClientInterface
      */
     public function __construct(Client $httpClient, MessageFactory $messageFactory)
     {
-
         $this->httpClient = $httpClient;
         $this->messageFactory = $messageFactory;
     }
@@ -47,9 +46,7 @@ final class HttplugHttpClient implements HttpClientInterface
         $request = $this->messageFactory->createRequest(Http::GET, $uri);
         try {
             return $this->httpClient->sendRequest($request)->getBody()->getContents();
-        } catch (ClientException  $e) {
-            throw new HttpClientException($e->getMessage(), $e->getCode(), $e);
-        } catch (Exception $e) {
+        } catch (ClientExceptionInterface | Exception$e) {
             throw new HttpClientException($e->getMessage(), $e->getCode(), $e);
         }
     }
