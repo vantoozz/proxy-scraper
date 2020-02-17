@@ -20,7 +20,7 @@
   },
   "require-dev": {
     "php-http/guzzle6-adapter": "~2",
-    "phpunit/phpunit": "~8",
+    "phpunit/phpunit": "^8.4|~9",
     "league/container": "~3"
   },
   "suggest": {
