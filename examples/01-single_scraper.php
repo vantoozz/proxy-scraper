@@ -19,5 +19,5 @@ $httpClient = new HttplugHttpClient(
 $scraper = new Scrapers\FreeProxyListScraper($httpClient);
 
 foreach ($scraper->get() as $proxy) {
-    echo (string)$proxy . "\n";
+    echo $proxy . "\n";
 }

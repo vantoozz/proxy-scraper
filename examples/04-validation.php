@@ -22,11 +22,10 @@ $validator = new Validators\ValidatorPipeline;
 $validator->addStep(new Validators\Ipv4RangeValidator);
 
 foreach ($scraper->get() as $proxy) {
-
     try {
         $validator->validate($proxy);
-        echo '[OK] ' . (string)$proxy . "\n";
+        echo '[OK] ' . $proxy . "\n";
     } catch (ValidationException $e) {
-        echo '[Error] ' . $e->getMessage() . ': ' . (string)$proxy . "\n";
+        echo '[Error] ' . $e->getMessage() . ': ' . $proxy . "\n";
     }
 }

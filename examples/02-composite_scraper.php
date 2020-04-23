@@ -19,9 +19,9 @@ $httpClient = new HttplugHttpClient(
 $compositeScraper = new Scrapers\CompositeScraper;
 
 $compositeScraper->addScraper(new Scrapers\FreeProxyListScraper($httpClient));
-$compositeScraper->addScraper(new Scrapers\MultiproxyScraper($httpClient));
+$compositeScraper->addScraper(new Scrapers\CoolProxyScraper($httpClient));
 $compositeScraper->addScraper(new Scrapers\SocksProxyScraper($httpClient));
 
 foreach ($compositeScraper->get() as $proxy) {
-    echo (string)$proxy . "\n";
+    echo $proxy . "\n";
 }

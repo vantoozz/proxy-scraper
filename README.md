@@ -48,7 +48,7 @@ $httpClient = new HttplugHttpClient(
 $scraper = new Scrapers\FreeProxyListScraper($httpClient);
 
 foreach ($scraper->get() as $proxy) {
-    echo (string)$proxy . "\n";
+    echo $proxy . "\n";
 }
 ```
 
@@ -76,11 +76,11 @@ $httpClient = new HttplugHttpClient(
 $compositeScraper = new Scrapers\CompositeScraper;
 
 $compositeScraper->addScraper(new Scrapers\FreeProxyListScraper($httpClient));
-$compositeScraper->addScraper(new Scrapers\MultiproxyScraper($httpClient));
+$compositeScraper->addScraper(new Scrapers\CoolProxyScraper($httpClient));
 $compositeScraper->addScraper(new Scrapers\SocksProxyScraper($httpClient));
 
 foreach ($compositeScraper->get() as $proxy) {
-    echo (string)$proxy . "\n";
+    echo $proxy . "\n";
 }
 ```
 
@@ -124,7 +124,7 @@ $compositeScraper->addScraper(new class implements Scrapers\ScraperInterface
 
 //Run composite scraper
 foreach ($compositeScraper->get() as $proxy) {
-    echo (string)$proxy . "\n";
+    echo $proxy . "\n";
 }
 ```
 Will output
@@ -162,9 +162,9 @@ $validator->addStep(new Validators\Ipv4RangeValidator);
 foreach ($scraper->get() as $proxy) {
     try {
         $validator->validate($proxy);
-        echo '[OK] ' . (string)$proxy . "\n";
+        echo '[OK] ' . $proxy . "\n";
     } catch (ValidationException $e) {
-        echo '[Error] ' . $e->getMessage() . ': ' . (string)$proxy . "\n";
+        echo '[Error] ' . $e->getMessage() . ': ' . $proxy . "\n";
     }
 }
 ```

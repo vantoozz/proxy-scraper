@@ -35,5 +35,5 @@ $compositeScraper->addScraper(new class implements Scrapers\ScraperInterface
 
 //Run composite scraper
 foreach ($compositeScraper->get() as $proxy) {
-    echo (string)$proxy . "\n";
+    echo $proxy . "\n";
 }
