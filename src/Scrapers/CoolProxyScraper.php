@@ -19,7 +19,7 @@ use Vantoozz\ProxyScraper\Proxy;
  * Class CoolProxyScraper
  * @package Vantoozz\ProxyScraper\Scrapers
  */
-final class CoolProxyScraper implements ScraperInterface
+final class CoolProxyScraper implements ScraperInterface, Discoverable
 {
     private const JSON_URL = 'https://www.cool-proxy.net/proxies.json';
 

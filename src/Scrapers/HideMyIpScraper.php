@@ -18,7 +18,7 @@ use function is_array;
  * Class HideMyIpScraper
  * @package Vantoozz\ProxyScraper\Scrapers
  */
-final class HideMyIpScraper implements ScraperInterface
+final class HideMyIpScraper implements ScraperInterface, Discoverable
 {
     /**
      * @var HttpClientInterface

@@ -6,7 +6,7 @@ namespace Vantoozz\ProxyScraper\Scrapers;
  * Class MultiproxyScraper
  * @package Vantoozz\ProxyScraper\Scrapers
  */
-final class MultiproxyScraper extends RemoteTextScraper
+final class MultiproxyScraper extends RemoteTextScraper implements Discoverable
 {
     /**
      * @return string

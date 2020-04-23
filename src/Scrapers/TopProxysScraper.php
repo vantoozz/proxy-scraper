@@ -6,7 +6,7 @@ namespace Vantoozz\ProxyScraper\Scrapers;
  * Class TopProxysScraper
  * @package Vantoozz\ProxyScraper\Scrapers
  */
-final class TopProxysScraper extends AbstractRssBloggerScraper
+final class TopProxysScraper extends AbstractRssBloggerScraper implements Discoverable
 {
 
     /**

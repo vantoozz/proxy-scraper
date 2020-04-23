@@ -19,7 +19,7 @@ use function is_array;
  * Class CheckProxyScraper
  * @package Vantoozz\ProxyScraper\Scrapers
  */
-final class CheckProxyScraper implements ScraperInterface
+final class CheckProxyScraper implements ScraperInterface, Discoverable
 {
     private const URL = 'https://checkerproxy.net/api/archive/%s';
     private const ATTEMPTS = 3;

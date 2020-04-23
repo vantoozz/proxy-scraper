@@ -6,7 +6,7 @@ namespace Vantoozz\ProxyScraper\Scrapers;
  * Class FreeProxyListScraper
  * @package Vantoozz\ProxyScraper\Scrapers
  */
-final class FreeProxyListScraper extends AbstractFreeProxyListScraper
+final class FreeProxyListScraper extends AbstractFreeProxyListScraper implements Discoverable
 {
     /**
      * @return string
