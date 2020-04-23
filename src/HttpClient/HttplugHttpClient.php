@@ -46,7 +46,7 @@ final class HttplugHttpClient implements HttpClientInterface
         $request = $this->messageFactory->createRequest(Http::GET, $uri);
         try {
             return $this->httpClient->sendRequest($request)->getBody()->getContents();
-        } catch (ClientExceptionInterface | Exception$e) {
+        } catch (ClientExceptionInterface | Exception $e) {
             throw new HttpClientException($e->getMessage(), $e->getCode(), $e);
         }
     }

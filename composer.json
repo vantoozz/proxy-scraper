@@ -28,6 +28,9 @@
     "ext-simplexml": "*",
     "php-http/guzzle6-adapter": "to use Guzzle as HTTP client"
   },
+  "conflict": {
+    "guzzlehttp/guzzle": "<6.3"
+  },
   "autoload": {
     "psr-4": {
       "Vantoozz\\ProxyScraper\\": [
