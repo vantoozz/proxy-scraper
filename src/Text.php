@@ -35,6 +35,6 @@ final class Text
      */
     public function isXml(): bool
     {
-        return substr($this->text, 0, 5) == "<?xml";
+        return strpos($this->text, '<?xml') === 0;
     }
 }

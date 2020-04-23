@@ -1,8 +1,8 @@
-FROM php:7.4-cli
+FROM php:7.4.5-cli
 
 RUN apt-get update \
     && apt-get install -y libzip-dev zip unzip git iproute2 libssl-dev\
-    && pecl install xdebug-2.9.2 \
+    && pecl install xdebug-2.9.4 \
     && docker-php-ext-enable xdebug \
     && rm -rf /var/lib/apt/lists/*
 
