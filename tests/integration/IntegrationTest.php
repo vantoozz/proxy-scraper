@@ -22,8 +22,8 @@ abstract class IntegrationTest extends TestCase
     {
         return new HttplugHttpClient(
             new HttpAdapter(new GuzzleClient([
-                'connect_timeout' => 2,
-                'timeout' => 3,
+                'connect_timeout' => 5,
+                'timeout' => 10,
             ])),
             new MessageFactory
         );

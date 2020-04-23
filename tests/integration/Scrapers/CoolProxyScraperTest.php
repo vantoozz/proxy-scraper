@@ -20,6 +20,6 @@ final class CoolProxyScraperTest extends IntegrationTest
 
         $proxies = iterator_to_array($scrapper->get(), false);
 
-        static::assertGreaterThanOrEqual(100, count($proxies));
+        static::assertGreaterThanOrEqual(50, count($proxies));
     }
 }
