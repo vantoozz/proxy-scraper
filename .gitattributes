@@ -10,4 +10,4 @@
 /phpmd.xml export-ignore
 /phpunit.xml export-ignore
 /README.md export-ignore
-/docker
+/run_examples.sh export-ignore
