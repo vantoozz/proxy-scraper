@@ -25,6 +25,57 @@ composer require vantoozz/proxy-scraper
 
 ### Usage
 
+#### Auto-configuration
+The simplest way to start using the library is to use `proxyScraper()` function 
+which instantiates and configures all the scrapers. 
+
+Please note, auto-configuration function in addition to `php-http/guzzle6-adapter` 
+requires `hanneskod/classtools` dependency.
+```bash
+composer require php-http/guzzle6-adapter hanneskod/classtools
+```
+```php
+<?php declare(strict_types = 1);
+
+use function Vantoozz\ProxyScraper\proxyScraper;
+
+require_once __DIR__ . '/vendor/autoload.php';
+
+foreach (proxyScraper()->get() as $proxy) {
+    echo $proxy . "\n";
+}
+```
+
+##### HTTP Client
+You can override default parameters of the HTTP client like this:
+```php
+<?php declare(strict_types=1);
+
+use GuzzleHttp\Client as GuzzleClient;
+use Http\Adapter\Guzzle6\Client as HttpAdapter;
+use Http\Message\MessageFactory\GuzzleMessageFactory as MessageFactory;
+use Vantoozz\ProxyScraper\HttpClient\HttplugHttpClient;
+
+use function Vantoozz\ProxyScraper\proxyScraper;
+
+$httpClient = new HttplugHttpClient(
+    new HttpAdapter(new GuzzleClient([
+        'connect_timeout' => 2,
+        'timeout' => 3,
+    ])),
+    new MessageFactory
+);
+
+require_once __DIR__ . '/vendor/autoload.php';
+
+foreach (proxyScraper($httpClient)->get() as $proxy) {
+    echo $proxy . "\n";
+}
+
+```
+
+Of course, you may manually configure the scraper and underlying HTTP client:
+
 #### Single scraper
 ```php
 <?php declare(strict_types = 1);
@@ -133,6 +184,24 @@ An error occurs: some error
 192.168.0.1:8888
 ```
 
+In the same manner you may configure exceptions handling for the scraper 
+created with `proxyScraper()` function as it returns an instance of `CompositeScraper`:
+```php
+<?php declare(strict_types = 1);
+
+use Vantoozz\ProxyScraper\Exceptions\ScraperException;
+
+use function Vantoozz\ProxyScraper\proxyScraper;
+
+require_once __DIR__ . '/vendor/autoload.php';
+
+$scraper = proxyScraper();
+
+$scraper->handleScraperExceptionWith(function (ScraperException $e) {
+    echo 'An error occurs: ' . $e->getMessage() . "\n";
+});
+```
+
 #### Validating proxies
 Validation steps may be added:
 ```php
@@ -232,6 +301,3 @@ _Note. Examples use Guzzle as HTTP client._
 ```bash
 php ./tests/systemTests.php
 ```
-
-
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/d5cffc7f-030f-49b3-ac7f-3769db037ee7/big.png)](https://insight.sensiolabs.com/projects/d5cffc7f-030f-49b3-ac7f-3769db037ee7)
