@@ -16,18 +16,19 @@
     "php-http/httplug": "~1|~2",
     "php-http/message": "~1",
     "symfony/dom-crawler": "~4|~5",
-    "symfony/css-selector": "~4|~5",
-    "hanneskod/classtools": "~1"
+    "symfony/css-selector": "~4|~5"
   },
   "require-dev": {
     "php-http/guzzle6-adapter": "~2",
     "phpunit/phpunit": "^8.4|~9",
-    "league/container": "~3"
+    "league/container": "~3",
+    "hanneskod/classtools": "~1"
   },
   "suggest": {
     "ext-json": "*",
     "ext-simplexml": "*",
-    "php-http/guzzle6-adapter": "to use Guzzle as HTTP client"
+    "php-http/guzzle6-adapter": "to use Guzzle as HTTP client",
+    "hanneskod/classtools": "to enable scrapers auto-discovery"
   },
   "conflict": {
     "guzzlehttp/guzzle": "<6.3",
@@ -38,7 +39,10 @@
       "Vantoozz\\ProxyScraper\\": [
         "src/"
       ]
-    }
+    },
+    "files": [
+      "support/proxyScraper.php"
+    ]
   },
   "autoload-dev": {
     "psr-4": {
