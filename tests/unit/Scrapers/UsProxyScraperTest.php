@@ -10,6 +10,10 @@ use Vantoozz\ProxyScraper\Scrapers\UsProxyScraper;
 use Vantoozz\ProxyScraper\UnitTests\HttpClient\FailingDummyHttpClient;
 use Vantoozz\ProxyScraper\UnitTests\HttpClient\PredefinedDummyHttpClient;
 
+/**
+ * Class UsProxyScraperTest
+ * @package Vantoozz\ProxyScraper\UnitTests\Scrapers
+ */
 final class UsProxyScraperTest extends TestCase
 {
     /**

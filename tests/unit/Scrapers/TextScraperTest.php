@@ -8,7 +8,7 @@ use Vantoozz\ProxyScraper\Scrapers\TextScraper;
 
 /**
  * Class TextScraperTest
- * @package Vantoozz\ProxyScraper\Scrapers
+ * @package Vantoozz\ProxyScraper\UnitTests\Scrapers
  */
 final class TextScraperTest extends TestCase
 {

@@ -2,18 +2,17 @@
 
 namespace Vantoozz\ProxyScraper\UnitTests\Scrapers;
 
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Vantoozz\ProxyScraper\Enums\Metrics;
-use Vantoozz\ProxyScraper\Exceptions\HttpClientException;
 use Vantoozz\ProxyScraper\Exceptions\ScraperException;
-use Vantoozz\ProxyScraper\HttpClient\HttpClientInterface;
 use Vantoozz\ProxyScraper\Proxy;
 use Vantoozz\ProxyScraper\Scrapers\TopProxysScraper;
+use Vantoozz\ProxyScraper\UnitTests\HttpClient\FailingDummyHttpClient;
+use Vantoozz\ProxyScraper\UnitTests\HttpClient\PredefinedDummyHttpClient;
 
 /**
  * Class TopProxysScraperTest
- * @package Vantoozz\ProxyScraper\Scrapers
+ * @package Vantoozz\ProxyScraper\UnitTests\Scrapers
  */
 final class TopProxysScraperTest extends TestCase
 {
@@ -25,14 +24,9 @@ final class TopProxysScraperTest extends TestCase
         $this->expectException(ScraperException::class);
         $this->expectExceptionMessage('error message');
 
-        /** @var HttpClientInterface|MockObject $httpClient */
-        $httpClient = $this->createMock(HttpClientInterface::class);
-        $httpClient
-            ->expects(static::once())
-            ->method('get')
-            ->willThrowException(new HttpClientException('error message'));
-
-        $scraper = new TopProxysScraper($httpClient);
+        $scraper = new TopProxysScraper(
+            new FailingDummyHttpClient('error message')
+        );
         $scraper->get()->current();
     }
 
@@ -44,14 +38,7 @@ final class TopProxysScraperTest extends TestCase
         $this->expectException(ScraperException::class);
         $this->expectExceptionMessage('Invalid XML');
 
-        /** @var HttpClientInterface|MockObject $httpClient */
-        $httpClient = $this->createMock(HttpClientInterface::class);
-        $httpClient
-            ->expects(static::once())
-            ->method('get')
-            ->willReturn('Invalid XML');
-
-        $scraper = new TopProxysScraper($httpClient);
+        $scraper = new TopProxysScraper(new PredefinedDummyHttpClient('Invalid XML'));
         $scraper->get()->current();
     }
 
@@ -60,14 +47,11 @@ final class TopProxysScraperTest extends TestCase
      */
     public function it_returns_source_metric(): void
     {
-        /** @var HttpClientInterface|MockObject $httpClient */
-        $httpClient = $this->createMock(HttpClientInterface::class);
-        $httpClient
-            ->expects(static::once())
-            ->method('get')
-            ->willReturn(file_get_contents(__DIR__ . '/../../fixtures/topProxysBlogger.xml'));
-
-        $scraper = new TopProxysScraper($httpClient);
+        $scraper = new TopProxysScraper(
+            new PredefinedDummyHttpClient(
+                file_get_contents(__DIR__ . '/../../fixtures/topProxysBlogger.xml')
+            )
+        );
         $proxy = $scraper->get()->current();
 
         static::assertInstanceOf(Proxy::class, $proxy);
@@ -81,14 +65,11 @@ final class TopProxysScraperTest extends TestCase
      */
     public function it_returns_a_proxy(): void
     {
-        /** @var HttpClientInterface|MockObject $httpClient */
-        $httpClient = $this->createMock(HttpClientInterface::class);
-        $httpClient
-            ->expects(static::once())
-            ->method('get')
-            ->willReturn(file_get_contents(__DIR__ . '/../../fixtures/topProxysBlogger.xml'));
-
-        $scraper = new TopProxysScraper($httpClient);
+        $scraper = new TopProxysScraper(
+            new PredefinedDummyHttpClient(
+                file_get_contents(__DIR__ . '/../../fixtures/topProxysBlogger.xml')
+            )
+        );
         $proxy = $scraper->get()->current();
 
         static::assertInstanceOf(Proxy::class, $proxy);
