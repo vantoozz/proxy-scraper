@@ -6,11 +6,11 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Vantoozz\ProxyScraper\Enums\Metrics;
 use Vantoozz\ProxyScraper\Exceptions\ScraperException;
-use Vantoozz\ProxyScraper\HttpClient\FailingDummyHttpClient;
 use Vantoozz\ProxyScraper\HttpClient\HttpClientInterface;
-use Vantoozz\ProxyScraper\HttpClient\PredefinedDummyHttpClient;
 use Vantoozz\ProxyScraper\Proxy;
 use Vantoozz\ProxyScraper\Scrapers\CheckProxyScraper;
+use Vantoozz\ProxyScraper\UnitTests\HttpClient\FailingDummyHttpClient;
+use Vantoozz\ProxyScraper\UnitTests\HttpClient\PredefinedDummyHttpClient;
 
 /**
  * Class CheckProxyScraperTest
@@ -114,7 +114,6 @@ final class CheckProxyScraperTest extends TestCase
      */
     public function it_skips_bad_data(): void
     {
-
         $scraper = new CheckProxyScraper(new PredefinedDummyHttpClient(json_encode([123, 234])));
 
         static::assertNull($scraper->get()->current());

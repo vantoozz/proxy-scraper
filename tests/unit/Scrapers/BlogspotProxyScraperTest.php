@@ -5,9 +5,9 @@ namespace Vantoozz\ProxyScraper\UnitTests\Scrapers;
 use PHPUnit\Framework\TestCase;
 use Vantoozz\ProxyScraper\Enums\Metrics;
 use Vantoozz\ProxyScraper\Exceptions\ScraperException;
-use Vantoozz\ProxyScraper\HttpClient\PredefinedDummyHttpClient;
 use Vantoozz\ProxyScraper\Proxy;
 use Vantoozz\ProxyScraper\Scrapers\BlogspotProxyScraper;
+use Vantoozz\ProxyScraper\UnitTests\HttpClient\PredefinedDummyHttpClient;
 
 /**
  * Class BlogspotProxyScraperTest

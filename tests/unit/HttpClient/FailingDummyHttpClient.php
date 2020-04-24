@@ -1,8 +1,9 @@
 <?php declare(strict_types=1);
 
-namespace Vantoozz\ProxyScraper\HttpClient;
+namespace Vantoozz\ProxyScraper\UnitTests\HttpClient;
 
 use Vantoozz\ProxyScraper\Exceptions\HttpClientException;
+use Vantoozz\ProxyScraper\HttpClient\HttpClientInterface;
 
 /**
  * Class FailingDummyHttpClient

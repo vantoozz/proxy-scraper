@@ -5,10 +5,10 @@ namespace Vantoozz\ProxyScraper\UnitTests\Scrapers;
 use PHPUnit\Framework\TestCase;
 use Vantoozz\ProxyScraper\Enums\Metrics;
 use Vantoozz\ProxyScraper\Exceptions\ScraperException;
-use Vantoozz\ProxyScraper\HttpClient\FailingDummyHttpClient;
-use Vantoozz\ProxyScraper\HttpClient\PredefinedDummyHttpClient;
 use Vantoozz\ProxyScraper\Proxy;
 use Vantoozz\ProxyScraper\Scrapers\UsProxyScraper;
+use Vantoozz\ProxyScraper\UnitTests\HttpClient\FailingDummyHttpClient;
+use Vantoozz\ProxyScraper\UnitTests\HttpClient\PredefinedDummyHttpClient;
 
 final class UsProxyScraperTest extends TestCase
 {
