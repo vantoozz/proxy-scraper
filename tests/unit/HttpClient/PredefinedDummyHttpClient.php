@@ -6,7 +6,7 @@ use Vantoozz\ProxyScraper\HttpClient\HttpClientInterface;
 
 /**
  * Class PredefinedDummyHttpClient
- * @package Vantoozz\ProxyScraper\HttpClient
+ * @package Vantoozz\ProxyScraper\UnitTests\HttpClient
  */
 final class PredefinedDummyHttpClient implements HttpClientInterface
 {
