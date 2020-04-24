@@ -2,18 +2,17 @@
 
 namespace Vantoozz\ProxyScraper\UnitTests\Scrapers;
 
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Vantoozz\ProxyScraper\Enums\Metrics;
-use Vantoozz\ProxyScraper\Exceptions\HttpClientException;
 use Vantoozz\ProxyScraper\Exceptions\ScraperException;
-use Vantoozz\ProxyScraper\HttpClient\HttpClientInterface;
 use Vantoozz\ProxyScraper\Proxy;
 use Vantoozz\ProxyScraper\Scrapers\HideMyIpScraper;
+use Vantoozz\ProxyScraper\UnitTests\HttpClient\FailingDummyHttpClient;
+use Vantoozz\ProxyScraper\UnitTests\HttpClient\PredefinedDummyHttpClient;
 
 /**
  * Class HideMyIpScraperTest
- * @package Vantoozz\ProxyScraper\Scrapers
+ * @package Vantoozz\ProxyScraper\UnitTests\Scrapers
  */
 final class HideMyIpScraperTest extends TestCase
 {
@@ -25,14 +24,9 @@ final class HideMyIpScraperTest extends TestCase
         $this->expectException(ScraperException::class);
         $this->expectExceptionMessage('error message');
 
-        /** @var HttpClientInterface|MockObject $httpClient */
-        $httpClient = $this->createMock(HttpClientInterface::class);
-        $httpClient
-            ->expects(static::once())
-            ->method('get')
-            ->willThrowException(new HttpClientException('error message'));
-
-        $scraper = new HideMyIpScraper($httpClient);
+        $scraper = new HideMyIpScraper(
+            new FailingDummyHttpClient('error message')
+        );
         $scraper->get()->current();
     }
 
@@ -44,14 +38,7 @@ final class HideMyIpScraperTest extends TestCase
         $this->expectException(ScraperException::class);
         $this->expectExceptionMessage('Unknown markup');
 
-        /** @var HttpClientInterface|MockObject $httpClient */
-        $httpClient = $this->createMock(HttpClientInterface::class);
-        $httpClient
-            ->expects(static::once())
-            ->method('get')
-            ->willReturn('bad markup');
-
-        $scraper = new HideMyIpScraper($httpClient);
+        $scraper = new HideMyIpScraper(new PredefinedDummyHttpClient('bad markup'));
         $scraper->get()->current();
     }
 
@@ -63,14 +50,7 @@ final class HideMyIpScraperTest extends TestCase
         $this->expectException(ScraperException::class);
         $this->expectExceptionMessage('Cannot parse json: Syntax error');
 
-        /** @var HttpClientInterface|MockObject $httpClient */
-        $httpClient = $this->createMock(HttpClientInterface::class);
-        $httpClient
-            ->expects(static::once())
-            ->method('get')
-            ->willReturn('var json = dcvsdjh');
-
-        $scraper = new HideMyIpScraper($httpClient);
+        $scraper = new HideMyIpScraper(new PredefinedDummyHttpClient('var json = dcvsdjh'));
         $scraper->get()->current();
     }
 
@@ -79,14 +59,9 @@ final class HideMyIpScraperTest extends TestCase
      */
     public function it_returns_source_metric(): void
     {
-        /** @var HttpClientInterface|MockObject $httpClient */
-        $httpClient = $this->createMock(HttpClientInterface::class);
-        $httpClient
-            ->expects(static::once())
-            ->method('get')
-            ->willReturn(file_get_contents(__DIR__ . '/../../fixtures/hideMyIp.html'));
-
-        $scraper = new HideMyIpScraper($httpClient);
+        $scraper = new HideMyIpScraper(
+            new PredefinedDummyHttpClient(file_get_contents(__DIR__ . '/../../fixtures/hideMyIp.html'))
+        );
         $proxy = $scraper->get()->current();
 
         static::assertInstanceOf(Proxy::class, $proxy);
@@ -100,14 +75,9 @@ final class HideMyIpScraperTest extends TestCase
      */
     public function it_returns_a_proxy(): void
     {
-        /** @var HttpClientInterface|MockObject $httpClient */
-        $httpClient = $this->createMock(HttpClientInterface::class);
-        $httpClient
-            ->expects(static::once())
-            ->method('get')
-            ->willReturn(file_get_contents(__DIR__ . '/../../fixtures/hideMyIp.html'));
-
-        $scraper = new HideMyIpScraper($httpClient);
+        $scraper = new HideMyIpScraper(
+            new PredefinedDummyHttpClient(file_get_contents(__DIR__ . '/../../fixtures/hideMyIp.html'))
+        );
         $proxy = $scraper->get()->current();
 
         static::assertInstanceOf(Proxy::class, $proxy);
@@ -119,14 +89,7 @@ final class HideMyIpScraperTest extends TestCase
      */
     public function it_skips_bad_rows(): void
     {
-        /** @var HttpClientInterface|MockObject $httpClient */
-        $httpClient = $this->createMock(HttpClientInterface::class);
-        $httpClient
-            ->expects(static::once())
-            ->method('get')
-            ->willReturn('var json = [{"i":"2323","p":"2323"}] ');
-
-        $scraper = new HideMyIpScraper($httpClient);
+        $scraper = new HideMyIpScraper(new PredefinedDummyHttpClient('var json = [{"i":"2323","p":"2323"}] '));
 
         static::assertNull($scraper->get()->current());
     }
@@ -136,14 +99,7 @@ final class HideMyIpScraperTest extends TestCase
      */
     public function it_skips_bad_formatted_json_items(): void
     {
-        /** @var HttpClientInterface|MockObject $httpClient */
-        $httpClient = $this->createMock(HttpClientInterface::class);
-        $httpClient
-            ->expects(static::once())
-            ->method('get')
-            ->willReturn('var json = [1,2,3] ');
-
-        $scraper = new HideMyIpScraper($httpClient);
+        $scraper = new HideMyIpScraper(new PredefinedDummyHttpClient('var json = [1,2,3] '));
 
         static::assertNull($scraper->get()->current());
     }
@@ -153,14 +109,7 @@ final class HideMyIpScraperTest extends TestCase
      */
     public function it_skips_not_filled_json_items(): void
     {
-        /** @var HttpClientInterface|MockObject $httpClient */
-        $httpClient = $this->createMock(HttpClientInterface::class);
-        $httpClient
-            ->expects(static::once())
-            ->method('get')
-            ->willReturn('var json = [{"a":1}] ');
-
-        $scraper = new HideMyIpScraper($httpClient);
+        $scraper = new HideMyIpScraper(new PredefinedDummyHttpClient('var json = [{"a":1}] '));
 
         static::assertNull($scraper->get()->current());
     }
