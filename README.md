@@ -58,6 +58,8 @@ use Vantoozz\ProxyScraper\HttpClient\HttplugHttpClient;
 
 use function Vantoozz\ProxyScraper\proxyScraper;
 
+require_once __DIR__ . '/vendor/autoload.php';
+
 $httpClient = new HttplugHttpClient(
     new HttpAdapter(new GuzzleClient([
         'connect_timeout' => 2,
@@ -65,8 +67,6 @@ $httpClient = new HttplugHttpClient(
     ])),
     new MessageFactory
 );
-
-require_once __DIR__ . '/vendor/autoload.php';
 
 foreach (proxyScraper($httpClient)->get() as $proxy) {
     echo $proxy . "\n";
