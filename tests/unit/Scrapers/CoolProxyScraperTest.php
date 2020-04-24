@@ -2,14 +2,13 @@
 
 namespace Vantoozz\ProxyScraper\UnitTests\Scrapers;
 
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Vantoozz\ProxyScraper\Enums\Metrics;
-use Vantoozz\ProxyScraper\Exceptions\HttpClientException;
 use Vantoozz\ProxyScraper\Exceptions\ScraperException;
-use Vantoozz\ProxyScraper\HttpClient\HttpClientInterface;
 use Vantoozz\ProxyScraper\Proxy;
 use Vantoozz\ProxyScraper\Scrapers\CoolProxyScraper;
+use Vantoozz\ProxyScraper\UnitTests\HttpClient\FailingDummyHttpClient;
+use Vantoozz\ProxyScraper\UnitTests\HttpClient\PredefinedDummyHttpClient;
 
 /**
  * Class CoolProxyScraperTest
@@ -25,14 +24,10 @@ final class CoolProxyScraperTest extends TestCase
         $this->expectException(ScraperException::class);
         $this->expectExceptionMessage('error message');
 
-        /** @var HttpClientInterface|MockObject $httpClient */
-        $httpClient = $this->createMock(HttpClientInterface::class);
-        $httpClient
-            ->expects(static::once())
-            ->method('get')
-            ->willThrowException(new HttpClientException('error message'));
+        $scraper = new CoolProxyScraper(
+            new FailingDummyHttpClient('error message')
+        );
 
-        $scraper = new CoolProxyScraper($httpClient);
         $scraper->get()->current();
     }
 
@@ -41,14 +36,9 @@ final class CoolProxyScraperTest extends TestCase
      */
     public function it_returns_source_metric(): void
     {
-        /** @var HttpClientInterface|MockObject $httpClient */
-        $httpClient = $this->createMock(HttpClientInterface::class);
-        $httpClient
-            ->expects(static::once())
-            ->method('get')
-            ->willReturn('[{"ip":"177.43.57.48","port":2222},{"ip":"206.189.220.8","port":80}]');
-
-        $scraper = new CoolProxyScraper($httpClient);
+        $scraper = new CoolProxyScraper(
+            new PredefinedDummyHttpClient('[{"ip":"177.43.57.48","port":2222},{"ip":"206.189.220.8","port":80}]')
+        );
         $proxy = $scraper->get()->current();
 
         static::assertInstanceOf(Proxy::class, $proxy);
@@ -62,14 +52,9 @@ final class CoolProxyScraperTest extends TestCase
      */
     public function it_returns_a_proxy(): void
     {
-        /** @var HttpClientInterface|MockObject $httpClient */
-        $httpClient = $this->createMock(HttpClientInterface::class);
-        $httpClient
-            ->expects(static::once())
-            ->method('get')
-            ->willReturn('[{"ip":"177.43.57.48","port":2222},{"ip":"206.189.220.8","port":80}]');
-
-        $scraper = new CoolProxyScraper($httpClient);
+        $scraper = new CoolProxyScraper(
+            new PredefinedDummyHttpClient('[{"ip":"177.43.57.48","port":2222},{"ip":"206.189.220.8","port":80}]')
+        );
         $proxy = $scraper->get()->current();
 
         static::assertInstanceOf(Proxy::class, $proxy);
@@ -81,14 +66,9 @@ final class CoolProxyScraperTest extends TestCase
      */
     public function it_skips_rows_with_no_ip(): void
     {
-        /** @var HttpClientInterface|MockObject $httpClient */
-        $httpClient = $this->createMock(HttpClientInterface::class);
-        $httpClient
-            ->expects(static::atLeastOnce())
-            ->method('get')
-            ->willReturn('[{"port":2222}]');
-
-        $scraper = new CoolProxyScraper($httpClient);
+        $scraper = new CoolProxyScraper(
+            new PredefinedDummyHttpClient('[{"port":2222}]')
+        );
 
         static::assertNull($scraper->get()->current());
     }
@@ -98,14 +78,9 @@ final class CoolProxyScraperTest extends TestCase
      */
     public function it_skips_non_array_rows(): void
     {
-        /** @var HttpClientInterface|MockObject $httpClient */
-        $httpClient = $this->createMock(HttpClientInterface::class);
-        $httpClient
-            ->expects(static::atLeastOnce())
-            ->method('get')
-            ->willReturn('[123]');
-
-        $scraper = new CoolProxyScraper($httpClient);
+        $scraper = new CoolProxyScraper(
+            new PredefinedDummyHttpClient('[123]')
+        );
 
         static::assertNull($scraper->get()->current());
     }
@@ -115,14 +90,9 @@ final class CoolProxyScraperTest extends TestCase
      */
     public function it_skips_rows_with_no_port(): void
     {
-        /** @var HttpClientInterface|MockObject $httpClient */
-        $httpClient = $this->createMock(HttpClientInterface::class);
-        $httpClient
-            ->expects(static::atLeastOnce())
-            ->method('get')
-            ->willReturn('[{"ip":"177.43.57.48"}]');
-
-        $scraper = new CoolProxyScraper($httpClient);
+        $scraper = new CoolProxyScraper(
+            new PredefinedDummyHttpClient('[{"ip":"177.43.57.48"}]')
+        );
 
         static::assertNull($scraper->get()->current());
     }
@@ -135,14 +105,10 @@ final class CoolProxyScraperTest extends TestCase
         $this->expectException(ScraperException::class);
         $this->expectExceptionMessage('Cannot parse json: Syntax error');
 
-        /** @var HttpClientInterface|MockObject $httpClient */
-        $httpClient = $this->createMock(HttpClientInterface::class);
-        $httpClient
-            ->expects(static::once())
-            ->method('get')
-            ->willReturn('var json = dcvsdjh');
+        $scraper = new CoolProxyScraper(
+            new PredefinedDummyHttpClient('var json = dcvsdjh')
+        );
 
-        $scraper = new CoolProxyScraper($httpClient);
         $scraper->get()->current();
     }
 
@@ -154,14 +120,9 @@ final class CoolProxyScraperTest extends TestCase
         $this->expectException(ScraperException::class);
         $this->expectExceptionMessage('No data');
 
-        /** @var HttpClientInterface|MockObject $httpClient */
-        $httpClient = $this->createMock(HttpClientInterface::class);
-        $httpClient
-            ->expects(static::once())
-            ->method('get')
-            ->willReturn('123');
-
-        $scraper = new CoolProxyScraper($httpClient);
+        $scraper = new CoolProxyScraper(
+            new PredefinedDummyHttpClient('123')
+        );
         $scraper->get()->current();
     }
 }
