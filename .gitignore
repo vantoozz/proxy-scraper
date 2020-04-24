@@ -1,5 +1,4 @@
 vendor/
 composer.lock
 tests/.cached_proxies
-.idea/
 .phpunit.result.cache
