@@ -11,7 +11,7 @@ use Vantoozz\ProxyScraper\UnitTests\HttpClient\PredefinedDummyHttpClient;
 
 /**
  * Class BlogspotProxyScraperTest
- * @package Vantoozz\ProxyScraper\Scrapers
+ * @package Vantoozz\ProxyScraper\UnitTests\Scrapers
  */
 final class BlogspotProxyScraperTest extends TestCase
 {

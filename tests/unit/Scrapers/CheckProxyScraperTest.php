@@ -14,7 +14,7 @@ use Vantoozz\ProxyScraper\UnitTests\HttpClient\PredefinedDummyHttpClient;
 
 /**
  * Class CheckProxyScraperTest
- * @package Vantoozz\ProxyScraper\Scrapers
+ * @package Vantoozz\ProxyScraper\UnitTests\Scrapers
  */
 final class CheckProxyScraperTest extends TestCase
 {
@@ -26,7 +26,9 @@ final class CheckProxyScraperTest extends TestCase
         $this->expectException(ScraperException::class);
         $this->expectExceptionMessage('error message');
 
-        $scraper = new CheckProxyScraper(new FailingDummyHttpClient('error message'));
+        $scraper = new CheckProxyScraper(
+            new FailingDummyHttpClient('error message')
+        );
         $scraper->get()->current();
     }
 

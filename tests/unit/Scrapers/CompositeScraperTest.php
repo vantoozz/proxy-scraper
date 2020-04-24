@@ -10,6 +10,10 @@ use Vantoozz\ProxyScraper\ProxyString;
 use Vantoozz\ProxyScraper\Scrapers\CompositeScraper;
 use Vantoozz\ProxyScraper\Scrapers\ScraperInterface;
 
+/**
+ * Class CompositeScraperTest
+ * @package Vantoozz\ProxyScraper\UnitTests\Scrapers
+ */
 final class CompositeScraperTest extends TestCase
 {
     /**

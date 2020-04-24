@@ -12,7 +12,7 @@ use Vantoozz\ProxyScraper\UnitTests\HttpClient\PredefinedDummyHttpClient;
 
 /**
  * Class CoolProxyScraperTest
- * @package Vantoozz\ProxyScraper\Scrapers
+ * @package Vantoozz\ProxyScraper\UnitTests\Scrapers
  */
 final class CoolProxyScraperTest extends TestCase
 {
