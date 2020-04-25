@@ -7,16 +7,34 @@ Library for scraping free proxies lists written in PHP
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/4b3e0816e98d486e9f0eff445a6310c6)](https://www.codacy.com/app/vantoozz/proxy-scraper?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=vantoozz/proxy-scraper&amp;utm_campaign=Badge_Grade)
 [![Packagist](https://img.shields.io/packagist/v/vantoozz/proxy-scraper.svg)](https://packagist.org/packages/vantoozz/proxy-scraper)
 
+### Quick start
+```bash
+composer require vantoozz/proxy-scraper php-http/guzzle6-adapter hanneskod/classtools
+```
+```php
+<?php declare(strict_types = 1);
+
+use function Vantoozz\ProxyScraper\proxyScraper;
+
+require_once __DIR__ . '/vendor/autoload.php';
+
+foreach (proxyScraper()->get() as $proxy) {
+    echo $proxy . "\n";
+}
+```
+
 ### Older versions
 This is version 2 of the library. For version 1 please check [v1](https://github.com/vantoozz/proxy-scraper/tree/v1) branch.
 
 ### Setup
 
-The library is built on top of [HTTPlug](http://httplug.io/) and requires a compatible HTTP client. Available clients are listed on Packagist: https://packagist.org/providers/php-http/client-implementation. To use the library you have to install any of them, e.g.:
+The library uses [HTTPlug](http://httplug.io/) and requires a compatible HTTP client. 
+To use the library you have to install any of them, e.g.:
 
 ```bash
 composer require php-http/guzzle6-adapter
 ```
+All available clients are listed on Packagist: https://packagist.org/providers/php-http/client-implementation.
 
 Then install proxy-scraper library itself:
 ```bash
