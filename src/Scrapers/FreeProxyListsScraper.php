@@ -18,7 +18,9 @@ use Vantoozz\ProxyScraper\ProxyString;
  */
 final class FreeProxyListsScraper implements ScraperInterface, Discoverable
 {
-
+    /**
+     *
+     */
     private const BASE_URL = 'http://www.freeproxylists.com/';
 
     /**
@@ -52,17 +54,26 @@ final class FreeProxyListsScraper implements ScraperInterface, Discoverable
      */
     private function getPages(): Generator
     {
-        foreach (['elite', 'anonymous', 'non-anonymous', 'https', 'standard', 'socks'] as $type) {
-            yield from $this->getPagesOfType($type);
+        foreach ([
+                'elite' => 'elite',
+                'anonymous' => 'anon',
+                'non-anonymous' => 'nonanon',
+                'https' => 'https',
+                'standard' => 'standard',
+                'socks' => 'socks',
+            ] as $type => $prefix
+        ) {
+            yield from $this->getPagesOfType($type, $prefix);
         }
     }
 
     /**
      * @param string $type
+     * @param string $prefix
      * @return Generator|string[]
      * @throws ScraperException
      */
-    private function getPagesOfType(string $type): Generator
+    private function getPagesOfType(string $type, string $prefix): Generator
     {
         try {
             $html = $this->httpClient->get(static::BASE_URL . $type . '.html');
@@ -71,7 +82,7 @@ final class FreeProxyListsScraper implements ScraperInterface, Discoverable
         }
 
         $matches = [];
-        preg_match_all('/' . $type . '\/\d+.html/', $html, $matches);
+        preg_match_all('/' . $prefix . '\/\d+.html/', $html, $matches);
 
         foreach ($matches[0] as $page) {
             yield 'load_' . str_replace('/', '_', $page);
