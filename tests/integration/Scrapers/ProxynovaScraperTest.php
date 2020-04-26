@@ -20,6 +20,6 @@ final class ProxynovaScraperTest extends IntegrationTest
         $scrapper = new ProxynovaScraper($this->httpClient());
 
         $proxies = iterator_to_array($scrapper->get());
-        static::assertGreaterThanOrEqual(100, count($proxies));
+        static::assertGreaterThanOrEqual(30, count($proxies));
     }
 }
