@@ -50,6 +50,6 @@ final class Metric
      */
     public function __toString()
     {
-        return $this->name . ': ' . (string)$this->value;
+        return $this->name . ': ' . $this->value;
     }
 }

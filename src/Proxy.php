@@ -56,7 +56,7 @@ final class Proxy
      */
     public function __toString(): string
     {
-        return (string)$this->ipv4 . ':' . (string)$this->port;
+        return $this->ipv4 . ':' . $this->port;
     }
 
     /**
