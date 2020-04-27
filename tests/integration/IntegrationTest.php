@@ -7,7 +7,7 @@ use Http\Adapter\Guzzle6\Client as HttpAdapter;
 use Http\Message\MessageFactory\GuzzleMessageFactory as MessageFactory;
 use PHPUnit\Framework\TestCase;
 use Vantoozz\ProxyScraper\HttpClient\HttpClientInterface;
-use Vantoozz\ProxyScraper\HttpClient\HttplugHttpClient;
+use Vantoozz\ProxyScraper\HttpClient\Psr18HttpClient;
 
 /**
  * Class IntegrationTest
@@ -20,7 +20,7 @@ abstract class IntegrationTest extends TestCase
      */
     protected function httpClient(): HttpClientInterface
     {
-        return new HttplugHttpClient(
+        return new Psr18HttpClient(
             new HttpAdapter(new GuzzleClient([
                 'connect_timeout' => 5,
                 'timeout' => 10,

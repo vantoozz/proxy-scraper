@@ -7,6 +7,8 @@ Library for scraping free proxies lists written in PHP
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/4b3e0816e98d486e9f0eff445a6310c6)](https://www.codacy.com/app/vantoozz/proxy-scraper?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=vantoozz/proxy-scraper&amp;utm_campaign=Badge_Grade)
 [![Packagist](https://img.shields.io/packagist/v/vantoozz/proxy-scraper.svg)](https://packagist.org/packages/vantoozz/proxy-scraper)
 
+---
+
 ### Quick start
 ```bash
 composer require vantoozz/proxy-scraper:v2.x-dev php-http/guzzle6-adapter hanneskod/classtools
@@ -23,18 +25,20 @@ foreach (proxyScraper()->get() as $proxy) {
 }
 ```
 
+---
+
 ### Older versions
 This is version 2 of the library. For version 1 please check [v1](https://github.com/vantoozz/proxy-scraper/tree/v1) branch.
 
 ### Setup
 
-The library uses [HTTPlug](http://httplug.io/) and requires a compatible HTTP client. 
+The library requires a PSR-18 compatible HTTP client. 
 To use the library you have to install any of them, e.g.:
 
 ```bash
 composer require php-http/guzzle6-adapter
 ```
-All available clients are listed on Packagist: https://packagist.org/providers/php-http/client-implementation.
+All available clients are listed on Packagist: https://packagist.org/providers/psr/http-client-implementation.
 
 Then install proxy-scraper library itself:
 ```bash
@@ -72,13 +76,13 @@ You can override default parameters of the HTTP client like this:
 use GuzzleHttp\Client as GuzzleClient;
 use Http\Adapter\Guzzle6\Client as HttpAdapter;
 use Http\Message\MessageFactory\GuzzleMessageFactory as MessageFactory;
-use Vantoozz\ProxyScraper\HttpClient\HttplugHttpClient;
+use Vantoozz\ProxyScraper\HttpClient\Psr18HttpClient;
 
 use function Vantoozz\ProxyScraper\proxyScraper;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-$httpClient = new HttplugHttpClient(
+$httpClient = new Psr18HttpClient(
     new HttpAdapter(new GuzzleClient([
         'connect_timeout' => 2,
         'timeout' => 3,
@@ -101,12 +105,12 @@ Of course, you may manually configure the scraper and underlying HTTP client:
 use GuzzleHttp\Client as GuzzleClient;
 use Http\Adapter\Guzzle6\Client as HttpAdapter;
 use Http\Message\MessageFactory\GuzzleMessageFactory as MessageFactory;
-use Vantoozz\ProxyScraper\HttpClient\HttplugHttpClient;
+use Vantoozz\ProxyScraper\HttpClient\Psr18HttpClient;
 use Vantoozz\ProxyScraper\Scrapers;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-$httpClient = new HttplugHttpClient(
+$httpClient = new Psr18HttpClient(
     new HttpAdapter(new GuzzleClient([
         'connect_timeout' => 2,
         'timeout' => 3,
@@ -129,12 +133,12 @@ You can easily get data from many scrapers at once:
 use GuzzleHttp\Client as GuzzleClient;
 use Http\Adapter\Guzzle6\Client as HttpAdapter;
 use Http\Message\MessageFactory\GuzzleMessageFactory as MessageFactory;
-use Vantoozz\ProxyScraper\HttpClient\HttplugHttpClient;
+use Vantoozz\ProxyScraper\HttpClient\Psr18HttpClient;
 use Vantoozz\ProxyScraper\Scrapers;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-$httpClient = new HttplugHttpClient(
+$httpClient = new Psr18HttpClient(
     new HttpAdapter(new GuzzleClient([
         'connect_timeout' => 2,
         'timeout' => 3,
@@ -271,13 +275,13 @@ By default Proxy object has _source_ metric:
 use GuzzleHttp\Client as GuzzleClient;
 use Http\Adapter\Guzzle6\Client as HttpAdapter;
 use Http\Message\MessageFactory\GuzzleMessageFactory as MessageFactory;
-use Vantoozz\ProxyScraper\HttpClient\HttplugHttpClient;
+use Vantoozz\ProxyScraper\HttpClient\Psr18HttpClient;
 use Vantoozz\ProxyScraper\Proxy;
 use Vantoozz\ProxyScraper\Scrapers;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-$httpClient = new HttplugHttpClient(
+$httpClient = new Psr18HttpClient(
     new HttpAdapter(new GuzzleClient([
         'connect_timeout' => 2,
         'timeout' => 3,

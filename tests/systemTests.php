@@ -9,7 +9,7 @@ use hanneskod\classtools\Iterator\ClassIterator;
 use Http\Adapter\Guzzle6\Client as HttpAdapter;
 use Http\Message\MessageFactory\GuzzleMessageFactory as MessageFactory;
 use Symfony\Component\Finder\Finder;
-use Vantoozz\ProxyScraper\HttpClient\HttplugHttpClient;
+use Vantoozz\ProxyScraper\HttpClient\Psr18HttpClient;
 use Vantoozz\ProxyScraper\Scrapers\Discoverable;
 use Vantoozz\ProxyScraper\Scrapers\ScraperInterface;
 use Vantoozz\ProxyScraper\SystemTests\ProxiesMiner\Cached;
@@ -18,7 +18,7 @@ use Vantoozz\ProxyScraper\SystemTests\Reports\DuplicatesReport;
 use Vantoozz\ProxyScraper\SystemTests\Reports\ExclusivityReport;
 use Vantoozz\ProxyScraper\SystemTests\Reports\ReportsPipeline;
 
-$httpClient = new HttplugHttpClient(
+$httpClient = new Psr18HttpClient(
     new HttpAdapter(new GuzzleClient([
         'connect_timeout' => 5,
         'timeout' => 10,

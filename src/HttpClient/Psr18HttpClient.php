@@ -3,17 +3,17 @@
 namespace Vantoozz\ProxyScraper\HttpClient;
 
 use Exception;
-use Http\Client\HttpClient as Client;
+use Psr\Http\Client\ClientInterface as Client;
 use Http\Message\MessageFactory;
 use Psr\Http\Client\ClientExceptionInterface;
 use Vantoozz\ProxyScraper\Enums\Http;
 use Vantoozz\ProxyScraper\Exceptions\HttpClientException;
 
 /**
- * Class HttplugHttpClient
+ * Class Psr18HttpClient
  * @package Vantoozz\ProxyScraper
  */
-final class HttplugHttpClient implements HttpClientInterface
+final class Psr18HttpClient implements HttpClientInterface
 {
     /**
      * @var Client
@@ -26,7 +26,7 @@ final class HttplugHttpClient implements HttpClientInterface
     private $messageFactory;
 
     /**
-     * HttplugHttpClient constructor.
+     * Psr18HttpClient constructor.
      * @param Client $httpClient
      * @param MessageFactory $messageFactory
      */

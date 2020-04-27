@@ -6,7 +6,7 @@ use Vantoozz\ProxyScraper\Exceptions\HttpClientException;
 
 /**
  * Interface HttpClientInterface
- * @package Vantoozz\ProxyScraper\HttplugHttpClient
+ * @package Vantoozz\ProxyScraper\Psr18HttpClient
  */
 interface HttpClientInterface
 {

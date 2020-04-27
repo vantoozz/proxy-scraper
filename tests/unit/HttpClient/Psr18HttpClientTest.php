@@ -12,13 +12,13 @@ use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
 use Vantoozz\ProxyScraper\Exceptions\HttpClientException;
-use Vantoozz\ProxyScraper\HttpClient\HttplugHttpClient;
+use Vantoozz\ProxyScraper\HttpClient\Psr18HttpClient;
 
 /**
- * Class HttplugHttpClientTest
+ * Class Psr18HttpClientTest
  * @package Vantoozz\ProxyScraper\UnitTests\HttpClient
  */
-final class HttplugHttpClientTest extends TestCase
+final class Psr18HttpClientTest extends TestCase
 {
     /**
      * @test
@@ -46,7 +46,7 @@ final class HttplugHttpClientTest extends TestCase
             ->method('sendRequest')
             ->willThrowException(new Exception('error message'));
 
-        $httpClient = new HttplugHttpClient($client, $messageFactory);
+        $httpClient = new Psr18HttpClient($client, $messageFactory);
         $httpClient->get('some url');
     }
 
@@ -77,7 +77,7 @@ final class HttplugHttpClientTest extends TestCase
             {
             });
 
-        $httpClient = new HttplugHttpClient($client, $messageFactory);
+        $httpClient = new Psr18HttpClient($client, $messageFactory);
         $httpClient->get('some url');
     }
 
@@ -119,7 +119,7 @@ final class HttplugHttpClientTest extends TestCase
             ->method('getContents')
             ->willReturn('some string');
 
-        $httpClient = new HttplugHttpClient($client, $messageFactory);
+        $httpClient = new Psr18HttpClient($client, $messageFactory);
 
         static::assertEquals('some string', $httpClient->get('some url'));
     }
