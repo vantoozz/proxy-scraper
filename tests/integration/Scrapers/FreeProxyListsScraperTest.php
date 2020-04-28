@@ -19,7 +19,7 @@ final class FreeProxyListsScraperTest extends IntegrationTest
     {
         $scrapper = new FreeProxyListsScraper($this->httpClient());
 
-        $proxies = iterator_to_array($scrapper->get());
+        $proxies = iterator_to_array($scrapper->get(), false);
 
         static::assertGreaterThanOrEqual(50, count($proxies));
     }

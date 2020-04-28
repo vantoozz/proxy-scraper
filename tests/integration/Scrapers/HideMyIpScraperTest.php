@@ -18,7 +18,7 @@ final class HideMyIpScraperTest extends IntegrationTest
     {
         $scrapper = new HideMyIpScraper($this->httpClient());
 
-        $proxies = iterator_to_array($scrapper->get());
+        $proxies = iterator_to_array($scrapper->get(), false);
 
         static::assertGreaterThanOrEqual(50, count($proxies));
     }

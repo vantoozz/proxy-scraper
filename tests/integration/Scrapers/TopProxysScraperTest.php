@@ -18,7 +18,8 @@ final class TopProxysScraperTest extends IntegrationTest
     {
         $scrapper = new TopProxysScraper($this->httpClient());
 
-        $proxies = iterator_to_array($scrapper->get());
+        $proxies = iterator_to_array($scrapper->get(), false);
+
         static::assertGreaterThanOrEqual(100, count($proxies));
     }
 }

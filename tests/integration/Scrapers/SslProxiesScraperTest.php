@@ -18,7 +18,8 @@ final class SslProxiesScraperTest extends IntegrationTest
     {
         $scrapper = new SslProxiesScraper($this->httpClient());
 
-        $proxies = iterator_to_array($scrapper->get());
+        $proxies = iterator_to_array($scrapper->get(), false);
+
         static::assertGreaterThanOrEqual(50, count($proxies));
     }
 }

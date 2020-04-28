@@ -3,20 +3,21 @@
 namespace Vantoozz\ProxyScraper\IntegrationTests\Scrapers;
 
 use Vantoozz\ProxyScraper\IntegrationTests\IntegrationTest;
-use Vantoozz\ProxyScraper\Scrapers\MultiproxyScraper;
+use Vantoozz\ProxyScraper\Scrapers\ProxyListOrgScraper;
 
 /**
- * Class MultiproxyScraperTest
+ * Class ProxyListOrgScraperTest
  * @package Vantoozz\ProxyScraper\IntegrationTests\Scrapers
  */
-final class MultiproxyScraperTest extends IntegrationTest
+final class ProxyListOrgScraperTest extends IntegrationTest
 {
+
     /**
      * @test
      */
     public function it_works(): void
     {
-        $scrapper = new MultiproxyScraper($this->httpClient());
+        $scrapper = new ProxyListOrgScraper($this->httpClient());
 
         $proxies = iterator_to_array($scrapper->get(), false);
 
