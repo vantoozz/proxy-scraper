@@ -41,7 +41,7 @@ foreach ($classIterator->type(Discoverable::class) as $class) {
 
 $cacheFilename = __DIR__ . '/.cached_proxies';
 if (in_array('--refresh', $argv, true)) {
-    unlink($cacheFilename);
+    @unlink($cacheFilename);
 }
 if (in_array('--cached', $argv, true)) {
     $miner = new Cached($miner, $cacheFilename);

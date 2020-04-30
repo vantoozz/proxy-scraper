@@ -16,7 +16,7 @@ use Vantoozz\ProxyScraper\ProxyString;
  * Class FreeProxyListsScraper
  * @package Vantoozz\ProxyScraper\Scrapers
  */
-final class FreeProxyListsScraper implements ScraperInterface, Discoverable
+final class FreeProxyListsScraper implements ScraperInterface
 {
     /**
      *

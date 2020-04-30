@@ -4,6 +4,7 @@ namespace Vantoozz\ProxyScraper\SystemTests\ProxiesMiner;
 
 use Vantoozz\ProxyScraper\Exceptions\ScraperException;
 use Vantoozz\ProxyScraper\Scrapers\ScraperInterface;
+use Vantoozz\ProxyScraper\SystemTests\Timed;
 
 /**
  * Class ScrapersProxiesMiner
@@ -31,6 +32,7 @@ final class ScrapersProxiesMiner implements ProxiesMinerInterface
      */
     public function getProxies(): array
     {
+        echo '==FETCHING TIME==' . "\n";
         $proxies = [];
         foreach ($this->scrapers as $class => $scraper) {
             try {
@@ -39,6 +41,9 @@ final class ScrapersProxiesMiner implements ProxiesMinerInterface
                 $proxies[$class] = [];
             }
         }
+        echo "\n";
+        echo "\n";
+
         return $proxies;
     }
 
@@ -50,7 +55,7 @@ final class ScrapersProxiesMiner implements ProxiesMinerInterface
     private function fetchProxies(ScraperInterface $scraper): array
     {
         $proxies = [];
-        foreach ($scraper->get() as $proxy) {
+        foreach ((new Timed($scraper))->get() as $proxy) {
             $parts = explode(':', (string)$proxy);
             if (!isset($proxies[ip2long($parts[0])])) {
                 $proxies[ip2long($parts[0])] = [];

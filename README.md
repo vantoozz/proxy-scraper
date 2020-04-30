@@ -10,7 +10,7 @@ Library for scraping free proxies lists written in PHP
 
 ### Quick start
 ```bash
-composer require vantoozz/proxy-scraper:v2.x-dev php-http/guzzle6-adapter hanneskod/classtools
+composer require vantoozz/proxy-scraper:~2 php-http/guzzle6-adapter hanneskod/classtools
 ```
 ```php
 <?php declare(strict_types = 1);
@@ -41,7 +41,7 @@ All available clients are listed on Packagist: https://packagist.org/providers/p
 
 Then install proxy-scraper library itself:
 ```bash
-composer require vantoozz/proxy-scraper:v2.x-dev
+composer require vantoozz/proxy-scraper:~2
 ```
 
 ### Usage
