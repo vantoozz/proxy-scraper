@@ -11,7 +11,6 @@ use Symfony\Component\Finder\Finder;
 use Vantoozz\ProxyScraper\HttpClient\HttpClientInterface;
 use Vantoozz\ProxyScraper\HttpClient\Psr18HttpClient;
 use Vantoozz\ProxyScraper\Scrapers\Discoverable;
-use Vantoozz\ProxyScraper\Scrapers\Distinct;
 use Vantoozz\ProxyScraper\Scrapers\ScraperInterface;
 
 /**
@@ -74,7 +73,7 @@ function proxyScraper(HttpClientInterface $httpClient = null): Scrapers\Composit
             /** @var ScraperInterface $scraper */
             $scraper = $class->newInstance($this->httpClient);
 
-            $compositeScraper->addScraper(new Distinct($scraper));
+            $compositeScraper->addScraper($scraper);
         }
 
         /**

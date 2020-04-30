@@ -18,7 +18,7 @@ use Vantoozz\ProxyScraper\ProxyString;
  * Class ProxynovaScraper
  * @package Vantoozz\ProxyScraper\Scrapers
  */
-final class ProxynovaScraper implements ScraperInterface, Discoverable
+final class ProxynovaScraper implements ScraperInterface
 {
     /**
      *
