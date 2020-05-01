@@ -1,14 +1,15 @@
 <?php declare(strict_types=1);
 
 
-namespace Vantoozz\ProxyScraper\Scrapers;
+namespace Vantoozz\ProxyScraper\Scrapers\Decorators;
 
 use Generator;
 use Vantoozz\ProxyScraper\Exceptions\ScraperException;
+use Vantoozz\ProxyScraper\Scrapers\ScraperInterface;
 
 /**
  * Class Distinct
- * @package Vantoozz\ProxyScraper\Scrapers
+ * @package Vantoozz\ProxyScraper\Scrapers\Decorators
  */
 final class Distinct implements ScraperInterface
 {

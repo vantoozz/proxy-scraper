@@ -2,9 +2,10 @@
 
 namespace Vantoozz\ProxyScraper\SystemTests\ProxiesMiner;
 
+use Generator;
 use Vantoozz\ProxyScraper\Exceptions\ScraperException;
+use Vantoozz\ProxyScraper\Scrapers\Decorators\Timed;
 use Vantoozz\ProxyScraper\Scrapers\ScraperInterface;
-use Vantoozz\ProxyScraper\SystemTests\Timed;
 
 /**
  * Class ScrapersProxiesMiner
@@ -55,7 +56,7 @@ final class ScrapersProxiesMiner implements ProxiesMinerInterface
     private function fetchProxies(ScraperInterface $scraper): array
     {
         $proxies = [];
-        foreach ((new Timed($scraper))->get() as $proxy) {
+        foreach ((new Timed($scraper, $this->output($scraper)))->get() as $proxy) {
             $parts = explode(':', (string)$proxy);
             if (!isset($proxies[ip2long($parts[0])])) {
                 $proxies[ip2long($parts[0])] = [];
@@ -64,5 +65,21 @@ final class ScrapersProxiesMiner implements ProxiesMinerInterface
         }
         ksort($proxies);
         return $proxies;
+    }
+
+    /**
+     * @param ScraperInterface $scraper
+     * @return Generator
+     */
+    private function output(ScraperInterface $scraper): Generator
+    {
+        $fullClass = explode('\\', get_class($scraper));
+        $class = end($fullClass);
+        while ([$event, $time] = yield) {
+            if (Timed::EVENT_DONE !== $event) {
+                continue;
+            }
+            echo $class . ' => ' . round($time, 2) . "s\n";
+        }
     }
 }
