@@ -29,6 +29,9 @@ foreach (proxyScraper()->get() as $proxy) {
 ### Older versions
 This is version 2 of the library. For version 1 please check [v1](https://github.com/vantoozz/proxy-scraper/tree/v1) branch.
 
+#### Upgrade
+[How to upgrade](#Upgrade from version 1)
+
 ### Setup
 
 The library requires a PSR-18 compatible HTTP client. 
@@ -321,4 +324,29 @@ _Note. Examples use Guzzle as HTTP client._
 ##### System tests
 ```bash
 php ./tests/systemTests.php
+```
+
+### Upgrade from version 1
+
+The biggest difference from version 1 
+is using a PSR-18 instead of HTTPlug compatible HTTP client.
+
+Instead of 
+```php
+$httpClient = new \Vantoozz\ProxyScraper\HttpClient\GuzzleHttpClient(
+    new \GuzzleHttp\Client([
+        'connect_timeout' => 2,
+        'timeout' => 3,
+    ])
+);
+```
+the client should be instantiated like
+```php
+$httpClient = new \Vantoozz\ProxyScraper\HttpClient\Psr18HttpClient(
+    new \Http\Adapter\Guzzle6\Client(new \GuzzleHttp\Client([
+        'connect_timeout' => 2,
+        'timeout' => 3,
+    ])),
+    new \Http\Message\MessageFactory\GuzzleMessageFactory
+);
 ```
