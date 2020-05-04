@@ -30,7 +30,7 @@ foreach (proxyScraper()->get() as $proxy) {
 This is version 2 of the library. For version 1 please check [v1](https://github.com/vantoozz/proxy-scraper/tree/v1) branch.
 
 #### Upgrade
-[How to upgrade](#Upgrade from version 1)
+[How to upgrade](#Upgrade-from-version-1)
 
 ### Setup
 
