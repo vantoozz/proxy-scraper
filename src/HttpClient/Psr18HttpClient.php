@@ -6,7 +6,6 @@ use Exception;
 use Psr\Http\Client\ClientInterface as Client;
 use Http\Message\MessageFactory;
 use Psr\Http\Client\ClientExceptionInterface;
-use Vantoozz\ProxyScraper\Enums\Http;
 use Vantoozz\ProxyScraper\Exceptions\HttpClientException;
 
 /**
@@ -43,7 +42,7 @@ final class Psr18HttpClient implements HttpClientInterface
      */
     public function get(string $uri): string
     {
-        $request = $this->messageFactory->createRequest(Http::GET, $uri);
+        $request = $this->messageFactory->createRequest('GET', $uri);
         try {
             return $this->httpClient->sendRequest($request)->getBody()->getContents();
         } catch (ClientExceptionInterface | Exception $e) {
