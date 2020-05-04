@@ -86,7 +86,7 @@ final class TimedTest extends TestCase
             {
                 usleep(100000);
                 yield new Proxy(new Ipv4('123.123.123.123'), new Port(1234));
-                usleep(150000);
+                usleep(250000);
                 yield new Proxy(new Ipv4('234.234.234.234'), new Port(2345));
             }
         };
