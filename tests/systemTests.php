@@ -8,10 +8,9 @@ use GuzzleHttp\Client as GuzzleClient;
 use hanneskod\classtools\Iterator\ClassIterator;
 use Http\Adapter\Guzzle6\Client as HttpAdapter;
 use Http\Message\MessageFactory\GuzzleMessageFactory as MessageFactory;
-use ReflectionClass;
 use Symfony\Component\Finder\Finder;
-use Vantoozz\ProxyScraper\HttpClient\HttpClientInterface;
 use Vantoozz\ProxyScraper\HttpClient\Psr18HttpClient;
+use Vantoozz\ProxyScraper\Scrapers\Discoverable;
 use Vantoozz\ProxyScraper\Scrapers\ScraperInterface;
 use Vantoozz\ProxyScraper\SystemTests\ProxiesMiner\Cached;
 use Vantoozz\ProxyScraper\SystemTests\Reports\CountsReport;
@@ -30,31 +29,10 @@ $httpClient = new Psr18HttpClient(
 $miner = new ProxiesMiner\ScrapersProxiesMiner;
 
 $classIterator = new ClassIterator((new Finder)->in(__DIR__ . '/../src/Scrapers'));
-foreach ($classIterator->type(ScraperInterface::class) as $class) {
-    /** @var ReflectionClass $class */
+foreach ($classIterator->type(Discoverable::class) as $class) {
     if (!$class->isInstantiable()) {
         continue;
     }
-
-    $constructor = $class->getConstructor();
-    if (!$constructor) {
-        continue;
-    }
-
-    $parameters = $constructor->getParameters();
-    if (1 !== count($parameters)) {
-        continue;
-    }
-
-    $dependency = $parameters[0]->getClass();
-    if (!$dependency) {
-        continue;
-    }
-
-    if (!$dependency->implementsInterface(HttpClientInterface::class)) {
-        continue;
-    }
-
     /** @var ScraperInterface $scraper */
     $scraper = $class->newInstance($httpClient);
     $miner->addScraper($scraper);
