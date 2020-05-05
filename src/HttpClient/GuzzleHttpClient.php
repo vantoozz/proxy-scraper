@@ -11,7 +11,7 @@ use Vantoozz\ProxyScraper\Exceptions\HttpClientException;
 /**
  * Class GuzzleHttpClient
  * @package Vantoozz\ProxyScraper\HttpClient
- * @deprecated
+ * @deprecated Use Psr18HttpClient instead
  */
 final class GuzzleHttpClient implements HttpClientInterface
 {
