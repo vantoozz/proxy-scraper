@@ -67,10 +67,9 @@ final class TimedTest extends TestCase
         iterator_to_array((new Timed($this->scraper(), $this->output($events)))->get());
 
         static::assertSame('proxy_found', $events[0][0]);
-        static::assertSame('proxy_found', $events[1][0]);
         static::assertIsFloat($events[0][1]);
+        static::assertSame('proxy_found', $events[1][0]);
         static::assertIsFloat($events[1][1]);
-        static::assertNotSame($events[0][1], $events[1][1]);
     }
 
     /**
@@ -84,9 +83,7 @@ final class TimedTest extends TestCase
              */
             public function get(): Generator
             {
-                usleep(100000);
                 yield new Proxy(new Ipv4('123.123.123.123'), new Port(1234));
-                usleep(250000);
                 yield new Proxy(new Ipv4('234.234.234.234'), new Port(2345));
             }
         };
