@@ -83,8 +83,8 @@ function proxyScraper(HttpClientInterface $httpClient = null): Scrapers\Composit
         {
             return new Psr18HttpClient(
                 new HttpAdapter(new GuzzleClient([
-                    'connect_timeout' => 5,
-                    'timeout' => 10,
+                    'connect_timeout' => 10,
+                    'timeout' => 20,
                 ])),
                 new MessageFactory
             );
