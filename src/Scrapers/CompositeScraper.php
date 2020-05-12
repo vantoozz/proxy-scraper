@@ -5,6 +5,7 @@ namespace Vantoozz\ProxyScraper\Scrapers;
 use Generator;
 use Vantoozz\ProxyScraper\Exceptions\ScraperException;
 use Vantoozz\ProxyScraper\Proxy;
+
 use function call_user_func;
 use function is_callable;
 

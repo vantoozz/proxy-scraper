@@ -12,6 +12,7 @@ use Vantoozz\ProxyScraper\Ipv4;
 use Vantoozz\ProxyScraper\Metric;
 use Vantoozz\ProxyScraper\Port;
 use Vantoozz\ProxyScraper\Proxy;
+
 use function is_array;
 
 /**

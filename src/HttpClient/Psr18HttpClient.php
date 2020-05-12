@@ -3,9 +3,9 @@
 namespace Vantoozz\ProxyScraper\HttpClient;
 
 use Exception;
-use Psr\Http\Client\ClientInterface as Client;
 use Http\Message\MessageFactory;
 use Psr\Http\Client\ClientExceptionInterface;
+use Psr\Http\Client\ClientInterface as Client;
 use Vantoozz\ProxyScraper\Exceptions\HttpClientException;
 
 /**

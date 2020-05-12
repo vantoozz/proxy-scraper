@@ -7,7 +7,6 @@ use Vantoozz\ProxyScraper\Enums\Metrics;
 use Vantoozz\ProxyScraper\Exceptions\ScraperException;
 use Vantoozz\ProxyScraper\Proxy;
 use Vantoozz\ProxyScraper\Scrapers\ProxyListOrgScraper;
-use Vantoozz\ProxyScraper\Scrapers\ProxynovaScraper;
 use Vantoozz\ProxyScraper\UnitTests\HttpClient\FailingDummyHttpClient;
 use Vantoozz\ProxyScraper\UnitTests\HttpClient\PredefinedDummyHttpClient;
 

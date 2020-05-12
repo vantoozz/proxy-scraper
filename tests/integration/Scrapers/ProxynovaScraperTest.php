@@ -4,7 +4,6 @@ namespace Vantoozz\ProxyScraper\IntegrationTests\Scrapers;
 
 use Vantoozz\ProxyScraper\IntegrationTests\IntegrationTest;
 use Vantoozz\ProxyScraper\Scrapers\ProxynovaScraper;
-use Vantoozz\ProxyScraper\Scrapers\UsProxyScraper;
 
 /**
  * Class ProxynovaScraperTest
