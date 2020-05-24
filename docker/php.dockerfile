@@ -1,8 +1,8 @@
-FROM php:7.4.5-cli
+FROM php:7.4.6-cli
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends libzip-dev zip unzip git iproute2 libssl-dev\
-    && pecl install xdebug-2.9.4 \
+    && pecl install xdebug-2.9.5 \
     && docker-php-ext-enable xdebug \
     && rm -rf /var/lib/apt/lists/*
 
@@ -15,8 +15,7 @@ RUN curl -sS https://getcomposer.org/installer | php \
 
 RUN  composer global require -v \
         squizlabs/php_codesniffer:~3 \
-        phploc/phploc:~5 \
-        sebastian/phpcpd:~4 \
+        sebastian/phpcpd:~5 \
         dancryer/php-docblock-checker:~1 \
         phpstan/phpstan:~0 \
         phpmd/phpmd:~2 \
