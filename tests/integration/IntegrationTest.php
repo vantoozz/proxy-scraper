@@ -23,7 +23,7 @@ abstract class IntegrationTest extends TestCase
         return new Psr18HttpClient(
             new HttpAdapter(new GuzzleClient([
                 'connect_timeout' => 5,
-                'timeout' => 10,
+                'timeout' => 15,
             ])),
             new MessageFactory
         );
