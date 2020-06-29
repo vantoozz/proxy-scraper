@@ -16,7 +16,7 @@ final class HideMyIpScraperTest extends IntegrationTest
      */
     public function it_works(): void
     {
-        $this->markTestSkipped('Need to investigate changes');
+//        $this->markTestSkipped('Need to investigate changes');
 
         $scrapper = new HideMyIpScraper($this->httpClient());
 
