@@ -17,8 +17,6 @@ final class FreeProxyListsScraperTest extends IntegrationTest
      */
     public function it_works(): void
     {
-        $this->markTestSkipped('Temporary unavailable');
-
         $scrapper = new FreeProxyListsScraper($this->httpClient());
 
         $proxies = iterator_to_array($scrapper->get(), false);
