@@ -14,7 +14,6 @@ env:
     - PREFER_LOWEST=""
 
 before_script:
-  - composer global require hirak/prestissimo
   - composer update $PREFER_LOWEST
 
 script:
