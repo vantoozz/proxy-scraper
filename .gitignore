@@ -2,3 +2,4 @@ vendor/
 composer.lock
 tests/.cached_proxies
 .phpunit.result.cache
+composer.phar
