@@ -21,6 +21,6 @@ final class ProxyListOrgScraperTest extends IntegrationTest
 
         $proxies = iterator_to_array($scrapper->get(), false);
 
-        self::assertGreaterThanOrEqual(100, count($proxies));
+        self::assertGreaterThanOrEqual(50, count($proxies));
     }
 }
