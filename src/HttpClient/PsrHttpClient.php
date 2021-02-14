@@ -3,17 +3,16 @@
 namespace Vantoozz\ProxyScraper\HttpClient;
 
 use Exception;
-use Http\Message\MessageFactory;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
+use Psr\Http\Message\RequestFactoryInterface;
 use Vantoozz\ProxyScraper\Exceptions\HttpClientException;
 
 /**
- * Class Psr18HttpClient
+ * Class PsrHttpClient
  * @package Vantoozz\ProxyScraper
- * @deprecated Use \Vantoozz\ProxyScraper\HttpClient\PsrHttpClient instead
  */
-final class Psr18HttpClient implements HttpClientInterface
+final class PsrHttpClient implements HttpClientInterface
 {
     /**
      * @var ClientInterface
@@ -21,19 +20,19 @@ final class Psr18HttpClient implements HttpClientInterface
     private $client;
 
     /**
-     * @var MessageFactory
+     * @var RequestFactoryInterface
      */
-    private $messageFactory;
+    private $requestFactory;
 
     /**
      * Psr18HttpClient constructor.
      * @param ClientInterface $client
-     * @param MessageFactory $messageFactory
+     * @param RequestFactoryInterface $requestFactory
      */
-    public function __construct(ClientInterface $client, MessageFactory $messageFactory)
+    public function __construct(ClientInterface $client, RequestFactoryInterface $requestFactory)
     {
         $this->client = $client;
-        $this->messageFactory = $messageFactory;
+        $this->requestFactory = $requestFactory;
     }
 
     /**
@@ -43,7 +42,7 @@ final class Psr18HttpClient implements HttpClientInterface
      */
     public function get(string $uri): string
     {
-        $request = $this->messageFactory->createRequest('GET', $uri);
+        $request = $this->requestFactory->createRequest('GET', $uri);
         try {
             return $this->client->sendRequest($request)->getBody()->getContents();
         } catch (ClientExceptionInterface | Exception $e) {

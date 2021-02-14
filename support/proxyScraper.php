@@ -2,14 +2,10 @@
 
 namespace Vantoozz\ProxyScraper;
 
-use GuzzleHttp\Client as GuzzleClient;
 use hanneskod\classtools\Iterator\ClassIterator;
-use Http\Adapter\Guzzle6\Client as HttpAdapter;
-use Http\Message\MessageFactory\GuzzleMessageFactory as MessageFactory;
 use ReflectionClass;
 use Symfony\Component\Finder\Finder;
 use Vantoozz\ProxyScraper\HttpClient\HttpClientInterface;
-use Vantoozz\ProxyScraper\HttpClient\Psr18HttpClient;
 use Vantoozz\ProxyScraper\Scrapers\Discoverable;
 use Vantoozz\ProxyScraper\Scrapers\ScraperInterface;
 
@@ -31,13 +27,13 @@ function proxyScraper(HttpClientInterface $httpClient = null): Scrapers\Composit
          */
         public function __construct(HttpClientInterface $httpClient = null)
         {
-            $this->httpClient = $httpClient ?: $this->guzzleHttpClient();
+            $this->httpClient = $httpClient ?: guzzleHttpClient();
         }
 
         /**
          * @return Scrapers\CompositeScraper
          */
-        public function run(): Scrapers\CompositeScraper
+        public function build(): Scrapers\CompositeScraper
         {
             $compositeScraper = new Scrapers\CompositeScraper;
 
@@ -60,13 +56,25 @@ function proxyScraper(HttpClientInterface $httpClient = null): Scrapers\Composit
                 return;
             }
 
-            $parameters = $class->getConstructor()->getParameters();
+            $constructor = $class->getConstructor();
+
+            if(null === $constructor){
+                return;
+            }
+
+            $parameters = $constructor->getParameters();
 
             if (1 !== count($parameters)) {
                 return;
             }
 
-            if (!$parameters[0]->getClass()->implementsInterface(HttpClientInterface::class)) {
+            $type = $parameters[0]->getType();
+
+            if(null === $type){
+                return;
+            }
+
+            if (!$type instanceof HttpClientInterface) {
                 return;
             }
 
@@ -75,20 +83,5 @@ function proxyScraper(HttpClientInterface $httpClient = null): Scrapers\Composit
 
             $compositeScraper->addScraper($scraper);
         }
-
-        /**
-         * @return Psr18HttpClient
-         */
-        private function guzzleHttpClient(): Psr18HttpClient
-        {
-            return new Psr18HttpClient(
-                new HttpAdapter(new GuzzleClient([
-                    'connect_timeout' => 10,
-                    'timeout' => 20,
-                ])),
-                new MessageFactory
-            );
-        }
-
-    })->run();
+    })->build();
 }

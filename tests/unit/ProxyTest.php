@@ -20,7 +20,7 @@ final class ProxyTest extends TestCase
     public function it_converts_to_string(): void
     {
         $proxy = new Proxy(new Ipv4('192.168.0.1'), new Port(1234));
-        static::assertSame('192.168.0.1:1234', (string)$proxy);
+        self::assertSame('192.168.0.1:1234', (string)$proxy);
     }
 
     /**
@@ -30,7 +30,7 @@ final class ProxyTest extends TestCase
     {
         $ipv4 = new Ipv4('192.168.0.1');
         $proxy = new Proxy($ipv4, new Port(1234));
-        static::assertSame($ipv4, $proxy->getIpv4());
+        self::assertSame($ipv4, $proxy->getIpv4());
     }
 
     /**
@@ -40,7 +40,7 @@ final class ProxyTest extends TestCase
     {
         $port = new Port(1234);
         $proxy = new Proxy(new Ipv4('192.168.0.1'), $port);
-        static::assertSame($port, $proxy->getPort());
+        self::assertSame($port, $proxy->getPort());
     }
 
     /**
@@ -56,6 +56,6 @@ final class ProxyTest extends TestCase
         $proxy->addMetric($one);
         $proxy->addMetric($two);
 
-        static::assertSame([$one, $two], $proxy->getMetrics());
+        self::assertSame([$one, $two], $proxy->getMetrics());
     }
 }

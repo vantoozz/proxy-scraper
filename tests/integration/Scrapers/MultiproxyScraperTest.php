@@ -20,6 +20,6 @@ final class MultiproxyScraperTest extends IntegrationTest
 
         $proxies = iterator_to_array($scrapper->get(), false);
 
-        static::assertGreaterThanOrEqual(100, count($proxies));
+        self::assertGreaterThanOrEqual(100, count($proxies));
     }
 }

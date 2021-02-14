@@ -27,8 +27,8 @@ final class TimedTest extends TestCase
         /** @var Proxy[] $proxies */
         $proxies = iterator_to_array((new Timed($this->scraper(), $this->output($events)))->get());
 
-        static::assertCount(2, $proxies);
-        static::assertInstanceOf(Proxy::class, $proxies[0]);
+        self::assertCount(2, $proxies);
+        self::assertInstanceOf(Proxy::class, $proxies[0]);
     }
 
     /**
@@ -40,7 +40,7 @@ final class TimedTest extends TestCase
 
         iterator_to_array((new Timed($this->scraper(), $this->output($events)))->get());
 
-        static::assertCount(3, $events);
+        self::assertCount(3, $events);
     }
 
     /**
@@ -52,8 +52,8 @@ final class TimedTest extends TestCase
 
         iterator_to_array((new Timed($this->scraper(), $this->output($events)))->get());
 
-        static::assertSame('done', $events[2][0]);
-        static::assertIsFloat($events[2][1]);
+        self::assertSame('done', $events[2][0]);
+        self::assertIsFloat($events[2][1]);
     }
 
     /**
@@ -65,10 +65,10 @@ final class TimedTest extends TestCase
 
         iterator_to_array((new Timed($this->scraper(), $this->output($events)))->get());
 
-        static::assertSame('proxy_found', $events[0][0]);
-        static::assertIsFloat($events[0][1]);
-        static::assertSame('proxy_found', $events[1][0]);
-        static::assertIsFloat($events[1][1]);
+        self::assertSame('proxy_found', $events[0][0]);
+        self::assertIsFloat($events[0][1]);
+        self::assertSame('proxy_found', $events[1][0]);
+        self::assertIsFloat($events[1][1]);
     }
 
     /**

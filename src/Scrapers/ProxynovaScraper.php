@@ -45,7 +45,7 @@ final class ProxynovaScraper implements ScraperInterface
     public function get(): Generator
     {
         try {
-            $html = $this->httpClient->get(static::URL);
+            $html = $this->httpClient->get(self::URL);
         } catch (HttpClientException $e) {
             throw new ScraperException($e->getMessage(), $e->getCode(), $e);
         }
@@ -84,7 +84,7 @@ final class ProxynovaScraper implements ScraperInterface
         }
 
         $proxy = (new ProxyString($parts[1] . ':' . $port))->asProxy();
-        $proxy->addMetric(new Metric(Metrics::SOURCE, static::class));
+        $proxy->addMetric(new Metric(Metrics::SOURCE, self::class));
 
         return $proxy;
     }

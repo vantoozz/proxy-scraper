@@ -60,6 +60,11 @@ abstract class AbstractFreeProxyListScraper implements ScraperInterface
     }
 
     /**
+     * @return string
+     */
+    abstract protected function baseUrl(): string;
+
+    /**
      * @param Dom $row
      * @return Proxy
      * @throws InvalidArgumentException
@@ -78,9 +83,4 @@ abstract class AbstractFreeProxyListScraper implements ScraperInterface
 
         return $proxy;
     }
-
-    /**
-     * @return string
-     */
-    abstract protected function baseUrl(): string;
 }

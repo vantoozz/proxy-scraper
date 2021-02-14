@@ -31,7 +31,7 @@ final class Ipv4RangeValidatorTest extends TestCase
             $valid = false;
         }
 
-        static::assertEquals($valid, $expected);
+        self::assertEquals($valid, $expected);
     }
 
     /**

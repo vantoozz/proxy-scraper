@@ -22,6 +22,6 @@ final class ProxynovaScraperTest extends IntegrationTest
 
         $proxies = iterator_to_array($scrapper->get(), false);
 
-        static::assertGreaterThanOrEqual(30, count($proxies));
+        self::assertGreaterThanOrEqual(30, count($proxies));
     }
 }

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-docker run --rm  -v "$(pwd)":/opt/project "$(docker build -q -f=docker/php.dockerfile .)" /bin/bash -c \
+docker run --rm  -v "$(pwd)":/opt/project "$(docker build -q -f=docker/php74.dockerfile .)" /bin/bash -c \
   "php /root/.composer/vendor/bin/phpcs --standard=psr2 src \
 && php /opt/project/vendor/bin/phpunit --testsuite=unit \
 && php /root/.composer/vendor/bin/phpmd src text phpmd.xml\
@@ -19,7 +19,7 @@ if [ $? != 0 ]; then
   exit 1
 fi
 
-docker run --rm  -v "$(pwd)":/opt/project "$(docker build -q -f=docker/php.dockerfile .)" bash ./run_examples.sh > /dev/null
+docker run --rm  -v "$(pwd)":/opt/project "$(docker build -q -f=docker/php74.dockerfile .)" bash ./run_examples.sh > /dev/null
 if [ $? != 0 ]; then
   echo "Examples broken."
   exit 1

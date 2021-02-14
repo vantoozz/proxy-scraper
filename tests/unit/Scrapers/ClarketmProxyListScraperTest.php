@@ -40,10 +40,10 @@ final class ClarketmProxyListScraperTest extends TestCase
         );
         $proxy = $scraper->get()->current();
 
-        static::assertInstanceOf(Proxy::class, $proxy);
+        self::assertInstanceOf(Proxy::class, $proxy);
         /** @var Proxy $proxy */
-        static::assertSame(Metrics::SOURCE, $proxy->getMetrics()[0]->getName());
-        static::assertSame(ClarketmProxyListScraper::class, $proxy->getMetrics()[0]->getValue());
+        self::assertSame(Metrics::SOURCE, $proxy->getMetrics()[0]->getName());
+        self::assertSame(ClarketmProxyListScraper::class, $proxy->getMetrics()[0]->getValue());
     }
 
     /**
@@ -56,8 +56,8 @@ final class ClarketmProxyListScraperTest extends TestCase
         );
         $proxy = $scraper->get()->current();
 
-        static::assertInstanceOf(Proxy::class, $proxy);
-        static::assertSame('222.111.222.111:8118', (string)$proxy);
+        self::assertInstanceOf(Proxy::class, $proxy);
+        self::assertSame('222.111.222.111:8118', (string)$proxy);
     }
 
     /**
@@ -69,6 +69,6 @@ final class ClarketmProxyListScraperTest extends TestCase
             new PredefinedDummyHttpClient('2312318')
         );
 
-        static::assertNull($scraper->get()->current());
+        self::assertNull($scraper->get()->current());
     }
 }

@@ -56,10 +56,15 @@ abstract class AbstractRssBloggerScraper implements ScraperInterface
     }
 
     /**
+     * @return string
+     */
+    abstract protected function rssBloggerUrl(): string;
+
+    /**
      * @param SimpleXMLElement $feed
      * @return Generator
      */
-    private function fetchFeed(SimpleXMLElement $feed)
+    private function fetchFeed(SimpleXMLElement $feed): Generator
     {
         foreach ($feed->entry ?? [] as $entry) {
             $matches = [];
@@ -76,9 +81,4 @@ abstract class AbstractRssBloggerScraper implements ScraperInterface
             }
         }
     }
-
-    /**
-     * @return string
-     */
-    abstract protected function rssBloggerUrl(): string;
 }

@@ -64,10 +64,10 @@ final class HideMyIpScraperTest extends TestCase
         );
         $proxy = $scraper->get()->current();
 
-        static::assertInstanceOf(Proxy::class, $proxy);
+        self::assertInstanceOf(Proxy::class, $proxy);
         /** @var Proxy $proxy */
-        static::assertSame(Metrics::SOURCE, $proxy->getMetrics()[0]->getName());
-        static::assertSame(HideMyIpScraper::class, $proxy->getMetrics()[0]->getValue());
+        self::assertSame(Metrics::SOURCE, $proxy->getMetrics()[0]->getName());
+        self::assertSame(HideMyIpScraper::class, $proxy->getMetrics()[0]->getValue());
     }
 
     /**
@@ -80,8 +80,8 @@ final class HideMyIpScraperTest extends TestCase
         );
         $proxy = $scraper->get()->current();
 
-        static::assertInstanceOf(Proxy::class, $proxy);
-        static::assertSame('218.161.1.189:3128', (string)$proxy);
+        self::assertInstanceOf(Proxy::class, $proxy);
+        self::assertSame('218.161.1.189:3128', (string)$proxy);
     }
 
     /**
@@ -91,7 +91,7 @@ final class HideMyIpScraperTest extends TestCase
     {
         $scraper = new HideMyIpScraper(new PredefinedDummyHttpClient('var json = [{"i":"2323","p":"2323"}] '));
 
-        static::assertNull($scraper->get()->current());
+        self::assertNull($scraper->get()->current());
     }
 
     /**
@@ -101,7 +101,7 @@ final class HideMyIpScraperTest extends TestCase
     {
         $scraper = new HideMyIpScraper(new PredefinedDummyHttpClient('var json = [1,2,3] '));
 
-        static::assertNull($scraper->get()->current());
+        self::assertNull($scraper->get()->current());
     }
 
     /**
@@ -111,6 +111,6 @@ final class HideMyIpScraperTest extends TestCase
     {
         $scraper = new HideMyIpScraper(new PredefinedDummyHttpClient('var json = [{"a":1}] '));
 
-        static::assertNull($scraper->get()->current());
+        self::assertNull($scraper->get()->current());
     }
 }

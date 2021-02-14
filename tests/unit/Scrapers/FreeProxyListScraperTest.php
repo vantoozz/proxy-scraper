@@ -42,10 +42,10 @@ final class FreeProxyListScraperTest extends TestCase
         );
         $proxy = $scraper->get()->current();
 
-        static::assertInstanceOf(Proxy::class, $proxy);
+        self::assertInstanceOf(Proxy::class, $proxy);
         /** @var Proxy $proxy */
-        static::assertSame(Metrics::SOURCE, $proxy->getMetrics()[0]->getName());
-        static::assertSame(FreeProxyListScraper::class, $proxy->getMetrics()[0]->getValue());
+        self::assertSame(Metrics::SOURCE, $proxy->getMetrics()[0]->getName());
+        self::assertSame(FreeProxyListScraper::class, $proxy->getMetrics()[0]->getValue());
     }
 
     /**
@@ -60,8 +60,8 @@ final class FreeProxyListScraperTest extends TestCase
         );
         $proxy = $scraper->get()->current();
 
-        static::assertInstanceOf(Proxy::class, $proxy);
-        static::assertSame('46.101.55.200:8118', (string)$proxy);
+        self::assertInstanceOf(Proxy::class, $proxy);
+        self::assertSame('46.101.55.200:8118', (string)$proxy);
     }
 
     /**
@@ -75,7 +75,7 @@ final class FreeProxyListScraperTest extends TestCase
             )
         );
 
-        static::assertNull($scraper->get()->current());
+        self::assertNull($scraper->get()->current());
     }
 
     /**
@@ -89,6 +89,6 @@ final class FreeProxyListScraperTest extends TestCase
             )
         );
 
-        static::assertNull($scraper->get()->current());
+        self::assertNull($scraper->get()->current());
     }
 }

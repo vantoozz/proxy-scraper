@@ -1,8 +1,8 @@
-FROM php:7.4.12-cli
+FROM php:8.0.2-cli
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends libzip-dev zip unzip git iproute2 libssl-dev\
-    && pecl install xdebug-2.9.8 \
+    && pecl install xdebug-3.0.2 \
     && docker-php-ext-enable xdebug \
     && rm -rf /var/lib/apt/lists/*
 
@@ -12,7 +12,7 @@ RUN curl -sS https://getcomposer.org/installer | php \
     && mv composer.phar /usr/local/bin/ \
     && ln -s /usr/local/bin/composer.phar /usr/local/bin/composer
 
-RUN  composer global require -v \
+RUN  composer global require --ignore-platform-req=php -v \
         squizlabs/php_codesniffer:~3 \
         sebastian/phpcpd:~5 \
         dancryer/php-docblock-checker:~1 \
