@@ -14,11 +14,11 @@ RUN curl -sS https://getcomposer.org/installer | php \
 
 RUN  composer global require -v \
         squizlabs/php_codesniffer:~3 \
-        sebastian/phpcpd:~5 \
+        sebastian/phpcpd:~6 \
         dancryer/php-docblock-checker:~1 \
         phpstan/phpstan:~0 \
         phpmd/phpmd:~2 \
-        povils/phpmnd:~2 \
+#        povils/phpmnd:~2 \
         vantoozz/phpcdm:~1
 
 ENV PHP_IDE_CONFIG="serverName=docker"

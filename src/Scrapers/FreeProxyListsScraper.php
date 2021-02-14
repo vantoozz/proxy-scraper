@@ -54,8 +54,7 @@ final class FreeProxyListsScraper implements ScraperInterface
      */
     private function getPages(): Generator
     {
-        foreach (
-            [
+        foreach ([
                 'elite' => 'elite',
                 'anonymous' => 'anon',
                 'non-anonymous' => 'nonanon',

@@ -4,6 +4,7 @@ namespace Vantoozz\ProxyScraper;
 
 use hanneskod\classtools\Iterator\ClassIterator;
 use ReflectionClass;
+use ReflectionNamedType;
 use Symfony\Component\Finder\Finder;
 use Vantoozz\ProxyScraper\HttpClient\HttpClientInterface;
 use Vantoozz\ProxyScraper\Scrapers\Discoverable;
@@ -56,9 +57,14 @@ function proxyScraper(HttpClientInterface $httpClient = null): Scrapers\Composit
                 return;
             }
 
+            if (!$class->implementsInterface(ScraperInterface::class)) {
+                return;
+            }
+
+
             $constructor = $class->getConstructor();
 
-            if(null === $constructor){
+            if (null === $constructor) {
                 return;
             }
 
@@ -68,13 +74,17 @@ function proxyScraper(HttpClientInterface $httpClient = null): Scrapers\Composit
                 return;
             }
 
-            $type = $parameters[0]->getType();
-
-            if(null === $type){
+            if (!$parameters[0]->hasType()) {
                 return;
             }
 
-            if (!$type instanceof HttpClientInterface) {
+            $type = $parameters[0]->getType();
+
+            if (null === $type) {
+                return;
+            }
+
+            if (!$type instanceof ReflectionNamedType) {
                 return;
             }
 

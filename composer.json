@@ -15,7 +15,7 @@
     "psr/http-factory": "~1",
     "psr/http-client-implementation": "~1",
     "psr/http-message-implementation": "~1",
-    "symfony/dom-crawler": "~5",
+    "symfony/dom-crawler": ">=5.1.4",
     "symfony/css-selector": "~5"
   },
   "require-dev": {

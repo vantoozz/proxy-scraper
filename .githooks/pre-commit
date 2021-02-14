@@ -5,16 +5,18 @@ docker run --rm  -v "$(pwd)":/opt/project "$(docker build -q -f=docker/php74.doc
 && php /opt/project/vendor/bin/phpunit --testsuite=unit \
 && php /root/.composer/vendor/bin/phpmd src text phpmd.xml\
 && php /root/.composer/vendor/bin/phpcpd src\
-&& php /root/.composer/vendor/bin/phpmnd src --non-zero-exit-on-violation\
 && php /root/.composer/vendor/bin/phpdoccheck -d src\
 && php /root/.composer/vendor/bin/phpcs --standard=psr2 src\
 && php /root/.composer/vendor/bin/phpstan analyze src --level=1\
 && php /root/.composer/vendor/bin/phpcdm src --non-zero-exit-on-violation
 "
+
+#&& php /root/.composer/vendor/bin/phpmnd src --non-zero-exit-on-violation\
+
 if [ $? != 0 ]; then
   echo "Fix errors before commit."
   echo "Try run \
-  docker run --rm -v \"\$(pwd)\":/opt/project \"\$(docker build -q -f=docker/php.dockerfile .)\" \
+  docker run --rm -v \"\$(pwd)\":/opt/project \"\$(docker build -q -f=docker/php74.dockerfile .)\" \
   php /root/.composer/vendor/bin/phpcbf --standard=psr2 src"
   exit 1
 fi

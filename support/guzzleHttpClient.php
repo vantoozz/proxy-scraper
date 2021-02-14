@@ -15,8 +15,8 @@ function guzzleHttpClient(): HttpClientInterface
 {
     return new PsrHttpClient(
         new Client([
-            RequestOptions::CONNECT_TIMEOUT => 5,
-            RequestOptions::TIMEOUT => 15,
+            RequestOptions::CONNECT_TIMEOUT => 10,
+            RequestOptions::TIMEOUT => 20,
         ]),
         new class implements RequestFactoryInterface {
             /**

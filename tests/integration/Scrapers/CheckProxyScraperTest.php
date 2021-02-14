@@ -16,7 +16,7 @@ final class CheckProxyScraperTest extends IntegrationTest
      */
     public function it_works(): void
     {
-        $this->markTestSkipped('Temporary unavailable');
+//        $this->markTestSkipped('Temporary unavailable');
 
         $scrapper = new CheckProxyScraper($this->httpClient());
 
