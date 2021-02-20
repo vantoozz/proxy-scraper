@@ -36,7 +36,6 @@
     "php-http/message": "to use Psr18HttpClient (deprecated)"
   },
   "conflict": {
-    "guzzlehttp/guzzle": "<6.3",
     "nikic/php-parser": "<3"
   },
   "autoload": {
