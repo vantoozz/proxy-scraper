@@ -12,7 +12,7 @@ $compositeScraper = new Scrapers\CompositeScraper;
 
 // Set exception handler
 $compositeScraper->handleScraperExceptionWith(function (ScraperException $e) {
-    echo 'An error occurs: ' . $e->getMessage() . "\n";
+    echo 'An error occurred: ' . $e->getMessage() . "\n";
 });
 
 // Fake scraper throwing an exception

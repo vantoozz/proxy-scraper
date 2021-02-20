@@ -1,5 +1,7 @@
 <?php declare(strict_types=1);
 
+namespace Vantoozz\ProxyScraper;
+
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;

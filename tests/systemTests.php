@@ -14,6 +14,8 @@ use Vantoozz\ProxyScraper\SystemTests\Reports\DuplicatesReport;
 use Vantoozz\ProxyScraper\SystemTests\Reports\ExclusivityReport;
 use Vantoozz\ProxyScraper\SystemTests\Reports\ReportsPipeline;
 
+use function Vantoozz\ProxyScraper\guzzleHttpClient;
+
 $httpClient = guzzleHttpClient();
 
 $miner = new ProxiesMiner\ScrapersProxiesMiner;

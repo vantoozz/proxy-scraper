@@ -3,6 +3,8 @@
 use Vantoozz\ProxyScraper\Proxy;
 use Vantoozz\ProxyScraper\Scrapers;
 
+use function Vantoozz\ProxyScraper\guzzleHttpClient;
+
 require_once __DIR__ . '/../vendor/autoload.php';
 
 $scraper = new Scrapers\UsProxyScraper(guzzleHttpClient());

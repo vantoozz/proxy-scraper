@@ -2,6 +2,8 @@
 
 use Vantoozz\ProxyScraper\Scrapers;
 
+use function Vantoozz\ProxyScraper\guzzleHttpClient;
+
 require_once __DIR__ . '/../vendor/autoload.php';
 
 $httpClient = guzzleHttpClient();

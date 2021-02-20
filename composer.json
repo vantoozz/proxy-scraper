@@ -29,7 +29,8 @@
   "suggest": {
     "ext-json": "*",
     "ext-simplexml": "*",
-    "php-http/guzzle6-adapter": "to use Guzzle as HTTP client",
+    "guzzlehttp/guzzle": "to use Guzzle as HTTP client",
+    "guzzlehttp/psr7": "to use Guzzle as HTTP client",
     "hanneskod/classtools": "to enable scrapers auto-discovery",
     "php-http/message-factory": "to use Psr18HttpClient (deprecated)",
     "php-http/message": "to use Psr18HttpClient (deprecated)"
