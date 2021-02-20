@@ -4,7 +4,7 @@ use Vantoozz\ProxyScraper\Scrapers;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-$scraper = new Scrapers\FreeProxyListScraper(guzzleHttpClient());
+$scraper = new Scrapers\UsProxyScraper(guzzleHttpClient());
 
 foreach ($scraper->get() as $proxy) {
     echo $proxy . "\n";
