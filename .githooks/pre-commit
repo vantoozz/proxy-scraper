@@ -21,9 +21,8 @@ if [ $? != 0 ]; then
   exit 1
 fi
 
-docker run --rm  -v "$(pwd)":/opt/project "$(docker build -q -f=docker/php74.dockerfile .)" bash ./run_examples.sh
+docker run --rm  -v "$(pwd)":/opt/project "$(docker build -q -f=docker/php74.dockerfile .)" bash ./run_examples.sh > /dev/null
 if [ $? != 0 ]; then
   echo "Examples broken."
   exit 1
 fi
-
