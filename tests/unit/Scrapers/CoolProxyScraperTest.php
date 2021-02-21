@@ -41,10 +41,10 @@ final class CoolProxyScraperTest extends TestCase
         );
         $proxy = $scraper->get()->current();
 
-        static::assertInstanceOf(Proxy::class, $proxy);
+        self::assertInstanceOf(Proxy::class, $proxy);
         /** @var Proxy $proxy */
-        static::assertSame(Metrics::SOURCE, $proxy->getMetrics()[0]->getName());
-        static::assertSame(CoolProxyScraper::class, $proxy->getMetrics()[0]->getValue());
+        self::assertSame(Metrics::SOURCE, $proxy->getMetrics()[0]->getName());
+        self::assertSame(CoolProxyScraper::class, $proxy->getMetrics()[0]->getValue());
     }
 
     /**
@@ -57,8 +57,8 @@ final class CoolProxyScraperTest extends TestCase
         );
         $proxy = $scraper->get()->current();
 
-        static::assertInstanceOf(Proxy::class, $proxy);
-        static::assertSame('177.43.57.48:2222', (string)$proxy);
+        self::assertInstanceOf(Proxy::class, $proxy);
+        self::assertSame('177.43.57.48:2222', (string)$proxy);
     }
 
     /**
@@ -70,7 +70,7 @@ final class CoolProxyScraperTest extends TestCase
             new PredefinedDummyHttpClient('[{"port":2222}]')
         );
 
-        static::assertNull($scraper->get()->current());
+        self::assertNull($scraper->get()->current());
     }
 
     /**
@@ -82,7 +82,7 @@ final class CoolProxyScraperTest extends TestCase
             new PredefinedDummyHttpClient('[123]')
         );
 
-        static::assertNull($scraper->get()->current());
+        self::assertNull($scraper->get()->current());
     }
 
     /**
@@ -94,7 +94,7 @@ final class CoolProxyScraperTest extends TestCase
             new PredefinedDummyHttpClient('[{"ip":"177.43.57.48"}]')
         );
 
-        static::assertNull($scraper->get()->current());
+        self::assertNull($scraper->get()->current());
     }
 
     /**

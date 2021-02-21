@@ -10,27 +10,32 @@
     }
   ],
   "require": {
-    "php": "^7.2",
-    "psr/http-client": "1.0.0",
+    "php": "^7.3|^8.0",
+    "psr/http-client": "~1",
+    "psr/http-factory": "~1",
     "psr/http-client-implementation": "~1",
-    "php-http/message-factory": "^1.0.2",
-    "php-http/message": "~1",
-    "symfony/dom-crawler": "~4|~5",
-    "symfony/css-selector": "~4|~5"
+    "psr/http-message-implementation": "~1",
+    "symfony/dom-crawler": ">=5.1.4",
+    "symfony/css-selector": "~5"
   },
   "require-dev": {
-    "php-http/guzzle6-adapter": "~2",
-    "phpunit/phpunit": "^8.4|~9",
-    "hanneskod/classtools": "~1"
+    "guzzlehttp/guzzle": "~7",
+    "guzzlehttp/psr7": "~1",
+    "phpunit/phpunit": "~9",
+    "hanneskod/classtools": "~1",
+    "php-http/message-factory": "~1",
+    "php-http/message": "~1"
   },
   "suggest": {
     "ext-json": "*",
     "ext-simplexml": "*",
-    "php-http/guzzle6-adapter": "to use Guzzle as HTTP client",
-    "hanneskod/classtools": "to enable scrapers auto-discovery"
+    "guzzlehttp/guzzle": "to use Guzzle as HTTP client",
+    "guzzlehttp/psr7": "to use Guzzle as HTTP client",
+    "hanneskod/classtools": "to enable scrapers auto-discovery",
+    "php-http/message-factory": "to use Psr18HttpClient (deprecated)",
+    "php-http/message": "to use Psr18HttpClient (deprecated)"
   },
   "conflict": {
-    "guzzlehttp/guzzle": "<6.3",
     "nikic/php-parser": "<3"
   },
   "autoload": {
@@ -40,7 +45,8 @@
       ]
     },
     "files": [
-      "support/proxyScraper.php"
+      "support/proxyScraper.php",
+      "support/guzzleHttpClient.php"
     ]
   },
   "autoload-dev": {
@@ -57,7 +63,9 @@
     }
   },
   "config": {
-    "preferred-install": "dist"
+    "preferred-install": {
+      "*": "dist"
+    }
   },
   "scripts": {
     "post-install-cmd": [

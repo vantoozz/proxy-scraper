@@ -16,12 +16,12 @@ final class ProxynovaScraperTest extends IntegrationTest
      */
     public function it_works(): void
     {
-        $this->markTestSkipped('cURL error 60: SSL certificate problem: certificate has expired');
+//        $this->markTestSkipped('cURL error 60: SSL certificate problem: certificate has expired');
 
         $scrapper = new ProxynovaScraper($this->httpClient());
 
         $proxies = iterator_to_array($scrapper->get(), false);
 
-        static::assertGreaterThanOrEqual(30, count($proxies));
+        self::assertGreaterThanOrEqual(30, count($proxies));
     }
 }

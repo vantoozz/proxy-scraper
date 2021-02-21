@@ -4,9 +4,9 @@ services:
   - docker
 
 php:
-  - 7.2
   - 7.3
   - 7.4
+  - 8.0
 
 env:
   matrix:
@@ -20,7 +20,7 @@ script:
   - composer validate --no-check-all --strict
   - mkdir -p build/logs
   - vendor/bin/phpunit --testsuite=integration
-  - vendor/bin/phpunit --testsuite=unit --coverage-text  --coverage-clover build/logs/clover.xml
+  - XDEBUG_MODE=coverage vendor/bin/phpunit --testsuite=unit --coverage-text  --coverage-clover build/logs/clover.xml
   - bash .githooks/pre-commit
   - php tests/systemTests.php
 

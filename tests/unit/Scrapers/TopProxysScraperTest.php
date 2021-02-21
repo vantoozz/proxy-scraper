@@ -54,10 +54,10 @@ final class TopProxysScraperTest extends TestCase
         );
         $proxy = $scraper->get()->current();
 
-        static::assertInstanceOf(Proxy::class, $proxy);
+        self::assertInstanceOf(Proxy::class, $proxy);
         /** @var Proxy $proxy */
-        static::assertSame(Metrics::SOURCE, $proxy->getMetrics()[0]->getName());
-        static::assertSame(TopProxysScraper::class, $proxy->getMetrics()[0]->getValue());
+        self::assertSame(Metrics::SOURCE, $proxy->getMetrics()[0]->getName());
+        self::assertSame(TopProxysScraper::class, $proxy->getMetrics()[0]->getValue());
     }
 
     /**
@@ -72,8 +72,8 @@ final class TopProxysScraperTest extends TestCase
         );
         $proxy = $scraper->get()->current();
 
-        static::assertInstanceOf(Proxy::class, $proxy);
-        static::assertSame('1.0.134.189:443', (string)$proxy);
+        self::assertInstanceOf(Proxy::class, $proxy);
+        self::assertSame('1.0.134.189:443', (string)$proxy);
     }
 
 }

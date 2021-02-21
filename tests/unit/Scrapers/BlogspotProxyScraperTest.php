@@ -39,10 +39,10 @@ final class BlogspotProxyScraperTest extends TestCase
 
         $proxy = $scraper->get()->current();
 
-        static::assertInstanceOf(Proxy::class, $proxy);
+        self::assertInstanceOf(Proxy::class, $proxy);
         /** @var Proxy $proxy */
-        static::assertSame(Metrics::SOURCE, $proxy->getMetrics()[0]->getName());
-        static::assertSame(BlogspotProxyScraper::class, $proxy->getMetrics()[0]->getValue());
+        self::assertSame(Metrics::SOURCE, $proxy->getMetrics()[0]->getName());
+        self::assertSame(BlogspotProxyScraper::class, $proxy->getMetrics()[0]->getValue());
     }
 
     /**
@@ -55,8 +55,8 @@ final class BlogspotProxyScraperTest extends TestCase
         );
         $proxy = $scraper->get()->current();
 
-        static::assertInstanceOf(Proxy::class, $proxy);
-        static::assertSame('1.0.134.189:443', (string)$proxy);
+        self::assertInstanceOf(Proxy::class, $proxy);
+        self::assertSame('1.0.134.189:443', (string)$proxy);
     }
 
     /**
@@ -68,7 +68,7 @@ final class BlogspotProxyScraperTest extends TestCase
 
         $proxies = iterator_to_array((new BlogspotProxyScraper($httpClient))->get(), true);
 
-        static::assertCount(0, $proxies);
+        self::assertCount(0, $proxies);
     }
 
 }

@@ -19,7 +19,7 @@ final class ProxyStringTest extends TestCase
     public function it_converts_to_string(): void
     {
         $proxyString = new ProxyString('192.168.0.1:1234');
-        static::assertSame('192.168.0.1:1234', (string)$proxyString);
+        self::assertSame('192.168.0.1:1234', (string)$proxyString);
     }
 
     /**
@@ -28,8 +28,8 @@ final class ProxyStringTest extends TestCase
     public function it_converts_to_proxy(): void
     {
         $proxyString = new ProxyString('192.168.0.1:1234');
-        static::assertInstanceOf(Proxy::class, $proxyString->asProxy());
-        static::assertSame('192.168.0.1:1234', (string)$proxyString->asProxy());
+        self::assertInstanceOf(Proxy::class, $proxyString->asProxy());
+        self::assertSame('192.168.0.1:1234', (string)$proxyString->asProxy());
     }
 
     /**
@@ -47,7 +47,7 @@ final class ProxyStringTest extends TestCase
             $created = false;
         }
 
-        static::assertEquals($created, $expected);
+        self::assertEquals($created, $expected);
     }
 
     /**

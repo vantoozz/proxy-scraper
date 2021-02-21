@@ -48,9 +48,9 @@ final class ProxyListOrgScraper implements ScraperInterface, Discoverable
     public function get(): Generator
     {
         $page = 0;
-        while (++$page <= static::LAST_PAGE) {
+        while (++$page <= self::LAST_PAGE) {
             yield from $this->crawlPage($page);
-            if ($page !== static::LAST_PAGE) {
+            if ($page !== self::LAST_PAGE) {
                 usleep(150000);
             }
         }
@@ -61,10 +61,10 @@ final class ProxyListOrgScraper implements ScraperInterface, Discoverable
      * @return Generator|Proxy[]
      * @throws ScraperException
      */
-    private function crawlPage(int $page): \Generator
+    private function crawlPage(int $page): Generator
     {
         try {
-            $html = $this->httpClient->get(static::BASE_URL . $page);
+            $html = $this->httpClient->get(self::BASE_URL . $page);
         } catch (HttpClientException $e) {
             throw new ScraperException($e->getMessage(), $e->getCode(), $e);
         }
@@ -80,7 +80,7 @@ final class ProxyListOrgScraper implements ScraperInterface, Discoverable
                 continue;
             }
 
-            $proxy->addMetric(new Metric(Metrics::SOURCE, static::class));
+            $proxy->addMetric(new Metric(Metrics::SOURCE, self::class));
 
             yield $proxy;
         }

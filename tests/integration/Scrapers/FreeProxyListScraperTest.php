@@ -16,10 +16,12 @@ final class FreeProxyListScraperTest extends IntegrationTest
      */
     public function it_works(): void
     {
+        $this->markTestSkipped('Temporary unavailable');
+
         $scrapper = new FreeProxyListScraper($this->httpClient());
 
         $proxies = iterator_to_array($scrapper->get(), false);
 
-        static::assertGreaterThanOrEqual(100, count($proxies));
+        self::assertGreaterThanOrEqual(100, count($proxies));
     }
 }

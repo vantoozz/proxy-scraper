@@ -25,7 +25,7 @@ final class DistinctTest extends TestCase
         /** @var Proxy[] $proxies */
         $proxies = iterator_to_array((new Distinct($this->scraper()))->get(), true);
 
-        static::assertInstanceOf(Proxy::class, $proxies[0]);
+        self::assertInstanceOf(Proxy::class, $proxies[0]);
     }
 
     /**
@@ -35,8 +35,8 @@ final class DistinctTest extends TestCase
     {
         /** @var Proxy[] $proxies */
         $proxies = iterator_to_array((new Distinct($this->scraper()))->get(), true);
-        static::assertCount(2, $proxies);
-        static::assertNotSame((string)$proxies[0], (string)$proxies[1]);
+        self::assertCount(2, $proxies);
+        self::assertNotSame((string)$proxies[0], (string)$proxies[1]);
     }
 
     /**

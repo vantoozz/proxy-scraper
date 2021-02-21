@@ -2,12 +2,14 @@
 
 namespace Vantoozz\ProxyScraper\IntegrationTests;
 
-use GuzzleHttp\Client as GuzzleClient;
-use Http\Adapter\Guzzle6\Client as HttpAdapter;
-use Http\Message\MessageFactory\GuzzleMessageFactory as MessageFactory;
+use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\RequestOptions;
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\RequestFactoryInterface;
+use Psr\Http\Message\RequestInterface;
 use Vantoozz\ProxyScraper\HttpClient\HttpClientInterface;
-use Vantoozz\ProxyScraper\HttpClient\Psr18HttpClient;
+use Vantoozz\ProxyScraper\HttpClient\PsrHttpClient;
 
 /**
  * Class IntegrationTest
@@ -20,12 +22,24 @@ abstract class IntegrationTest extends TestCase
      */
     protected function httpClient(): HttpClientInterface
     {
-        return new Psr18HttpClient(
-            new HttpAdapter(new GuzzleClient([
-                'connect_timeout' => 5,
-                'timeout' => 15,
-            ])),
-            new MessageFactory
+        return new PsrHttpClient(
+            new Client([
+                RequestOptions::CONNECT_TIMEOUT => 5,
+                RequestOptions::TIMEOUT => 15,
+            ]),
+            new class implements RequestFactoryInterface {
+                /**
+                 * @param string $method
+                 * @param $uri
+                 * @return RequestInterface
+                 */
+                public function createRequest(
+                    string $method,
+                    $uri
+                ): RequestInterface {
+                    return new Request($method, $uri);
+                }
+            }
         );
     }
 }

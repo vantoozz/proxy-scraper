@@ -16,10 +16,12 @@ final class MultiproxyScraperTest extends IntegrationTest
      */
     public function it_works(): void
     {
+        $this->markTestSkipped('Temporary unavailable');
+
         $scrapper = new MultiproxyScraper($this->httpClient());
 
         $proxies = iterator_to_array($scrapper->get(), false);
 
-        static::assertGreaterThanOrEqual(100, count($proxies));
+        self::assertGreaterThanOrEqual(100, count($proxies));
     }
 }

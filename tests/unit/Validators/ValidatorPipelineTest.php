@@ -30,6 +30,6 @@ final class ValidatorPipelineTest extends TestCase
         }));
         $pipeline->validate(new Proxy(new Ipv4('127.0.0.1'), new Port(8888)));
 
-        static::assertSame(2, $calls);
+        self::assertSame(2, $calls);
     }
 }

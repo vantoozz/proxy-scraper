@@ -17,7 +17,7 @@ final class MetricTest extends TestCase
     public function it_returns_name(): void
     {
         $metric = new Metric('some_name', 123);
-        static::assertSame('some_name', $metric->getName());
+        self::assertSame('some_name', $metric->getName());
     }
 
     /**
@@ -26,7 +26,7 @@ final class MetricTest extends TestCase
     public function it_returns_value(): void
     {
         $metric = new Metric('some_name', 123);
-        static::assertSame(123, $metric->getValue());
+        self::assertSame(123, $metric->getValue());
     }
 
     /**
@@ -35,6 +35,6 @@ final class MetricTest extends TestCase
     public function it_converts_to_a_string(): void
     {
         $metric = new Metric('some_name', 123);
-        static::assertSame('some_name: 123', (string)$metric);
+        self::assertSame('some_name: 123', (string)$metric);
     }
 }

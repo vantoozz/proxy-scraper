@@ -45,7 +45,7 @@ final class CheckProxyScraper implements ScraperInterface, Discoverable
      */
     public function get(): Generator
     {
-        $attempts = static::ATTEMPTS;
+        $attempts = self::ATTEMPTS;
         $date = new DateTimeImmutable;
 
         $data = [];
@@ -68,7 +68,7 @@ final class CheckProxyScraper implements ScraperInterface, Discoverable
                 continue;
             }
 
-            $proxy->addMetric(new Metric(Metrics::SOURCE, static::class));
+            $proxy->addMetric(new Metric(Metrics::SOURCE, self::class));
 
             yield $proxy;
         }
@@ -82,7 +82,7 @@ final class CheckProxyScraper implements ScraperInterface, Discoverable
     private function getDailyData(DateTimeInterface $date): array
     {
         try {
-            $json = $this->httpClient->get(sprintf(static::URL, $date->format('Y-m-d')));
+            $json = $this->httpClient->get(sprintf(self::URL, $date->format('Y-m-d')));
         } catch (HttpClientException $e) {
             throw new ScraperException($e->getMessage(), $e->getCode(), $e);
         }
@@ -93,7 +93,7 @@ final class CheckProxyScraper implements ScraperInterface, Discoverable
             $data = [];
         }
 
-        $data = array_filter($data, function ($item) {
+        $data = array_filter($data, static function ($item) {
             return is_array($item);
         });
 

@@ -47,9 +47,9 @@ final class Timed implements ScraperInterface
         foreach ($this->scraper->get() as $proxy) {
             $iterationStartTime = microtime(true);
             yield $proxy;
-            $this->output->send([static::EVENT_PROXY_FOUND, microtime(true) - $iterationStartTime]);
+            $this->output->send([self::EVENT_PROXY_FOUND, microtime(true) - $iterationStartTime]);
         }
 
-        $this->output->send([static::EVENT_DONE, microtime(true) - $startTime]);
+        $this->output->send([self::EVENT_DONE, microtime(true) - $startTime]);
     }
 }

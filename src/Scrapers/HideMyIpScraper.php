@@ -22,14 +22,13 @@ use function is_array;
 final class HideMyIpScraper implements ScraperInterface
 {
     /**
-     * @var HttpClientInterface
-     */
-    private $httpClient;
-
-    /**
      *
      */
     private const URL = 'https://www.hide-my-ip.com/%s/proxylist.shtml';
+    /**
+     * @var HttpClientInterface
+     */
+    private $httpClient;
 
     /**
      * FreeProxyListScraper constructor.
@@ -92,7 +91,7 @@ final class HideMyIpScraper implements ScraperInterface
 
         ];
 
-        return sprintf(static::URL, $languages[array_rand($languages)]);
+        return sprintf(self::URL, $languages[array_rand($languages)]);
     }
 
     /**
@@ -127,7 +126,7 @@ final class HideMyIpScraper implements ScraperInterface
         }
 
         $proxy = new Proxy(new Ipv4((string)$item['i']), new Port((int)$item['p']));
-        $proxy->addMetric(new Metric(Metrics::SOURCE, static::class));
+        $proxy->addMetric(new Metric(Metrics::SOURCE, self::class));
 
         return $proxy;
     }

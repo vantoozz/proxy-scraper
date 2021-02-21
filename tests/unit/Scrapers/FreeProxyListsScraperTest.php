@@ -40,17 +40,18 @@ final class FreeProxyListsScraperTest extends TestCase
         $this->expectExceptionMessage('error message');
 
 
-        /** @var HttpClientInterface|MockObject $httpClient */
-        $httpClient = $this->createMock(HttpClientInterface::class);
-        $httpClient
-            ->expects(static::at(0))
-            ->method('get')
-            ->willReturn('<p>elite/123.html</p>');
-        $httpClient
-            ->expects(static::at(1))
-            ->method('get')
-            ->willThrowException(new HttpClientException('error message'));
+        $httpClient = new class implements HttpClientInterface{
 
+            private $i = 0;
+
+            public function get(string $uri): string
+            {
+                if(0===$this->i++){
+                    return '<p>elite/123.html</p>';
+                }
+                throw new HttpClientException('error message');
+            }
+        };
 
         $scraper = new FreeProxyListsScraper($httpClient);
         $scraper->get()->current();
@@ -68,10 +69,10 @@ final class FreeProxyListsScraperTest extends TestCase
         );
         $proxy = $scraper->get()->current();
 
-        static::assertInstanceOf(Proxy::class, $proxy);
+        self::assertInstanceOf(Proxy::class, $proxy);
         /** @var Proxy $proxy */
-        static::assertSame(Metrics::SOURCE, $proxy->getMetrics()[0]->getName());
-        static::assertSame(FreeProxyListsScraper::class, $proxy->getMetrics()[0]->getValue());
+        self::assertSame(Metrics::SOURCE, $proxy->getMetrics()[0]->getName());
+        self::assertSame(FreeProxyListsScraper::class, $proxy->getMetrics()[0]->getValue());
     }
 
     /**
@@ -86,8 +87,8 @@ final class FreeProxyListsScraperTest extends TestCase
         );
         $proxy = $scraper->get()->current();
 
-        static::assertInstanceOf(Proxy::class, $proxy);
-        static::assertSame('91.134.221.168:80', (string)$proxy);
+        self::assertInstanceOf(Proxy::class, $proxy);
+        self::assertSame('91.134.221.168:80', (string)$proxy);
     }
 
     /**
@@ -101,6 +102,6 @@ final class FreeProxyListsScraperTest extends TestCase
             )
         );
 
-        static::assertNull($scraper->get()->current());
+        self::assertNull($scraper->get()->current());
     }
 }

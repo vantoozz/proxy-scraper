@@ -45,7 +45,7 @@ final class CoolProxyScraper implements ScraperInterface, Discoverable
     public function get(): Generator
     {
         try {
-            $json = $this->httpClient->get(sprintf(static::JSON_URL));
+            $json = $this->httpClient->get(sprintf(self::JSON_URL));
         } catch (HttpClientException $e) {
             throw new ScraperException($e->getMessage(), $e->getCode(), $e);
         }
@@ -87,7 +87,7 @@ final class CoolProxyScraper implements ScraperInterface, Discoverable
         }
 
         $proxy = new Proxy(new Ipv4($item['ip']), new Port((int)$item['port']));
-        $proxy->addMetric(new Metric(Metrics::SOURCE, static::class));
+        $proxy->addMetric(new Metric(Metrics::SOURCE, self::class));
 
         return $proxy;
     }

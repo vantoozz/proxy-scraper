@@ -17,7 +17,7 @@ final class Ipv4Test extends TestCase
      */
     public function it_converts_to_string(): void
     {
-        static::assertSame('127.0.0.1', (string)new Ipv4('127.0.0.1'));
+        self::assertSame('127.0.0.1', (string)new Ipv4('127.0.0.1'));
     }
 
     /**

@@ -76,7 +76,7 @@ final class FreeProxyListsScraper implements ScraperInterface
     private function getPagesOfType(string $type, string $prefix): Generator
     {
         try {
-            $html = $this->httpClient->get(static::BASE_URL . $type . '.html');
+            $html = $this->httpClient->get(self::BASE_URL . $type . '.html');
         } catch (HttpClientException $e) {
             throw new ScraperException($e->getMessage(), $e->getCode(), $e);
         }
@@ -97,7 +97,7 @@ final class FreeProxyListsScraper implements ScraperInterface
     private function crawlPage(string $page): Generator
     {
         try {
-            $html = $this->httpClient->get(static::BASE_URL . $page);
+            $html = $this->httpClient->get(self::BASE_URL . $page);
         } catch (HttpClientException $e) {
             throw new ScraperException($e->getMessage(), $e->getCode(), $e);
         }
@@ -112,7 +112,7 @@ final class FreeProxyListsScraper implements ScraperInterface
             } catch (InvalidArgumentException $e) {
                 continue;
             }
-            $proxy->addMetric(new Metric(Metrics::SOURCE, static::class));
+            $proxy->addMetric(new Metric(Metrics::SOURCE, self::class));
 
             yield $proxy;
         }
