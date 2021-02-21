@@ -22,16 +22,14 @@ final class CompositeScraperTest extends TestCase
     public function it_calls_inner_scrapers(): void
     {
         $compositeScraper = new CompositeScraper();
-        $compositeScraper->addScraper(new class implements ScraperInterface
-        {
+        $compositeScraper->addScraper(new class implements ScraperInterface {
             public function get(): Generator
             {
                 yield (new ProxyString('127.0.0.1:8080'))->asProxy();
             }
         });
 
-        $compositeScraper->addScraper(new class implements ScraperInterface
-        {
+        $compositeScraper->addScraper(new class implements ScraperInterface {
             public function get(): Generator
             {
                 yield (new ProxyString('127.0.0.2:8080'))->asProxy();
@@ -55,8 +53,7 @@ final class CompositeScraperTest extends TestCase
         $this->expectExceptionMessage('some error');
 
         $compositeScraper = new CompositeScraper();
-        $compositeScraper->addScraper(new class implements ScraperInterface
-        {
+        $compositeScraper->addScraper(new class implements ScraperInterface {
             /** @noinspection PhpInconsistentReturnPointsInspection */
             public function get(): Generator
             {
@@ -72,8 +69,7 @@ final class CompositeScraperTest extends TestCase
     public function it_handles_exceptions_from_inner_scrapper(): void
     {
         $compositeScraper = new CompositeScraper();
-        $compositeScraper->addScraper(new class implements ScraperInterface
-        {
+        $compositeScraper->addScraper(new class implements ScraperInterface {
             /** @noinspection PhpInconsistentReturnPointsInspection */
             public function get(): Generator
             {

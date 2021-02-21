@@ -2,7 +2,6 @@
 
 namespace Vantoozz\ProxyScraper\UnitTests\Scrapers;
 
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Vantoozz\ProxyScraper\Enums\Metrics;
 use Vantoozz\ProxyScraper\Exceptions\HttpClientException;
@@ -40,13 +39,14 @@ final class FreeProxyListsScraperTest extends TestCase
         $this->expectExceptionMessage('error message');
 
 
-        $httpClient = new class implements HttpClientInterface{
+        $httpClient = new class implements HttpClientInterface {
 
-            private $i = 0;
+            private $timesCalled = 0;
 
             public function get(string $uri): string
             {
-                if(0===$this->i++){
+                $this->timesCalled++;
+                if (0 === $this->timesCalled) {
                     return '<p>elite/123.html</p>';
                 }
                 throw new HttpClientException('error message');

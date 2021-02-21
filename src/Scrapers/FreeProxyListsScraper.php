@@ -61,8 +61,7 @@ final class FreeProxyListsScraper implements ScraperInterface
                 'https' => 'https',
                 'standard' => 'standard',
                 'socks' => 'socks',
-            ] as $type => $prefix
-        ) {
+            ] as $type => $prefix) {
             yield from $this->getPagesOfType($type, $prefix);
         }
     }

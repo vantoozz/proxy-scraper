@@ -71,7 +71,7 @@ final class ProxyListOrgScraperTest extends TestCase
     {
         $scraper = new ProxyListOrgScraper(
             new PredefinedDummyHttpClient(
-                '<li><script type="text/javascript">Proxy(\''.base64_encode('103.252.117.100:000').'\')</script></li>'
+                '<li><script type="text/javascript">Proxy(\'' . base64_encode('103.252.117.100:000') . '\')</script></li>'
             )
         );
 

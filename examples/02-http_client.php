@@ -12,7 +12,7 @@ $httpClient = guzzleHttpClient();
 $scraper = proxyScraper($httpClient);
 
 try {
-    echo $scraper->get()->current()->getIpv4(). "\n";
+    echo $scraper->get()->current()->getIpv4() . "\n";
 } catch (ScraperException $e) {
     echo $e->getMessage() . "\n";
 }

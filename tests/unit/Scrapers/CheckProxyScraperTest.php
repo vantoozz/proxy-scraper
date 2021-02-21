@@ -2,15 +2,12 @@
 
 namespace Vantoozz\ProxyScraper\UnitTests\Scrapers;
 
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Vantoozz\ProxyScraper\Enums\Metrics;
-use Vantoozz\ProxyScraper\Exceptions\HttpClientException;
 use Vantoozz\ProxyScraper\Exceptions\ScraperException;
 use Vantoozz\ProxyScraper\HttpClient\HttpClientInterface;
 use Vantoozz\ProxyScraper\Proxy;
 use Vantoozz\ProxyScraper\Scrapers\CheckProxyScraper;
-use Vantoozz\ProxyScraper\Scrapers\FreeProxyListsScraper;
 use Vantoozz\ProxyScraper\UnitTests\HttpClient\FailingDummyHttpClient;
 use Vantoozz\ProxyScraper\UnitTests\HttpClient\PredefinedDummyHttpClient;
 
@@ -71,14 +68,14 @@ final class CheckProxyScraperTest extends TestCase
      */
     public function it_makes_many_attempts(): void
     {
+        $httpClient = new class implements HttpClientInterface {
 
-        $httpClient = new class implements HttpClientInterface{
-
-            private $i = 0;
+            private $timesCalled = 0;
 
             public function get(string $uri): string
             {
-                if(2>$this->i++){
+                $this->timesCalled++;
+                if (2 > $this->timesCalled) {
                     return json_encode([]);
                 }
                 return json_encode([['addr' => '222.111.222.111:8118']]);
