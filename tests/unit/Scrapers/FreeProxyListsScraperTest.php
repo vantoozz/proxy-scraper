@@ -46,7 +46,7 @@ final class FreeProxyListsScraperTest extends TestCase
             public function get(string $uri): string
             {
                 $this->timesCalled++;
-                if (0 === $this->timesCalled) {
+                if (1 === $this->timesCalled) {
                     return '<p>elite/123.html</p>';
                 }
                 throw new HttpClientException('error message');
